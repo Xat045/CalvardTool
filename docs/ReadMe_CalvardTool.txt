@@ -1,4 +1,4 @@
-CalvardTool 2.8: decompiles and builds the files of the Calvard games (PC versions)
+CalvardTool 0.1: decompiles and builds the files of the Calvard games (PC versions)
   The Legend of Heroes: Trails through Daybreak     (Kuro no Kiseki)
   The Legend of Heroes: Trails through Daybreak II  (Kuro no Kiseki II)
   The Legend of Heroes: Trails beyond the Horizon   (Kai no Kiseki)

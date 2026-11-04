@@ -1,4 +1,4 @@
-CalvardTool 2.8 — разборка и сборка файлов игр Калварда (PC-версии)
+CalvardTool 0.1 — разборка и сборка файлов игр Калварда (PC-версии)
   The Legend of Heroes: Trails through Daybreak     (Kuro no Kiseki)
   The Legend of Heroes: Trails through Daybreak II  (Kuro no Kiseki II)
   The Legend of Heroes: Trails beyond the Horizon   (Kai no Kiseki)

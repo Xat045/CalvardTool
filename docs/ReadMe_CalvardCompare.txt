@@ -1,4 +1,4 @@
-CalvardCompare 3.8: translation compare for Trails through Daybreak, Daybreak II, Trails beyond the Horizon
+CalvardCompare 0.1: translation compare for Trails through Daybreak, Daybreak II, Trails beyond the Horizon
 
 WHAT IT DOES
   Shows the text of two languages side by side, line by line (Japanese, English or Russian, in any pair,

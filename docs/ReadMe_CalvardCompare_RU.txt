@@ -1,4 +1,4 @@
-Сверка перевода (CalvardCompare) 3.8 — Trails through Daybreak, Daybreak II, Trails beyond the Horizon
+Сверка перевода (CalvardCompare) 0.1 — Trails through Daybreak, Daybreak II, Trails beyond the Horizon
 
 ЧТО ДЕЛАЕТ
   Показывает текст двух языков рядом, строка к строке (японский, английский или русский — в любой паре,
