@@ -1,5 +1,7 @@
 # CalvardTool
 
+**English** · [Русский](README_RU.md)
+
 Building, extraction and proofreading of texts for The Legend of Heroes games (PC, Steam): Trails through Daybreak, Trails through Daybreak II and Trails beyond the Horizon.
 
 | Program | What it does |
