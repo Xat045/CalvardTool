@@ -1,10 +1,15 @@
 # Trails beyond the Horizon: characters and their models
 
-From the game's `t_name.tbl`, English. A full name missing there is taken from another game of the series for the same model number.
+From the game's `t_name.tbl`, English. A full name missing there is taken from
+another game of the series for the same model number.
 
-- **Model:** the model file. Mask for extracting from archives: the model number and an asterisk, for example `chr0000*`.
-- **ID:** the character's number in `t_name.tbl`, the one scripts use, for example `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that the record has no ID of its own, usually an extra outfit.
-- **Note:** `no .mdl file` means that the table names this model, but the game has no such file.
+- **Model:** the model file. Mask for extracting from archives: the model number
+  and an asterisk, for example `chr0000*`.
+- **ID:** the character's number in `t_name.tbl`, the one scripts use, for example
+  `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that
+  the record has no ID of its own, usually an extra outfit.
+- **Note:** `no .mdl file` means that the table names this model, but the game has
+  no such file.
 
 | Model | ID | Full name in the game | Note |
 |---|---:|---|---|
