@@ -64,7 +64,7 @@ WHAT IT DOES
   textures               .dds → .png   (or as they are, .dds, chosen in 'What to decompile'; rare formats are always .dds)
   interface text         multilanguage\message_en.yaml
   everything else (.mdl models, effects, sounds) stays as it is. To replace a model, put your file with the same name
-  in place of the old one and build. Which model belongs to which character: character_models.txt.
+  in place of the old one and build. Which model belongs to which character: character_models_<game>.txt.
   To get a model's files, use the CalvardTool extract command (see 'Command line').
 
   Dialogues (.json): translate only the strings in "text".
@@ -118,7 +118,7 @@ WHAT IT DOES
 ──────────────────────────────── FILES NEXT TO THE PROGRAM
 
   CalvardTool.ini: settings (folders, mode, mod name, mask, decompile and build speed); CalvardTool.log: the log.
-  character_models.txt: which model belongs to which character.
+  character_models_daybreak.txt, character_models_daybreak2.txt, character_models_horizon.txt: which model and ID belong to which character in each game.
 
 ──────────────────────────────── COMMAND LINE
 

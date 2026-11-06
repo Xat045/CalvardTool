@@ -79,7 +79,7 @@ Rules for editing:
 - **Tables:** on the `Text` sheet, column A says where the string is, B is the text to edit and C is the original. Don't touch hidden column D or the `_internal` sheet, and don't delete or reorder rows.
 - **Textures:** save `.png` with transparency, and preferably at the same size.
 
-Which model belongs to which character is listed in [character_models.txt](docs/character_models.txt).
+Which model and character ID belong to which character is listed for each game: [Daybreak](docs/character_models_daybreak.txt), [Daybreak II](docs/character_models_daybreak2.txt), [Horizon](docs/character_models_horizon.txt).
 
 ### Decompiling
 

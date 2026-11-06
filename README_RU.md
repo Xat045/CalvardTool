@@ -81,7 +81,7 @@ CalvardCompare:
 - **Таблицы:** на листе `Text` в столбце A указано, где находится строка, в B текст для правки, в C оригинал. Не трогайте скрытый столбец D и лист `_internal`, не удаляйте и не переставляйте строки.
 - **Текстуры:** сохраняйте `.png` с прозрачностью, размер лучше не менять.
 
-Какая модель у какого персонажа, указано в [character_models.txt](docs/character_models.txt) (на английском).
+Какая модель и какой ID у какого персонажа, указано отдельно для каждой игры (на английском): [Daybreak](docs/character_models_daybreak.txt), [Daybreak II](docs/character_models_daybreak2.txt), [Horizon](docs/character_models_horizon.txt).
 
 ### Разборка
 
