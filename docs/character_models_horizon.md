@@ -5,7 +5,7 @@ another game of the series for the same model number.
 
 - **ID:** the character's number in `t_name.tbl`, the one scripts use, for example
   `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that
-  the record has no ID of its own, usually an extra outfit.
+  the record has no ID of its own; scripts refer to such models by name.
 - **CHR:** the model file. Mask for extracting from archives: the model number
   and an asterisk, for example `chr0000*`.
 - **Note:** `no .mdl file` means that the table names this model, but the game has
