@@ -1,0 +1,2614 @@
+Trails beyond the Horizon: characters and their models (from the game's t_name.tbl, English; a full name missing there is taken from another game of the series for the same model number). Mask for extracting from archives: the model number and an asterisk, for example chr0000*
+
+model	full name in the game (English)	note
+chr0000_c15	Van Arkride
+chr0002_c15	Aaron Wei
+chr0004_c15	Quatre Salision
+chr0006	Bergard Zeman
+chr0009	Grendel Van
+chr0010	Grendel Zolga
+chr0011	Grendel Shaddai
+chr0111	Zin Vathek (the Immovable)
+chr0112	René Kincaid (Presidential Aide)
+chr0113	Walter Kron (the Direwolf)
+chr0114_c10	Alexandre
+chr0115_c11	Melchior
+chr0116	Gerard Dantès
+chr0117_c10	Arioch
+chr0118	Ellroy Harwood (the Oathbreaker)
+chr0120	Swin Abel
+chr0122_c10	Ixs the Glinting Bullet
+chr0123	Rean Schwarzer
+chr0124	Crow Armbrust
+chr0125	Rufus A.
+chr0126	Kevin Graham
+chr0127	Simeon
+chr0129	Yun Ka-fai (Sword Hermit)
+chr0130_c11	Masked Martial Artist
+chr0298	Overlord Auguste
+chr0299	Overlord Dantès
+chr0301	Cao Lee
+chr0302	Sherid Asval (Prince)
+chr0303	Kasim Al-Fayed (Security Chief)
+chr0304	Kurogane
+chr0304_c00	Kuuga Ka-fai
+chr0306	Leon Balthazar (Dominion)
+chr0307	Campanella the Fool
+chr5001_c15	Agnès Claudel
+chr5003_c15	Feri Al-Fayed
+chr5005_c15	Risette Twinings
+chr5007_c15	Judith Lanster
+chr5110_c15	Elaine Auclair
+chr5112_c00	Fie Claussell
+chr5113	Rixia Mao
+chr5114_c10	Renne Bright
+chr5117_c10	Shizuna Rem Misurugi
+chr5118	Lucrezia Isselee (the Golden Butterfly)
+chr5119	Nadia Rayne
+chr5120	Jorda Eldarion
+chr5121	Altina Orion
+chr5300	Naje Berka
+chr5302	Celis Ortesia (Dominion)
+chr8400	◆3D Avatar_Van
+chr8401	◆3D Avatar_Altina
+chr8402	◆3D Avatar_Lapis
+chr8404	◆3D Avatar_Agnès
+chr8408	◆3D Avatar_Elaine
+chr8406	◆3D Avatar_Shizuna
+chr8403	◆3D Avatar_Rean
+chr8405	◆3D Avatar_Kevin
+chr8407	◆3D Avatar_Rufus
+chr8499	◆3D Avatar_Boss
+chr0119	Roy Gramheart (President)
+chr0121	The Gardenmaster
+chr0300	Alvis
+chr0305_c01	Ashladd
+chr0310	Victor
+chr0311_c11	Giacomo
+chr0313	Bermotti
+chr0314	Daswani (Inspector)
+chr0315	Nate (Detective)
+chr0316	Dingo Brad
+chr0317	Jack Trevor
+chr0318	Maxim Lugan
+chr0319	Gien Lu
+chr0320	Fan Dàrén
+chr0321	Gaspard Dillon (President)
+chr0322	Salvatore Gotti (Director)
+chr0323	David Callaghan (Professor)
+chr0324	Yang Cronkite (Professor)
+chr0325	Giscard (Chief Engineer)
+chr0326	Bill Tausend
+chr0327	Edmond Auclair (President)
+chr0328	Hasan Al-Fayed (Vice Chief)
+chr0329	Geraint (Commander)
+chr0330	Cody McMillan (Warrant Officer)
+chr0331	Former President Rocksmith
+chr0333	Man in Black Coat
+chr0334	Gaolang
+chr0335	Air Force General Harring
+chr0336	Professor Novartis
+chr0428	Leroy
+chr5009_c00	Lapis Rosenberg
+chr5115_c10	Viola
+chr5116_c10	Olympia
+chr5122	Lapis Rosenberg
+chr5123	Ulrika
+chr5124	Sheena Dirke
+chr5301	Aida
+chr5301_c10	Masked Soldier
+chr5310	Paulette
+chr5311	Yumé
+chr5312	Odette
+chr5313	Marielle Aymé
+chr5314	Halle Coleman
+chr5316	Ashen Lu
+chr5320	Second Lieutenant Kaela
+chr0312	Albert
+chr5317	Saara
+chr5318	Shaheena
+chr5315	Nina Fenly
+chr5319	Esmeray Archette (Associate Professor)
+chr0332	Gilliam Thorndyke
+chr5322	Kilika Rouran
+chr0326	Bill Tausend (CEO)
+chr5321	Latoya Hamilton (Professor)
+chr5324	Princess Zita
+chr5325_c15	Mirabel
+chr5326	Dominique
+chr5323	Chief Developer Rosalie
+chr5323_c03	Fake Grimcat
+chr5327	Towa Herschel
+chr5328	Chloe
+chr5329	Mint the Mechanic
+chr5330	The Grandmaster
+chr5401_c00	Major Emilia
+chr5409_c02	Lila
+chr0000_c00	Van Arkride (No Jacket)
+chr0000_c01	Van Arkride	no .mdl file
+chr0000	Van Arkride (Daybreak 1 Outfit)
+chr0000_c07	Van Arkride (Samue)
+chr0000_c02	Van Arkride (Bath Getup)
+chr0000_c08	Van Arkride (Shirtless)
+chr0000_c09	Van Arkride (Shirtless and Bandaged)
+chr0000_c10	Van Arkride (Racing Suit & Helmet)
+chr0000_c15	Van Arkride (Horizon Outfit)
+chr0000_c16	Van Arkride (Horizon Outfit, No Jacket)
+chr0000_c48	Van Arkride (Swimsuit/No Sandals)
+chr0000_c55	Van Arkride (Swimsuit DLC/Jacket)
+chr0000_c56	Van Arkride (Swimsuit DLC/No Jacket)
+chr0000_c60	Van Arkride (Alt. Color DLC)
+chr0000_c63	Van Arkride (DLC Suit)
+chr0000_c71	Van Arkride (Suit Vest DLC)
+chr0000_c73	Van Arkride (Alt. Color 2 DLC)
+chr0002	Aaron Wei (Daybreak 1 Outfit)
+chr0002_c02	Aaron Wei
+chr0002_c04	Aaron Home Outfit
+chr0002_c05	Aaron Theater Costume
+chr0002_c06	Aaron Theater Costume_No Wig
+chr0002_c07	Aaron Wei (Samue)
+chr0002_c08	Aaron Wei (Shirtless)
+chr0002_c09	Aaron Wei (Shirtless and Bandaged)
+chr0002_c15	Aaron Wei (Horizon Outfit)
+chr0002_c16	Aaron Wei (Horizon Outfit, No Jacket)
+chr0002_c55	Aaron Wei (Swimsuit DLC/Jacket)
+chr0002_c56	Aaron Wei (Swimsuit DLC/No Jacket)
+chr0002_c63	Aaron Wei (DLC Suit)
+chr0002_c71	Aaron Wei (Suit Vest DLC)
+chr0002_c73	Aaron Wei (Alt. Color DLC)
+chr0004	Quatre Salision (Previous Game's Outfit)
+chr0004_c00	Quatre Salision (No Jacket)
+chr0004_c02	Quatre Salision (Bath Getup)
+chr0004_c07	Quatre Salision (Samue)
+chr0004_c08	Quatre Salision (For Event No Headphones)
+chr0004_c09	Quatre Salision (Female Avatar Version)
+chr0004_c15	Quatre Salision (Horizon Outfit)
+chr0004_c16	Quatre Salision (Horizon Outfit, No Jacket)
+chr0004_c17	Quatre Salision (Horizon Outfit, Feminine)
+chr0004_c18	Quatre Salision (Horizon Outfit, Feminine, No Jacket)
+chr0004_c49	Quatre Salision (Angel)
+chr0004_c48	Quatre Salision (Swimsuit/No Sandals)
+chr0004_c55	Quatre Salision (Swimsuit DLC/Jacket)
+chr0004_c56	Quatre Salision (Swimsuit DLC/No Jacket)
+chr0004_c58	Quatre Salision (DLC/Aramis Middle School Uniform)
+chr0004_c60	Quatre Salision (DLC Color Change)
+chr0004_c63	Quatre Salision (DLC Suit)
+chr0004_c71	Quatre Salision (Suit Vest DLC)
+chr0004_c73	Quatre Salision (Alt. Color DLC)
+chr0006_c00	Bergard Zeman (No Jacket)
+chr0006_c02	Bergard Zeman (Bath Getup)
+chr0006_c05	Bergard Zeman (Goggles)
+chr0006_c55	Bergard Zeman (Swimsuit DLC/Jacket)
+chr0006_c56	Bergard Zeman (Swimsuit DLC/No Jacket)
+chr0006_c60	Bergard Zeman (DLC Color Change)
+chr0006_c71	Bergard Zeman (Suit Vest DLC)
+chr0006_c73	Bergard Zeman (Alt. Color DLC)
+chr0009_c00	Grendel Van Final Battle Spec
+chr0010_c00	Grendel Zolga (Ebony Copy)
+chr0111_c02	Zin Vathek (Towel)
+chr0111_c73	Zin Vathek (Alt. Color DLC)
+chr0112_c00	René Kincaid (Sleeves Rolled Up)
+chr0112_c02	René Kincaid (Towel)
+chr0112_c63	René Kincaid (DLC Suit)
+chr0113_c02	Walter Kron (Towel)
+chr0114	Alexandre (Daybreak Outfit)
+chr0114_c10	Alexandre (Marduk Version)
+chr0115	Melchior (Daybreak Outfit)
+chr0115_c00	Kincaid (Shard Clone)
+chr0115_c01	Melchior (Pupil Highlight and Soft Expression)
+chr0115_c02	Demon Melchior
+chr0115_c03	Melchior (Chest Wound/Normal Version)
+chr0115_c10	Melchior (Vestige Costume, Masked)
+chr0115_c11	Melchior (Vestige Costume, Unmasked)
+chr0116_c00	Gerard Dantès (Dealer Outfit)
+chr0116_c01	Gerard Dantès (Fatally Wounded)
+chr0116_c02	Gerard Dantès (Immortal)
+chr0117	Arioch (Daybreak Outfit)
+chr0117_c00	Arioch (Living Armor State)
+chr0117_c10	Arioch (Vestige Outfit, Masked)
+chr0120_c01	Swin Abel (Swimsuit)
+chr0120_c02	Swin Abel (Towel)
+chr0120_c03	Swin Abel (Uniform)
+chr0120_c12	Swin Abel (Jersey)
+chr0120_c63	Swin Abel (DLC Suit)
+chr0120_c71	Swin Abel (Suit Vest DLC)
+chr0120_c73	Swin Abel (Alt. Color DLC)
+chr0121_c00	Gardenmaster (Hood & Mask)
+chr0122	Ixs (Twin Enforcer/Daybreak 2 Outfit)
+chr0122_c00	Ixs (Twin Enforcer, Hood Up)
+chr0122_c01	Ixs (Disguised)
+chr0122_c10	Ixs (Remnant Outfit)
+chr0122_c11	Ixs (Remnant Outfit, Hood Up)
+chr0123_c00	Rean Schwarzer (No Jacket)
+chr0123_c01	Rean Schwarzer (Swimsuit)
+chr0123_c02	Rean Schwarzer (Towel)
+chr0123_c07	Rean Schwarzer (Monk Uniform)
+chr0123_c71	Rean Schwarzer (Suit Vest DLC)
+chr0123_c73	Rean Schwarzer (Alt. Color DLC)
+chr0124_c00	Crow Armbrust (No Jacket)
+chr0124_c02	Crow Armbrust (Towel)
+chr0124_c07	Crow Armbrust (Monk Uniform)
+chr0124_c71	Crow Armbrust (Suit Vest DLC)
+chr0124_c73	Crow Armbrust (Alt. Color DLC)
+chr0125_c00	Rufus A. (No Jacket)
+chr0125_c01	Rufus A. (Swimsuit)
+chr0125_c02	Rufus A. (Towel)
+chr0125_c71	Rufus A. (Suit Vest DLC)
+chr0125_c73	Rufus A. (Alt. Color DLC)
+chr0126_c00	Kevin Graham (No Jacket)
+chr0126_c01	Kevin Graham (Swimsuit)
+chr0126_c02	Kevin Graham (Towel)
+chr0126_c71	Kevin Graham (Suit Vest DLC)
+chr0126_c73	Kevin Graham (Alt. Color DLC)
+chr0129b	Yun Ka-fai (test)	no .mdl file
+chr0130_c10	Lagun (Vestige Outift, Masked)
+chr0130_c11	Lagun (Vestige Outift, Unmasked)
+chr0131_c10	Ulgar Atkinson (Vestige Outift, Masked)
+chr0132_c10	Ulgar Atkinson (Vestige Outift, Unmasked)
+chr0132_c99	Fake Remnant (Male/Hollow Face) Use Aramis Number
+chr0299_c00	Overlord Dantès (Gorged Chest for Event)
+chr0303_c00	Kasim Al-Fayed (Security Chief, Regular Clothes)
+chr0303_c02	Kasim Al-Fayed (Towel)
+chr0304_c00	Kurogane (Natural Face)
+chr0306_c00	Leon Balthazar (Wearing Overcoat)
+chr0306_c02	Leon Balthazar (Towel)
+chr0306_c04	Leon Balthazar (Promoter Outfit)
+chr0306_c63	Leon Balthazar (DLC Suit)
+chr0306_c73	Leon Balthazar (Alt. Color DLC)
+chr0307b	Campanella test	no .mdl file
+chr0307_c99	Campanella (Cut-in Effect Dummy)
+chr0311_c00	Giacomo (Corpse Version)
+chr0311_c10	Giacomo (Vestige Outfit, Masked)
+chr0311_c11	Giacomo (Vestige Outfit, Natural Face)
+chr0311_c11b	Giacomo (Vestige Outfit/Natural Face, No Hat Test)	no .mdl file
+chr0311_c11c	Giacomo (Vestige Outfit/Natural Face, No Hat Test 02)	no .mdl file
+chr0312_c12	Albert (Jersey)
+chr0314_c00	Daswani (Inspector, Shot)
+chr0318_c00	Maxim Lugan (Muddy)
+chr0318_c03	Maxim Lugan (Racing Suit: Helmet Off)
+chr0318_c04	Maxim Lugan (Racing Suit: Helmet On)
+chr0319_c00	Gien Lu (Hawaiian Shirt)
+chr0320_c00	Fan Dàrén (No Jacket)
+chr0321_c00	Gaspard Dillon (President, Corpse Version)
+chr0325_c00	Giscard (Chief Engineer)
+chr0326_c00	Bill Tausend (Button-up Shirt)
+chr0328_c00	Hasan Al-Fayed (Vice Chief, For Event, Injured)
+chr0330_c00	Cody McMillan (Warrant Officer, Special Ops Uniform)
+chr0302_c02	Sherid Asval (Prince, Bath Getup)
+chr0331_c00	Samuel Rocksmith (No Hat)
+chr0331_c01	Samuel Rocksmith (Suit)
+chr0319_c00	Gien Lu
+chr0305_c00	Ashladd (Mouth Open)
+chr0305	Ashladd (Hood)
+chr0306_c03	Leon Balthazar (Injured)
+chr0312_c00	Albert (Apron)
+chr0333_c00	Man in a Black Coat (Identity Revealed)
+chr0424_c00	Jimmy (Alternate Outfit)
+chr0428_c00	Leroy (Injured)
+chr0428_c01	Leroy (Cured)
+chr0490_c00	Faceless Assassin: Male (Normal Face)
+chr0449_c01	Stage Actor Auguste (Stage Costume)
+chr0450_c01	Stage Actor Aramis (Stage Costume)
+chr0451_c01	Stage Actor Atkinson (Stage Costume)
+chr0452	Stage Actor Prince Selge (Stage Costume)
+chr0492	Barker Penguin
+chr0806	Male Student 9 (Jersey) Caucasian
+chr0806_c01	Male Student 12 (Jersey) Central Eastern
+chr0807	Male Student (Button Up Shirt and Apron) Edmond
+chr0807_c01	Male Student 13 (Button Up Shirt and Apron) Caucasian
+chr0807_c02	Male Student 10 (Button Up Shirt and Apron) Eastern
+chr0807_c03	Male Student 2 (Button-Up Shirt and Apron) Lyle
+chr5001	Agnès Claudel (Previous Game's Outfit)
+chr5001_c00	Agnès Claudel (No Coat)
+chr5001_c02	Agnès Claudel (Bath Getup)
+chr5001_c03	Agnès Claudel (Uniform)
+chr5001_c04	Agnès Claudel (Home Outfit)
+chr5001_c07	Agnès Claudel (Samue)
+chr5001_c10	Agnès Claudel (Daybreak 2 Outfit)
+chr5001_c11	Agnès Claudel (Second Game Outfit No Coat)
+chr5001_c12	Agnès Claudel (Jersey)
+chr5001_c14	Agnès Claudel (Uniform, No Jacket)
+chr5001_c15	Agnès Claudel (Horizon Outfit)
+chr5001_c16	Agnès Claudel (Horizon Light Outfit)
+chr5001_c49	Agnès Claudel (Goddess)
+chr5001_c50	Agnès Claudel (DLC/Store Bonus)
+chr5001_c55	Agnès Claudel (Swimsuit DLC/Shirt)
+chr5001_c56	Agnès Claudel (Swimsuit DLC/No Shirt)
+chr5001_c60	Agnès Claudel (Color Swap DLC)
+chr5001_c61	Agnès Claudel (DLC Pit Girl/Store Bonus)
+chr5001_c64	Agnès Claudel (DLC Pit Girl/For Sale)
+chr5001_c72	Agnès Claudel (DLC Bunny/For Sale)
+chr5001_c73	Agnès Claudel (Alt. Color DLC)
+chr5001_c74	Agnès Claudel (DLC Bunny/Strategy Guide Bonus)
+chr5003	Feri Al-Fayed (Daybreak 1 Outfit)
+chr5003_c04	Feri Al-Fayed (Light Home Outfit)
+chr5003_c00	Feri Al-Fayed (Hood)
+chr5003_c02	Feri Al-Fayed (Bath Getup)
+chr5003_c15	Feri Al-Fayed (Horizon Outfit)
+chr5003_c16	Feri Al-Fayed (Horizon Light Outfit)
+chr5003_c07	Feri Al-Fayed (Samue)
+chr5003_c50	Feri Al-Fayed (DLC/Store Bonus Sleeves)
+chr5003_c51	Feri Al-Fayed (DLC/Store Bonus Sleeves)
+chr5003_c55	Feri Al-Fayed (Swimsuit DLC/Jacket)
+chr5003_c56	Feri Al-Fayed (Swimsuit DLC/No Jacket)
+chr5003_c64	Feri Al-Fayed (DLC Pit Girl/For Sale)
+chr5003_c72	Feri Al-Fayed (DLC Bunny/For Sale)
+chr5003_c73	Feri Al-Fayed (Alt. Color DLC)
+chr5005	Risette Twinings (Previous Game's Outfit)
+chr5005_c02	Risette Twinings (Bath Getup)
+chr5005_c04	Risette Twinings (Home Outfit/Pants)
+chr5005_c05	Risette Twinings (Left Arm and Right Foot Damaged)
+chr5005_c06	Risette Twinings (Undergoing Treatment)
+chr5005_c07	Risette Twinings (Samue)
+chr5005_c08	Risette Twinings (Right Arm Swapped Version)
+chr5005_c09	Risette Twinings (Home Outfit/Seamless Skin)
+chr5005_c15	Risette Twinings (Horizon Costume)
+chr5005_c15	Risette Twinings (Risette's Double)
+chr5005_c48	Risette Twinings (Swimsuit/No Sandals)
+chr5005_c50	Risette Twinings (DLC/Store Bonus)
+chr5005_c55	Risette Twinings (Swimsuit DLC/Shirt)
+chr5005_c56	Risette Twinings (Swimsuit DLC/No Shirt)
+chr5005_c60	Risette Twinings (DLC Color Change)
+chr5005_c64	Risette Twinings (DLC Pit Girl/For Sale)
+chr5005_c72	Risette Twinings (DLC Bunny/For Sale)
+chr5005_c73	Risette Twinings (Alt. Color DLC)
+chr5007	Judith Lanster (Daybreak Outifit)
+chr5007_c01	Judith Lanster (Swimsuit)
+chr5007_c02	Judith Lanster (Bath Getup)
+chr5007_c03	Judith Lanster (Grimcat)
+chr5007_c04	Judith Lanster (Water Fall Ritual Outfit_Normal)
+chr5007_c05	Judith Lanster (Waterfall Ritual Outfit_Event Start and End)
+chr5007_c06	Judith Lanster (Long Hair)
+chr5007_c07	Judith Lanster (Samue)
+chr5007_c08	Judith Lanster (Transformation Craft Model)
+chr5007_c09	Judith Lanster (Home Outfit Gown)
+chr5007_c10	Judith Lanster (Gown+Grimcat)
+chr5007_c11	Judith Lanster (Gown+Grimcat+Cap)
+chr5007_c15	Judith Lanster (Horizon Outfit)
+chr5007_c55	Judith Lanster (DLC Swimsuit/Shirt)
+chr5007_c56	Judith Lanster (DLC Swimsuit/No Shirt)
+chr5007_c59	Judith Lanster (Golden Costume DLC)
+chr5007_c60	Judith Lanster (DLC Color Change)
+chr5007_c64	Judith Lanster (DLC Pit Girl/For Sale)
+chr5007_c72	Judith Lanster (DLC Bunny/For Sale)
+chr5007_c73	Judith Lanster (Alt. Color DLC)
+chr5110	Elaine Auclair (Bracer Outfit)
+chr5110_c01	Elaine Auclair (Swimsuit)
+chr5110_c02	Elaine Auclair (Towel)
+chr5110_c10	Elaine Auclair (Daybreak 2 Outfit)
+chr5110_c11	Elaine Auclair (Personal Outfit No Coat)
+chr5110_c12	Elaine Auclair (Wedding Dress)
+chr5110_c15	Elaine Auclair (Horizon Outfit)
+chr5110_c61	Elaine Auclair (DLC Pit Girl/Store Bonus)
+chr5110_c64	Elaine Auclair (DLC Pit Girl/For Sale)
+chr5110_c72	Elaine Auclair (DLC Bunny/For Sale)
+chr5110_c73	Elaine Auclair (Alt. Color DLC)
+chr5112_c00	Fie Claussell (No Hat)
+chr5112_c02	Fie Claussell (Bath Getup)
+chr5112_c07	Fie Claussell (Monk Uniform)
+chr5112_c72	Fie Claussell (DLC Bunny/For Sale)
+chr5112_c73	Fie Claussell (Alt. Color DLC, With Hat)
+chr5112_c73b	Fie Claussell (Alt. Color DLC, No Hat)
+chr5113_c00	Rixia Mao (Lightweight Stage Outfit)
+chr5113_c02	Rixia Mao (Towel)
+chr5113_c04	Rixia Mao (Personal Outfit)
+chr5113_c73	Rixia Mao (Alt. Color DLC)
+chr5114_c01	Renne Bright (Swimsuit)
+chr5114	Renne Bright (Uniform)
+chr5114_c02	Renne Bright (Towel)
+chr5114_c11	Renne Bright (Personal Outfit, No Jacket)
+chr5114_c64	Renne Bright (DLC Pit Girl/For Sale)
+chr5114_c65	Renne Bright (DLC Grimcat/Strategy Guide Bonus)
+chr5114_c72	Renne Bright (DLC Bunny/For Sale)
+chr5114_c73	Renne Bright (Alt. Color DLC)
+chr5115	Viola (Horizon Outfit)
+chr5115_c10	Viola (Marduk Version)
+chr5116	Olympia (Daybreak Outfit)
+chr5116_c10	Olympia (Vestige Outfit, Masked)
+chr5117	Shizuna Rem Misurugi (Daybreak 1 Outfit)
+chr5117_c01	Shizuna Rem Misurugi (Swimsuit)
+chr5117_c10	Shizuna Rem Misurugi (Personal Outfit)
+chr5117_c11	Shizuna Rem Misurugi (Personal Outfit/No Coat)
+chr5117_c02	Shizuna Rem Misurugi (Towel)
+chr5117_c12	Shizuna Rem Misurugi (Berserk)
+chr5117_c61	Shizuna Rem Misurugi (DLC Pit Girl/Store Bonus)
+chr5117_c64	Shizuna Rem Misurugi (DLC Pit Girl/For Sale)
+chr5117_c72	Shizuna Rem Misurugi (DLC Bunny/For Sale)
+chr5117_c73	Shizuna Rem Misurugi (Alt. Color DLC)
+chr5118_c00	Lucrezia Isselee (the Golden Butterfly, With Hat, No Veil)
+chr5118_c01	Lucrezia Isselee (the Golden Butterfly, Kimono)
+chr5118_c02	Lucrezia Isselee (the Golden Butterfly, Swimsuit)
+chr5119_c01	Nadia Rayne (Swimsuit)
+chr5119_c02	Nadia Rayne (Towel)
+chr5119_c03	Nadia Rayne (Uniform)
+chr5119_c12	Nadia Rayne (Jersey)
+chr5119_c64	Nadia Rayne (DLC Pit Girl/For Sale)
+chr5119_c72	Nadia Rayne (DLC Bunny/For Sale)
+chr5119_c73	Nadia Rayne (Alt. Color DLC)
+chr5120_c00	Jorda Eldarion (Twin Enforcer - Sister/Hooded)
+chr5120_c02	Jorda Eldarion (Twin Enforcer/Towel)
+chr5120_c03	Jorda Eldarion (Twin Enforcer, No Jacket)
+chr5120_c03b	Jorda Eldarion ((Twin Enforcer, No Jacket) Test)	no .mdl file
+chr5120_c73	Jorda Eldarion (Alt. Color DLC)
+chr5121_c01	Altina Orion (Swimsuit)
+chr5121_c02	Altina Orion (Towel)
+chr5121_c07	Altina Orion (Monk Uniform)
+chr5121_c70	Altina Orion (DLC Cold Steel IV Travel Attire)
+chr5121_c72	Altina Orion (DLC Bunny/For Sale)
+chr5121_c73	Altina Orion (Alt. Color DLC)
+chr5122_c01	Lapis Rosenberg (Swimsuit)
+chr5122_c02	Lapis Rosenberg (Towel)
+chr5122_c70	Lapis Rosenberg (DLC Azure Dress/Store Bonus)
+chr5122_c72	Lapis Rosenberg (DLC Bunny/For Sale)
+chr5122_c73	Lapis Rosenberg (Alt. Color DLC)
+chr5124_c10	Sheena (Vestige Outfit, Masked)
+chr5124_c11	Sheena (Vestige Outift, Unmasked)
+chr5300_c02	Naje Berka (Bath Outfit)
+chr5301_c00	Jaeger Aida
+chr5301_c01	Jaeger Aida
+chr5301_c10	Aida (Vestige, Masked)
+chr5301_c11	Aida (Vestige, Cracked Mask)
+chr5301_c99	Fake Remnant (Female/Hollow Face) Use Aida Number
+chr5302_c00	Celis Ortesia (Wearing Overcoat)
+chr5302_c04	Celis Ortesia (Energy Drink Collab)
+chr5302_c02	Celis Ortesia (Towel)
+chr5302_c64	Celis Ortesia (DLC Pit Girl/For Sale)
+chr5302_c73	Celis Ortesia (Alt. Color DLC)
+chr5311_c00	Yumé (Different Outfit)
+chr5311_c02	Yumé (Bath Outfit)
+chr5311_c07	Yumé (Samue)
+chr5312_c12	Odette (Jersey)
+chr5313_c00	Marielle Aymé (No Hat)
+chr5313_c01	Marielle Aymé (Clothes Half-Disintegrated)
+chr5313_c02	Marielle Aymé (Clothes Half-Disintegrated/No Slime)
+chr5313_c03	Marielle Aymé (Towel)
+chr5315_c01	Nina Fenly (Swimsuit)
+chr5315_c02	Nina Fenly (Bath Outfit)
+chr5315_c03	Nina Fenly (Disguise/Aniras Girls Academy Uniform)
+chr5315_c04	Nina Fenly (Disguise/Street Musician)
+chr5315_c05	Nina Fenly (Michelle Costume)
+chr5315_c06	Nina Fenly (Sheena Dirke Costume)
+chr5315_c07	Nina Fenly (Stage Rehearsal Attire)
+chr5315_c15	Nina Fenly (Eschaton Saint Outfit)
+chr5317_c00	Saara (Personal Outfit)
+chr5317_c02	Saara (Bath Getup)
+chr5317_c04	Saara (Pole Dancer)
+chr5317_c05	Saara (Burlesque Outfit)
+chr5318_c00	Shaheena (Personal Outfit)
+chr5318_c02	Shaheena (Bath Getup)
+chr5319_c00	Esmeray Archette (Resort Clothes)
+chr5310_c00	Paulette (Different Outfit)
+chr5321_c00	Latoya Hamilton (Professor, 54 Years Old)
+chr5322_c02	Kilika Rouran (Towel)
+chr5324_c02	Princess Zita (Towel)
+chr5325_c00	Mirabel (No Headset)
+chr5325_c15	Mirabel (Summer Clothes)
+chr5323_c00	Chief Development Officer Rosalie (Auction House Suit)
+chr5323_c03	Chief Development Officer Rosalie (Fake Grimcat)
+chr5327_c02	Towa Herschel (Towel)
+chr5327_c07	Towa Herschel (Monk Uniform)
+chr5327_c72	Towa Herschel (DLC Bunny/For Sale)
+chr5327_c73	Towa Herschel (Alt. Color DLC)
+chr5401_c01	Major Emilia (Pilot Suit, Helmet)
+chr5401_c02	Major Emilia (Pilot Suit, No Helmet)
+chr5490_c00	Faceless Assassin: Female (Normal Face)
+chr5701	Female Student 10 (Jersey) Caucasian
+chr5701_c01	Female Student 12 (Jersey) Eastern
+chr5701_c02	Female Student 13 (Jersey) Sasha
+chr0724_c01	Franklin
+chr5685	Royche
+chr5426	Raytarossa
+chr0712b	Farouk
+chr0400	Joe Browning
+chr0400_c00	Joe Browning (After Treatment)
+chr0401	Secretary Culleo
+chr0402	Researcher Ray
+chr0403	President Daltie
+chr0404	Lucio
+chr0404_c00	Lucio (Button-up Shirt)
+chr0405_c00	Jacobin (Disguise)
+chr0405_c01	Jacobin (Disguise 2: Mechanic)
+chr0406	Filenkov
+chr0406_c00	Filenkov
+chr0407	Kyle (Fisherman)
+chr0408	Giordano
+chr0409	Director Lam
+chr0410	Researcher Lionel
+chr0411	Jess
+chr0412	Hubert
+chr0413	Ronald Griffith
+chr0413_c00	Ronald Griffith (Disguise)
+chr0414	Syd
+chr0414_c09	Syd (Bandaged Head)
+chr0415	chr0503 Young Man 4 (Underwear Only Model)
+chr0416	chr0712 Young Man 3 (Underwear Only Model)
+chr0417	chr0725 Young Adult SP 1 (Underwear Only Model)
+chr0418	chr0725_c01 Young Adult SP 1 (Underwear Only Model)
+chr0419	Marché Bakery Owner?
+chr0420	Ralph (Bouldering Customer)
+chr0421	Aslan (Z1 Racer)
+chr0421_c00	Aslan (Z1 Racer No Helmet)
+chr0421_c01	Aslan (Civilian Clothing)
+chr0422	Master Tailong
+chr0423	Mr. Raffaello
+chr0424	Jimmy
+chr0425	Jed? (For Messeldam Quest)
+chr0426	Senator Ryan
+chr0428	Aaron's Father
+chr0428_c00	Aaron's Father (Injured)
+chr0428_c01	Aaron's Father (Bandaged)
+chr0429	Groom (Connection Event Background Character)
+chr0430	Curtis (Aramis Academy Student Uniform)
+chr0431	Lodi (Jersey)
+chr0432	Medical Director
+chr0433	Doctor
+chr0434	Norton
+chr0435	Reporter Edwin
+chr0436	Former A-Rank Bracer Receptionist
+chr0437	Reins
+chr0438	Chief Bannings
+chr0440	Doctor, Black
+chr0441	Sigourney's Father
+chr0442	Louis
+chr0443	Luke
+chr0445	Homeless Man (Central Eastern, Middle-Aged)
+chr0446	Fabio Rossi
+chr0446_c00	Fabio Rossi (Full Helmet)
+chr0448	Deputy Secretary Kincaid
+chr0449	Stage Actor Auguste (Rehearsal Attire)
+chr0450	Stage Actor Aramis (Rehearsal Attire)
+chr0451	Stage Actor Atkinson (Rehearsal Attire)
+chr0455	Jeffrey (Hoodie)
+chr0455_c00	Jeffrey (Hoodie, Hood Up)
+chr0456	Stalker (With Face Marking)
+chr0490	Faceless Assassin: Male
+chr0498	Mishette
+chr0499	Mishy
+chr0711_c01	Staff
+chr0503_c01	Middle Devancy Brother
+chr0668_c03	Youngest Devancy Brother
+chr5400	Female Shopkeeper
+chr5401	Courier (Helmet On)
+chr5402	Women's Fitness Instructor (Ms. Sonia)
+chr5402_c01	Jersey Thelma
+chr5402_c02	Women's Fitness Instructor (Ms. Sonia) (Matchmaking Outfit)
+chr5402_c03	Betty (Bouldering Receptionist)
+chr5404	Doctor Isabelle
+chr5405	Gabriella
+chr5406	Shannon (Fisherwoman)
+chr5407	Makino (Fisherman)
+chr5408	Daswani's Daughter
+chr5409	Manager Lila
+chr5409_c01	Lila (Academy Festival Maid Outfit)
+chr5409_c02	Manager Lila (Classic Maid Outfit)
+chr5410	Kisara (Graffiti Artist)
+chr5410_c01	Kisara (Aramis School Uniform)
+chr5411	Meixin
+chr5412	Binsui
+chr5413	Ms. Leifa
+chr5490	Faceless Assassin: Female
+chr5414	Ms. Matilda
+chr5415	Risette
+chr5416	Connection Event Bride
+chr5417	Shannon
+chr5417_c01	Shannon
+chr5418	Female Nurse Finlay
+chr5419	Reporter Nicole
+chr5420	Junior Bracer Ange
+chr5421	New First Year Girl
+chr5422	Rival Idol A
+chr5423	Rival Idol B
+chr5424	Nelly (Casual Clothes)
+chr5425	Officer Crema (Civilian Clothes)
+chr5428	Ginny
+chr5432	Mylène's Mother
+chr5434	Waitress 01 (Personal Clothes)
+chr0500	Young Man 1
+chr0500a	Young Man 1 Alt Color 1
+chr0500b	Young Man 1 Alt Color 2
+chr0501	Young Man 2
+chr0501a	Young Man 2 Alt Color 1
+chr0501b	Young Man 2 Alt Color 2
+chr0502	Young Man 3
+chr0502a	Young Man 3 Alt Color 1
+chr0502b	Young Man 3 Alt Color 2
+chr0503	Young Man 4
+chr0503a	Young Man 4 Alt Color 1
+chr0503b	Young Man 4 Alt Color 2
+chr0504	Young Man 5
+chr0505	Young Man 6
+chr0510	Middle-Aged Man 1
+chr0510_c01	Middle-Aged Man 1 Fat
+chr0510a	Middle-Aged Man 1 Alt Color 1
+chr0510b	Middle-Aged Man 1 Alt Color 2
+chr0510c	Middle-Aged Man 1 Alt Color 3
+chr0511	Middle-Aged Man 2
+chr0511a	Middle-Aged Man 2 Alt Color 1
+chr0511b	Middle-Aged Man 2 Alt Color 2
+chr0512	Middle-Aged Man 3
+chr0512a	Middle-Aged Man 3 Alt Color 1
+chr0512b	Middle-Aged Man 3 Alt Color 2
+chr0513	Middle-Aged Man 4
+chr0513_c01	Middle-Aged Man 4 Fat
+chr0513a	Middle-Aged Man 4 Alt Color 1
+chr0513b	Middle-Aged Man 4 Alt Color 2
+chr0513c	Middle-Aged Man 4 Alt Color 3
+chr0514	Middle-Aged Man 5
+chr0514_c01	Middle-Aged Man 5 Combination 1
+chr0520	Old Man 1
+chr0520_c01	Old Man 1 No Hat
+chr0520a	Old Man 1 Alt Color 1
+chr0521	Old Man 2
+chr0521a	Old Man 2 Alt Color 1
+chr0530	Young Boy 1
+chr0530a	Young Boy 1 Alt Color 1
+chr0531	Young Boy 2
+chr0531a	Young Boy 2 Alt Color 1
+chr0532	Young Boy 3
+chr0532a	Young Boy 3 Alt Color 1
+chr0540	Toddler 1
+chr0540a	Toddler 1 Alt Color 1
+chr0541	Toddler 2
+chr0541a	Toddler 2 Alt Color 1
+chr0548	Middle Schooler 1
+chr0549	Middle Schooler 2
+chr0550	Young Man (Eastern) 1
+chr0550a	Young Man (Eastern) 1 Alt Color 1
+chr0550_c09	Young Man (Eastern) 1 (Sei/Injured)
+chr0551	Young Man (Eastern) 2
+chr0551a	Young Man (Eastern) 2 Alt Color 1
+chr0551_c01	Young Man (Eastern) 2 Alt Hair 1
+chr0560	Middle-Aged Man (Eastern) 1
+chr0560a	Middle-Aged Man (Eastern) 1 Alt Color 1
+chr0561	Middle-Aged Man (Eastern) 2
+chr0561_c01	Middle-Aged Man (Eastern) 2 Fat
+chr0561a	Middle-Aged Man (Eastern) 2 Alt Color 1
+chr0570	Old Man (Eastern) 1
+chr0570a	Old Man (Eastern) 1 Alt Color 1
+chr0570_c01	Old Man (Eastern) 1 Alt Hair 1
+chr0580	Young Boy (Eastern) 1
+chr0580a	Young Boy (Eastern) 1 Alt Color 1
+chr0590	Toddler (Eastern) 1
+chr0600	Young Man (Central Eastern) 1
+chr0600a	Young Man (Central Eastern) 1 Alt Color 1
+chr0601	Young Man (Central Eastern) 2
+chr0601a	Young Man (Central Eastern) 2 Alt Color 1
+chr0610	Middle-Aged Man (Central Eastern) 1
+chr0610_c01	Middle-Aged Man (Central Eastern) 1 Fat
+chr0610a	Middle-Aged Man (Central Eastern) 1 Alt Color 1
+chr0611	Middle-Aged Man (Central Eastern) 2
+chr0611a	Middle-Aged Man (Central Eastern) 2 Alt Color 1
+chr0620	Old Man (Central Eastern) 1
+chr0620_c01	Old Man (Central Eastern) 1 Alt Hair 1
+chr0630	Young Boy (Central Eastern) 1
+chr0630a	Young Boy (Central Eastern) 1 Alt Color 1
+chr0631	Young Boy (Central Eastern) 2
+chr0640	Toddler (Central Eastern) 1
+chr0652	Young Priest (Caucasian) 1
+chr0652_c01	Young Priest (Caucasian) 2
+chr0653	Young Priest (Eastern) 1
+chr0654	Young Priest (Central Eastern) 1
+chr0655	Middle-Aged Priest (Caucasian) 1
+chr0655_c01	Middle-Aged Priest (Caucasian) 2
+chr0656	Middle-Aged Priest (Eastern) 1
+chr0657	Middle-Aged Priest (Central Eastern) 1
+chr0658	Old Bishop (Caucasian) 1
+chr0660	Young Policeman 1
+chr0660_c01	Young Policeman 2
+chr0660_c01a	Young Policeman 2 Fake Policeman (For Quest)
+chr0660_c02	Young Policeman 1 Dirty Clothes
+chr0661	Middle-Aged Policeman 1
+chr0661_c01	Middle-Aged Policeman 2
+chr0662	Space Force Operator 1 (Young Man)
+chr0662_c01	Space Force Operator 2 (Young Man)
+chr0665	Young Adult Merchant 1
+chr0665_c01	Young Adult Merchant 2 (Devancy 3 Brothers)
+chr0666	Middle-Aged Merchant 1
+chr0667	Old Merchant 1
+chr0668	Young Adult Laborer 1
+chr0668_c01	Young Adult Laborer 2
+chr0669	Middle-Aged Laborer 1
+chr0669a	Middle-Aged Laborer 1 (Central Eastern)
+chr0670	Young Adult Engineer 1
+chr0670a	Young Adult Engineer 1 (Eastern)
+chr0670b	Young Adult Engineer 1 (Central Eastern)
+chr0671	Middle-Aged Engineer 1
+chr0700	Young Adult Chef (Caucasian) 1
+chr0701	Young Adult Chef (Eastern) 1
+chr0702	Young Adult Chef (Central Eastern) 2
+chr0703	Middle-Aged Chef (Caucasian) 1
+chr0704	Middle-Aged Chef (Eastern) 1
+chr0705	Middle-Aged Chef (Central Eastern) 1
+chr0705_c01	Middle-Aged Chef (Central Eastern) 1 Fat
+chr0710	Young Adult Suit 1
+chr0710a	Young Adult Suit 1 Alt Color 1
+chr0710b	Young Adult Suit 1 Alt Color 2
+chr0710_c01	Young Adult Suit 1 (Hair Style, Alt Color/New for Kuro 2)
+chr0711	Young Adult Suit 2
+chr0711a	Young Adult Suit 2 Alt Color 1
+chr0711b	Young Adult Suit 2 Alt Color 2
+chr0711_c01	Young Adult Suit 2 (Hair Style, Alt Color/New for Kuro 2)
+chr0712	Young Adult Suit 3
+chr0712a	Young Adult Suit 3 Alt Color 1
+chr0712b	Young Adult Suit 3 Alt Color 2
+chr0712_c01	Young Adult Suit 3 (Hair Style, Alt Color/New for Kuro 2)
+chr0715	Middle-Aged Suit 1
+chr0715a	Middle-Aged Suit 1 Alt Color 1
+chr0715b	Middle-Aged Suit 1 Alt Color 2
+chr0715c	Middle-Aged Suit 1 Alt Color 3
+chr0715_c01	Middle-Aged Suit 1 (No Hat)
+chr0715_c02	Middle-Aged Suit 1 (Hair Style, Alt Color/New for Kuro 2)
+chr0716	Middle-Aged Suit 2
+chr0716_c01	Middle-Aged Suit 2 Fat
+chr0716_c01a	Middle-Aged Suit 2 Fat (Central Eastern)
+chr0716_c02	Middle-Aged Suit 2 Alt Hair 1
+chr0716a	Middle-Aged Suit 2 Alt Color 1
+chr0716_c03	Middle-Aged Suit 2 (Hair Style, Alt Color/New for Kuro 2)
+chr0717	Middle-Aged Suit 3
+chr0717_c01	Middle-Aged Suit 3 Fat
+chr0717a	Middle-Aged Suit 3 Alt Color 1
+chr0717b	Middle-Aged Suit 3 Alt Color 2 (Eastern)
+chr0717c	Middle-Aged Suit 3 Alt Color 3 (Central Eastern)
+chr0717_c02	Middle-Aged Suit 3 (Hair Style, Alt Color/New for Kuro 2)
+chr0720	Old Suit 1
+chr0720a	Old Suit 1 Alt Color 1 (Central Eastern)
+chr0720_c01	Old Suit 1 Alt Hair 1
+chr0720_c02	Old Suit 1 Alt Hair 2
+chr0721	Old Suit 2
+chr0721a	Old Suit 2 Alt Color 1
+chr0722	Old Suit 3
+chr0724	Young Adult Dealer 1
+chr0724_c01	Middle-Aged Dealer 1
+chr0724_c02	Middle-Aged Dealer 2
+chr0725	SP1
+chr0725_c01	SP2
+chr0725_c02	SP1 (Massive Type)
+chr0725_c03	SP2 (Massive Type)
+chr0726	Mafia 1
+chr0726_c01	Mafia 2
+chr0727	Dolor Family 1
+chr0727_c01	Dolor Family 2
+chr0728	Central Eastern Men in Black 1
+chr0728_c01	Central Eastern Men in Black 2
+chr0730	Young Adult Station Worker 1
+chr0731	Young Adult Attendant 1
+chr0731_c01	Young Adult Attendant 2 (Devancy 3 Brothers)
+chr0731_c02	Young Adult Attendant 3 (Bleublanc Disguise)
+chr0735	Young Adult White Clothes 1
+chr0735a	Young Adult White Clothes 1 Alt Color 1 (Central Eastern)
+chr0735_c01	Young Adult White Clothes 2
+chr0735_c01a	Young Adult White Clothes 2 Alt Color 1 (Central Eastern)
+chr0740	Middle-Aged White Clothes 1
+chr0740_c01	Middle-Aged White Clothes 2
+chr0745	Young Adult Coat 1
+chr0750	Middle-Aged Coat 1
+chr0750_c01	Middle-Aged Coat 1 (No Hat)
+chr0755_c10	Middle-Aged Soldier (Officer) 1
+chr0755	Young Adult Soldier 1
+chr0755_c01	Young Adult Soldier 2
+chr0756	Young Adult Navy Sailor 1
+chr0756_c01	Young Adult Navy Sailor 2
+chr0757	Middle-Aged Navy Sailor 1 (Devancy 3 Brothers)
+chr0758	Young Adult Space Soldier 1
+chr0758_c01	Young Adult Space Soldier 2
+chr0760	Hercules 1
+chr0760a	Hercules 2 (Black)
+chr0760b	Hercules 3 (White)
+chr0760c	Hercules 4 (Black Full Face) For Prologue MAYA Event
+chr0765	Eisenschild 1
+chr0765_c01	Eisenschild 2
+chr0770	Kruga 1
+chr0770_c01	Kruga 2
+chr0775	Ikaruga 1
+chr0775_c01	Ikaruga 2 Ninja
+chr0780	Marduk Security 1
+chr0780_c01	Marduk Security 2
+chr0781	Marduk Security EX 1
+chr0781_c01	Marduk Security EX 2
+chr0782	Nidhoggr Soldier 1
+chr0782_c01	Nidhoggr Soldier 2
+chr0782_c02	Eldest Devancy Brother
+chr0783	Zecht Arms Soldier 1
+chr0783_c01	Zecht Arms Soldier 2
+chr0784	Zecht Arms Soldier 1 (Society Colors)
+chr0784_c02	Zecht Arms (Society Colors) Dark-Skinned, For Event
+chr0784_c03	Zecht Arms (Society Colors) Dark Skinned, No Helmet, For Event
+chr0785	Stylish Male Gangster 1
+chr0785a	Stylish Male Gangster 1 Alt Color 1
+chr0785_c01	Stylish Male Gangster 1 Alt Hair 1
+chr0785_c02	Stylish Male Gangster 1 (Beat Up)
+chr0785_c03	Stylish Male Gangster 1 (Zombie)
+chr0785a_c03	Stylish Male Gangster 1 Alt Color 1 (Zombie)
+chr0785_c04	Stylish Male Gangster 1 (Prologue Event EX)	no .mdl file
+chr0786	Punk Male Gangster 2
+chr0786a	Punk Male Gangster 2 Alt Color 1
+chr0786_c01	Punk Male Gangster 2 Alt Hair 1
+chr0786_c02	Punk Male Gangster 2 (Beat Up)
+chr0786_c03	Punk Male Gangster 2 (Zombie)
+chr0786a_c03	Punk Male Gangster 2 Alt Color 1 (Zombie)
+chr0786_c04	Punk Male Gangster 2 (Prologue Event EX)	no .mdl file
+chr0787	Laborer Male Gangster 3
+chr0787a	Laborer Male Gangster 3 Alt Color 1
+chr0787_c02	Laborer Male Gangster 3 (Beat Up)
+chr0787_c03	Laborer Male Gangster 3 (Zombie)
+chr0787_c04	Laborer Male Gangster 3 (Prologue Event EX)	no .mdl file
+chr0790_c01	Jaeger Dropout 2
+chr0790_c02	Jaeger Dropout 1 (Helmet Cut, Face Half-Shown Version)
+chr0790_c03	Jaeger Dropout 2 (Pants, Lower Body Exposed Version)
+chr0791	Jaeger Dropout 1 Alt Color (Zahat's Scorpion) 1
+chr0791_c01	Jaeger Dropout 1 Alt Color (Zahat's Scorpion) 2
+chr0792	Anti-Immigrant Terrorist (Modified Jaeger Dropout)
+chr0792_c01	Anti-Immigrant Terrorist (Middle-Aged Commander) 1
+chr0792_c02	Anti-Immigrant Terrorist (Middle-Aged Commander) 2
+chr0795	Heiyue Member 1
+chr0795_c01	Heiyue Member 2
+chr0795_c03	Heiyue Member 1 (With Xiongshou Mask)
+chr0795_c04	Heiyue Member 2 (With Xiongshou Mask)
+chr0800	Heiyue Special Assassination Squad 1
+chr0801	Heiyue Special Assassination Squad 2
+chr0802	Heiyue Special Assassination Squad 3
+chr0805	Male Student 1 (Julian)
+chr0805_c01	Male Student 2 (Lyle)
+chr0805_c02	Male Student 3 (James)
+chr0805_c03	Male Student 4 (Fully Generic 01)
+chr0805_c04	Male Student 5 (Edmond)
+chr0805_c05	Male Student 6 (Woody)
+chr0805_c06	Male Student 7 (Donatello)
+chr0805_c07	Male Student 8 (Elijah)
+chr0805_c08	Male Student 9 (Fully Generic 02) Caucasian
+chr0805_c09	Male Student 10 (Fully Generic 03) Eastern
+chr0805_c10	Male Student 11 (Fully Generic 04) Caucasian
+chr0805_c11	Male Student 12 (Fully Generic 05) Eastern
+chr0805_c12	Male Student 13 (Fully Generic 06) Caucasian
+chr0805_c13	Male Student 14 (Fully Generic 07) Caucasian First-Year
+chr0808	Male Student Samue
+chr0809	Male Student 8 (Elijah Personal Outfit)
+chr0810	Young Adult Swimsuit 1
+chr0811	Young Adult Swimsuit 2
+chr0820	Young Adult Bath Getup 1
+chr0821	Middle-Aged Bath Getup 1
+chr0822	Old Bath Getup 1
+chr0830	Young Adult Bracer 1
+chr0831	Young Adult Bracer 2
+chr0831_c01	Young Adult Bracer 2 (Fake Bracer)
+chr0832	Young Adult Bracer 3
+chr0833	Young Adult Bracer 4
+chr0834	Young Adult Bracer 5
+chr0835	Middle-Aged Bracer 1
+chr0836	Middle-Aged Bracer 2
+chr0837	Middle-Aged Bracer 3
+chr0840	Young Adult Knight 1
+chr0843	Holy Grail Knight (Young Man) 1
+chr0843_c01	Holy Grail Knight (Young Man) 1
+chr0845	Young Adult Samue 1
+chr0845_c01	Young Adult Samue 2
+chr0846	Middle-Aged Samue 1
+chr0847	Old Samue 1
+chr0848	Kanza Middle-Aged Samue
+chr0848_c01	Mamiya Middle-Aged Samue
+chr0849	Hakurou Old Samue
+chr0850	Young Adult (Eastern Theater Troupe) 1
+chr0850_c01	Young Adult (Eastern Theater Troupe) 2
+chr0855	Z1 Racer Generic (ETWS)
+chr0856	Z1 Racer Generic (Ingert)
+chr0857	Z1 Racer Generic (Red Star)
+chr0858	Z1 Racer Generic (Leno)
+chr0860	Gekka School Martial Artist (Young Man) 01
+chr0860_c01	Gekka School Martial Artist (Young Man) 02
+chr0861	Gekka School Martial Artist (Middle-Aged) 01
+chr0866	Hospital Patient (Eastern Boy)
+chr0870	Academy Festival Dancer (Eastern Outfit Julian)
+chr0871	Academy Festival Dancer (Western Outfit Dancer)
+chr0872	Academy Festival Dancer (Eastern Outfit Dancer)
+chr0873	Academy Festival Dancer (Central Eastern Outfit Dancer)
+chr0875	Former Royal Army Soldier (Young Man) 1
+chr0876	Former Royal Army Officer (Middle-Aged Man) 1
+chr0877	Revolution Army Officer (Young Man) 1
+chr0878	Revolution Army Civilian Soldier (Young Man) 1
+chr0880	Oración 100 Years Ago (Young Man) 1
+chr0885	Oración 100 Years Ago (Middle-Aged Man) 1
+chr0895	Oración 100 Years Ago (Boy) 1
+chr0905	Guardian (Young Man) 1
+chr0910	Guardian (Middle-Aged Man) 1
+chr0940	Migrant Worker (Young Man) 1
+chr5500	Young Woman 1
+chr5500a	Young Woman 1 Alt Color 1
+chr5500b	Young Woman 1 Alt Color 2
+chr5501	Young Woman 2
+chr5501a	Young Woman 2 Alt Color 1
+chr5501b	Young Woman 2 Alt Color 2
+chr5501c	Young Woman 2 Alt Color 3 (Eastern, Black Hair)
+chr5501_c01	Young Woman 2 Alt Color and Alt Hair
+chr5502	Young Woman 3
+chr5502a	Young Woman 3 Alt Color 1
+chr5502b	Young Woman 3 Alt Color 2
+chr5503	Young Woman 4
+chr5503a	Young Woman 4 Alt Color 1
+chr5503b	Young Woman 4 Alt Color 2
+chr5504	Young Woman 5
+chr5504a	Young Woman 5 Alt Color 1
+chr5504b	Young Woman 5 Alt Color 2
+chr5505	Young Woman 6
+chr5510	Middle-Aged Woman 1
+chr5510a	Middle-Aged Woman 1 Alt Color 1
+chr5510b	Middle-Aged Woman 1 Alt Color 2
+chr5511	Middle-Aged Woman 2
+chr5511_c01	Middle-Aged Woman 2 Fat 1
+chr5511_c02	Middle-Aged Woman 2 Alt Hair 1
+chr5511a	Middle-Aged Woman 2 Alt Color 1
+chr5511b	Middle-Aged Woman 2 Alt Color 2
+chr5512	Middle-Aged Woman 3	no .mdl file
+chr5513	Middle-Aged Woman 4
+chr5513_c01	Middle-Aged Woman 4 Fat 1
+chr5513a	Middle-Aged Woman 4 Alt Color 1 Brown Hair
+chr5513b	Middle-Aged Woman 4 Alt Color 2
+chr5520	Old Woman 1
+chr5520a	Old Woman 1 Alt Color 1
+chr5520b	Old Woman 1 Alt Color 2
+chr5521	Old Woman 2
+chr5522	Old Woman 3
+chr5522a	Old Woman 3 Alt Color 1
+chr5530	Young Girl 1
+chr5530a	Young Girl 1 Alt Color 1
+chr5531	Young Girl 2
+chr5531a	Young Girl 2 Alt Color 1
+chr5531_c01	Young Girl 2 Alt Hair 1
+chr5532	Young Girl 3
+chr5532a	Young Girl 3 Alt Color 1
+chr5532b	Young Girl 3 Alt Color 2 (Eastern)
+chr5540	Little Girl 1
+chr5540a	Little Girl 1 Alt Color 1
+chr5540b	Little Girl 1 Alt Color 2
+chr5541	Little Girl 2
+chr5541a	Little Girl 2 Alt Color 1
+chr5541b	Little Girl 2 Alt Color 2 (Eastern)
+chr5541_c01	Little Girl 2 (Quest Hair Decorations Added)
+chr5550	Young Woman (Eastern) 1
+chr5550a	Young Woman (Eastern) 1 Alt Color 1
+chr5551	Young Woman (Eastern) 2
+chr5551a	Young Woman (Eastern) 2 Alt Color 1
+chr5560	Young Woman (Eastern) 1
+chr5560a	Young Woman (Eastern) 1 Alt Color 1
+chr5561	Young Woman (Eastern) 2
+chr5561_c01	Young Woman (Eastern) 2 Fat 1
+chr5561a	Young Woman (Eastern) 2 Alt Color 1
+chr5570	Old Woman (Eastern) 1
+chr5570a	Old Woman (Eastern) 1 Alt Color 1
+chr5570b	Old Woman (Eastern) 1 Alt Color 2 (Caucasion)
+chr5580	Young Girl (Eastern) 1
+chr5580a	Young Girl (Eastern) 1 Alt Color 1
+chr5590	Little Girl (Eastern) 1
+chr5590a	Little Girl (Eastern) 1 Alt Color 1 (Subdued Color)
+chr5600	Young Woman (Central Eastern) 1
+chr5600a	Young Woman (Central Eastern) 1 Alt Color 1
+chr5601	Young Woman (Central Eastern) 2
+chr5601a	Young Woman (Central Eastern) 2 Alt Color 1
+chr5610	Middle-Aged Woman (Central Eastern) 1
+chr5610a	Middle-Aged Woman (Central Eastern) 1 Alt Color 1
+chr5611	Middle-Aged Woman (Central Eastern) 2
+chr5611_c01	Middle-Aged Woman (Central Eastern) 2 Fat 1
+chr5611a	Middle-Aged Woman (Central Eastern) 2 Alt Color 1
+chr5620	Old Woman (Central Eastern) 1
+chr5630	Young Girl (Central Eastern) 1
+chr5630a	Young Girl (Central Eastern) 1 Alt Color 1
+chr5630_c01	Young Girl (Central Eastern) 1 Alt Hair 1
+chr5640	Little Girl (Central Eastern) 1
+chr5640a	Little Girl (Central Eastern) 1 Alt Color 1
+chr5650	Young Adult Sister (Caucasian) 1
+chr5650_c01	Young Adult Sister (Caucasian) 2
+chr5650_c02	Young Adult Sister (Caucasian) 3
+chr5650a	Young Adult Sister (Caucasian) 1 (Central Eastern)
+chr5651	Young Adult Sister (Eastern) 1
+chr5652	Young Adult Sister (Central Eastern) 1
+chr5655	Young Adult Sister (Central Eastern) 1
+chr5660	Young Policewoman 1
+chr5660a	Young Policewoman 1 Alt Color 1 (Central Eastern)
+chr5660a_c01	Young Policewoman 1 Alt Color 1 (Central Eastern, Dirty Clothing)
+chr5660_c01	Young Policewoman 2
+chr5662	Young Woman Space Army Operator 1
+chr5662_c01	Young Woman Space Army Operator 2
+chr5670	Young Woman Suit 1
+chr5670a	Young Woman Suit 1 Alt Color 1
+chr5670b	Young Woman Suit 1 Alt Color 2 (Eastern)
+chr5670c	Young Woman Suit 1 Alt Color 3 (Central Eastern)
+chr5671	Young Woman Suit 2
+chr5671_c01	Young Woman Suit 2 Alt Hair 1
+chr5671a	Young Woman Suit 2 Alt Color 1
+chr5671b	Young Woman Suit 2 Alt Color 2
+chr5675	Middle-Aged Woman Suit 1
+chr5675_c01	Middle-Aged Woman Suit 1 Alt Hair 1
+chr5675a	Middle-Aged Woman Suit 1 Alt Color 1
+chr5676	Middle-Aged Woman Suit 2
+chr5676a	Middle-Aged Woman Suit 2 Alt Color 1
+chr5676b	Middle-Aged Woman Suit 2 Alt Color 2
+chr5680	Young Woman Receptionist 1
+chr5680a	Young Woman Receptionist 1 Alt Color 1 (Blue Clothing)
+chr5680b	Young Woman Receptionist 1 Alt Color 2 (Eastern)
+chr5680_c01	Young Woman Receptionist 2
+chr5680_c01a	Young Woman Receptionist 2 Alt Color 1 (Central Eastern)
+chr5681	Middle-Aged Woman 1 (Guide)
+chr5682	Young Woman Dealer 1
+chr5682a	Young Woman Dealer 1 Alt Color 1 (Central Eastern)
+chr5685	Bunny Girl 1
+chr5685_c01	Bunny Girl 2
+chr5685_c02	Bunny Girl 3
+chr5685_c03	Bunny Girl 4
+chr5685_c04	Bunny Girl 5
+chr5685_c05	Bunny Girl 6
+chr5695	Young Woman Chef (Caucasian) 1
+chr5695a	Young Woman Chef (Caucasian) 1 Alt Color 1 (Eastern)
+chr5700	Female Student 1 (Mignon)
+chr5700_c01	Female Student 2 (Sasha)
+chr5700_c02	Female Student 3 (Fully Generic 01)
+chr5700_c03	Female Student 4 (Fully Generic 02)
+chr5700_c04	Female Student 5 (Thelma)
+chr5700_c05	Female Student 6 (Sigourney)
+chr5700_c06	Female Student 7 (Aija)
+chr5700_c07	Female Student 8 (Frederica)
+chr5700_c08	Female Student 9 (Fully Generic 03) Central Eastern
+chr5700_c09	Female Student 10 (Fully Generic 04) Caucasian
+chr5700_c10	Female Student 11 (Fully Generic 05) Caucasian
+chr5700_c11	Female Student 12 (Fully Generic 06) Central Eastern
+chr5700_c12	Female Student 13 (Fully Generic 07) Caucasian First-Year
+chr5702	Female Student Samue (Sigourney)
+chr5702_c01	Female Student Samue (Central Eastern)
+chr5703	Female Student Maid 1 (Caucasian)
+chr5703_c01	Female Student Maid 2 (Eastern)
+chr5704	Frederica (Personal Outfit)
+chr5705	Maid 1
+chr5705a	Maid 1 Alt Color 1 (Eastern)
+chr5706	Waitress 1
+chr5706a	Waitress 1 Alt Color 1 (Central Eastern)
+chr5710	Nightlife Dress 1
+chr5710a	Nightlife Dress 1 Alt Color 1
+chr5710b	Nightlife Dress 1 Alt Color 2
+chr5710_c01	Nightlife Dress 1 Alt Hair 1
+chr5710_c02	Nightlife Dress 1 Alt Hair 2
+chr5711	Nightlife Dress 2
+chr5711a	Nightlife Dress 2 Alt Color 1
+chr5711b	Nightlife Dress 2 Alt Color 2
+chr5711_c01	Nightlife Dress 2 (Quest Vernier)
+chr5711_c02	Nightlife Dress 2 (Quest Cervi)
+chr5715	Pole Dancer 1
+chr5715a	Pole Dancer 1 Alt Color 1
+chr5715_c01	Pole Dancer 2
+chr5715_c01a	Pole Dancer 2 Alt Color 1
+chr5717	Burlesque Dancer 1
+chr5717_c01	Burlesque Dancer 2
+chr5717_c02	Burlesque Dancer 3
+chr5720	Young Woman White Clothes 1
+chr5720_c01	Young Woman White Clothes 2
+chr5720_c01a	Young Woman White Clothes 2 Alt Color 1
+chr5720_c02	Young Woman White Clothes 3
+chr5725	Middle-Aged Woman White Clothes 1
+chr5730	Young Woman Coat 1
+chr5730_c01	Young Woman Coat 1 (No Hat) Alt Color 1
+chr5735	Middle-Aged Woman Coat 1
+chr5735_c01	Middle-Aged Woman Coat 1 (No Hat) Alt Color 1
+chr5740	Young Woman Swimsuit 1
+chr5740a	Young Woman Swimsuit 1 Alt Color 1
+chr5741	Young Woman Swimsuit 2
+chr5741a	Young Woman Swimsuit 2 Alt Color 1
+chr5745	Young Woman Swimsuit 1
+chr5746	Middle-Aged Woman Bath Getup 1
+chr5750	Young Woman Bracer 1
+chr5751	Young Woman Bracer 2
+chr5753	Young Woman Bracer 3
+chr5760	Young Woman Samue 1
+chr5760_c01	Young Woman Samue 2
+chr5761	Young Woman Samue 1
+chr5770	Hostess 1
+chr5771	Proprietress 1
+chr5782	Middle-Aged Woman (Eastern Theater Troupe) 1
+chr5782_c01	Middle-Aged Woman (Eastern Theater Troupe) 2
+chr5790	Idol 1
+chr5790_c01	Idol 1 (Personal Outfit)
+chr5791	Idol 2
+chr5791_c01	Idol 2 (Personal Outfit)
+chr5795	Young Woman Engineer 1
+chr5795_c01	Young Woman Engineer 2
+chr5795_c02	Young Woman Engineer 3
+chr5796	Middle-Aged Woman Engineer 1
+chr5800	Pit Girl 1 (ETWS/Leslie)
+chr5801	Pit Girl 2 (Red/Linmei)
+chr5802	Pit Girl 3 (Leno)
+chr5803	Pit Girl 4 (Ingert)
+chr5804	Pit Girl 5 (Energy Drink Collab)
+chr5804_c01	Pit Girl 6 (Energy Drink Collab)
+chr5805	Gekka School Martial Artist (Young Woman)
+chr5810	Academy Festival Dancer (Central Eastern Outfit Caucasian Dancer)
+chr5811	Academy Festival Dancer (Western Outfit Dancer)
+chr5812	Academy Festival Dancer (Eastern Outfit Dancer)
+chr5813	Academy Festival Dancer (Central Eastern Outfit Dancer)
+chr5815	Oración 100 Years Ago (Young Woman) 1
+chr5818	Oración Noble 100 Years Ago (Young Woman) 1
+chr5820	Oración 100 Years Ago (Middle-Aged Woman) 1
+chr5823	Oración Noble 100 Years Ago (Middle-Aged Woman) 1
+chr5830	Oración 100 Years Ago (Girl) 1
+chr5838	Classic Maid (Young Woman) 1
+chr5838_c01	Classic Maid (Young Woman) 2
+chr5840	Guardian (Young Woman) 1
+chr5875	Nurse (Young Woman) 1
+chr5876	Nurse (Middle-Aged Woman) 1
+chr5880	Escort (Young Woman) 1
+chr5881	Escort (Young Woman) 2
+chr0785	Gangster A
+chr0786	Gangster B
+chr0787	Gangster C
+chr0726	Mafioso A
+chr0726_c01	Mafioso B
+chr0550	Sei
+chr0551_c01	Huang
+chr0560	Antique Seller Jigen
+chr0561	Street Vendor Guhan
+chr0847	Eastern Medicine Dr. Longkai
+chr0550a	Assistant Shenli
+chr0671	Park Ranger
+chr5611_c01	Proprietress Hala
+chr0830	Bracer Renton
+chr0836	Bracer Ismail
+chr0611a	Manager Jahm
+chr0630a	Timur
+chr0715	Mr. Powell
+chr0805_c01	Lyle
+chr5700	Chignon
+chr0805	Julian
+chr0805_c02	James
+chr5700_c01	Sasha
+chr5680_c01	Receptionist Trity
+chr5752	Bracer Blanca
+chr5750	Bracer Regina
+chr5695	Grani
+chr5403	Shino
+chr0580a	Guide Senri
+chr5751	Bracer Xiaoling
+chr0833	Bracer Lahad
+chr5116	Olympia (Battle Gaya)
+chr5401	Hermes
+chr0712_c01	Ethan
+chr0427	Glasgow
+chr0413	Ronald
+chr0668	Man Dressed Like a Construction Worker
+chr0510b	Remnant Terrorist
+chr0790	Jaeger Dropout
+chr5705a	Maid
+chr0717_c02	Deputy Secretary Valentino
+chr0731	Guard
+chr0843	Squire Cesar
+chr0843_c01	Squire Marcia
+chr0610_c01	Caravan Merchant
+chr0601	Caravan Merchant
+chr0610a	Caravan Merchant
+chr0732	Guard
+chr0669a	Cleaning Staff
+chr0715a	Pianist
+chr0500	Lott
+chr0503	Daniel
+chr0787	Gangster
+chr5503a	Alicia
+chr0710	Man
+chr0710	Jonas
+chr5504	Jessica
+chr0512a	Samson
+chr0511a	Richie
+chr0715_c01	Editor-in-Chief Cunning
+chr0610	Caravan Chief Osman
+chr5680	Kwan
+chr0745	Percy
+chr0730	Station Attendant
+chr0455_c00	Jeffrey
+chr5500b	Amy
+chr5511b	Caroline
+chr0521a	Bruno
+chr0710	Roderick
+chr0513a	Marcello
+chr0660_c01a	Officer Camilo
+chr0500	Tourist
+chr5715	Juliana
+chr0750	Archaeologist Inigo
+chr0501a	Stephan
+chr0510	Carson
+chr0511	Walton
+chr0711a	Barton
+chr0514_c01	Guru
+chr5521	Dolly
+chr0501	Tebo
+chr0712a	Roger
+chr0786	Damian
+chr0740	Harrison
+chr5720_c01	Female Researcher?
+chr5541	Lyla
+chr5500	Laura
+chr5541	Laura's Daughter
+chr0731	Security Guard A
+chr0717a	Clément
+chr5521	Daphne
+chr0500b	Neil
+chr0620	Manager Fazil
+chr5630_c01	Sinem
+chr5504	Amalie
+chr5670	Manager
+chr5670	Store Clerk
+chr5710_c01	Juliana
+chr5711_c01	Officer Vernier
+chr5711_c02	Cervi
+chr5503a	Francisca
+chr0511b	Secondhand Dealer
+chr5521	Elderly Woman
+chr5502a	Gawking Woman
+chr0500b	Film Crew
+chr0501	Film Crew
+chr5675	Manager
+chr0510_c01	Man on Walk
+chr5671_c01	Stalker
+chr0722	Manager Thomson
+chr0785_c02	Desire Remnant
+chr0785a	Gangster
+chr0786a	Gangster
+chr0787a	Gangster
+chr0786	Gangster
+chr0425	Jed
+chr0513_c01	Jed's Father
+chr0710_c01	Deen
+chr0712_c01	Jet
+chr5551a	Rui Li
+chr0715_c02	Brothel Manager
+chr0717a	Wilmer
+chr5410_c01	Kisara
+chr0785a	Young Man
+chr0786a	Young Man
+chr0503b	Ned
+chr5680a	Store Clerk
+chr0712a	Man
+chr0711_c01	Man
+chr0780	Marduk Security Guard
+chr0780_c01	Marduk Security Guard
+chr0701	Mengxiao
+chr0848	Head Chef Yon Tzu
+chr5550	Female Customer
+chr5501c	Female Customer
+chr0500a	Male Customer
+chr0551	Male Customer
+chr0560	Angler
+chr0561a	Angler
+chr0716_c01a	Judge
+chr5560a	Judge
+chr0570	Judge
+chr0716	Minhou
+chr0710b	Shipping Worker
+chr0757	Eldest Devancy Brother
+chr5675a	Teresa
+chr0665	Young Man Handing Out Balloons
+chr5511b	Suspicious Middle-Aged Woman
+chr0511b	Conrad
+chr0710_c01	Event Planner
+chr0419	Dunne
+chr0724	Kenny
+chr0511	Unsavory Customer
+chr0512a	Suspicious Man
+chr5504b	Dorothea
+chr0806	Boys' Basketball Team Captain
+chr0805_c10	Manager of the Boys' Basketball Team
+chr5700_c03	Girls' Basketball Team Manager
+chr5429	Nika
+chr5430	Lumiera
+chr0447	Billy
+chr5431	Kaede
+chr5433	Candace (Female Sniper)
+chr5433_c00	Candace (Female Sniper, No Hat)
+chr0501a	Colt
+chr5510b	Housewife
+chr0502b	Brown-Haired Guest
+chr0716a	Green-Haired Regular
+chr0549	Stan
+chr5433_c00	Candace
+chr5408	Gigi
+chr5610a	Latifa
+chr5680	Receptionist Kokuriko
+chr0735_c01a	Researcher Murphie
+chr0503a	Felix
+chr0600	Mehmed
+chr5421	Angie
+chr5670a	Radley
+chr5675	Staff Member Allison
+chr0716_c01a	Representative Murton
+chr0735	Researcher
+chr0711a	Staff Member Gracio
+chr0510c	Boarding House Owner
+chr5676a	Manager Senna
+chr0715_c02	President Nelken
+chr5521	Grandmother
+chr5796	Sandra
+chr0668_c02	Deliveryman Yaser
+chr0501b	Johannes
+chr0711_c01	Professional Stock Trader
+chr0716a	Chief Basset
+chr0785a	Crime Group Young Man
+chr0786a	Crime Group Young Man
+chr0787	Crime Group Young Man
+chr0787a	Crime Group Young Man
+chr5521	Morges
+chr0671	Artisan
+chr0716_c03	Antenna Manufacturer TO
+chr0710_c01	Secretary Kohen
+chr0710b	Manager Taoming
+chr0665	Mechanic Hongli
+chr0785	Gangster
+chr0790	Jaeger
+chr5710a	Adult Entertainer
+chr5710	Adult Entertainer
+chr5711_c02	Adult Entertainer
+chr5710b	Adult Entertainer
+chr0511a	Nathan
+chr0715b	Goldman
+chr0745	Questionable Tourist
+chr0502b	Bespectacled Youth
+chr5504b	Rumor-Loving Woman
+chr0445	Homeless Man Nasri
+chr5423	Yulia
+chr0710	Manager
+chr5422	Rachel
+chr0620_c01	Fatih
+chr5513b	Miyuki
+chr5532	Merina
+chr5511b	Merina's Mother
+chr5513a	Yudy's Mother
+chr5670a	Female Station Worker
+chr0432	Medical Director Heineman
+chr0433	Dr. Grant
+chr0446	Fabio
+chr5502b	Immodest Gal
+chr0661_c01	Sr. Officer Walley
+chr0666	Boss Goddard
+chr0730	Driver Roger
+chr5500b	Maury
+chr0511	Nathan
+chr0407	Kyle
+chr5505	Melissa
+chr5650a	Sister Belicia
+chr0521	Hunter Rutts
+chr0561	Ranji
+chr5560	Motona
+chr0513_c01	Gonzales
+chr5513	Giovanna
+chr5531_c01	Annie
+chr0541	Kent
+chr0611	Jafar
+chr0630	Lashkar
+chr5522a	Martha
+chr0667	Focken
+chr0665	Hans
+chr0510	Ben
+chr5503a	Ran
+chr0716	Kim
+chr5795_c02	Kaina
+chr0570_c01	Mayor Weng
+chr5520b	Annha
+chr0655_c01	Father Johan
+chr0115_c01	Melchior
+chr0532	Harry
+chr0540	Mark
+chr0511	Hawker
+chr0716_c02	Hawker
+chr0510a	Robinson
+chr5513b	Margaret
+chr5522	Natalia
+chr5501a	Monique
+chr5400	Gin
+chr5531	Sheena
+chr0670	Chris
+chr5795	Rebecca
+chr5510	Brenda
+chr0500	Mikkel
+chr0786_c01	Eddy
+chr5530	Anya
+chr0521	Huck
+chr0720_c01	Huck
+chr5513	Anya's Mother
+chr0655	Vicar Nikolai
+chr5650	Sister Myria
+chr0430	Curtis
+chr0510_c01	Roman
+chr5511a	Zora
+chr0501a	Raymond
+chr5500	Carol
+chr5671_c01	Carol
+chr5504b	Catherine
+chr0731	Huck's Driver
+chr0715	Neumann
+chr0661	Sr. Officer Paul
+chr5681	Melise
+chr5510a	Clarissa
+chr5540	Myna
+chr0500b	Clutch
+chr5501b	Gretta
+chr5502a	Kopeyka
+chr0834	Gray
+chr0520_c01	Hazel
+chr0712b	Ilhan
+chr0711	Manager Carlo
+chr5671	Isla
+chr5511_c01	Olivia
+chr0750_c01	Butler Markley
+chr5720_c01	Kei
+chr0720	Administrator Wesley
+chr5513_c01	Manager Deborah
+chr0551	Li-Lian
+chr5510b	Marguerite
+chr5795_c01	Sylvie
+chr5503b	Beth
+chr0405	Jacobin
+chr0831	Bracer Ewan
+chr5670	Milty
+chr0514_c01	Sir Vinson
+chr0711_c01	Store Clerk
+chr9992	Passenger	no .mdl file
+chr5541a	Myna's Friend
+chr0715_c02	Manager Sevin
+chr5680_c01	Promoter
+chr0715a	Leno Representative
+chr5680a	Tour Guide
+chr5561_c01	Merch Shop Woman
+chr0510a	Man Setting Up Stall
+chr5500	Woman Setting Up Stall
+chr0512	Merch Shop Man
+chr5522a	Merch Shop Granny
+chr0710	Scooter Character
+chr0570a	Secondhand Dealer Yimai
+chr0666	Morgan
+chr5600a	Maja
+chr5503a	Lindsey
+chr5711a	Mistress
+chr0715c	Barker Tracey
+chr0513_c01	Beckson
+chr0541	Yota
+chr5715_c01a	Candy
+chr5520	Magisa
+chr5710a	Paprica
+chr5705	Maron
+chr0715_c02	Well-Dressed Man
+chr5540b	Girl
+chr0540a	Boy
+chr0717_c02	Man in Suit
+chr0521a	Old Man
+chr0785	Crowd
+chr0786	Crowd
+chr0787	Crowd
+chr0790	Crowd
+chr5715	Crowd
+chr5611	Crowd
+chr0790_c01	Jaeger
+chr0727	Member of the Dolor Family
+chr0727_c01	Member of the Dolor Family
+chr5710	Hostess
+chr5715a	Hostess
+chr0745	Shakar
+chr0701	Kaohan
+chr5551	Kunming
+chr5561	Owner Mau
+chr5670	Receptionist Rianna
+chr5675a	Editor-in-Chief Sullivan
+chr0711b	Reporter Chen
+chr0715a	Reporter Langdon
+chr5505	Giselle
+chr5501c	San
+chr5504b	Marilyn
+chr0501	Peter
+chr0501a	Wendell
+chr0502b	Sloth
+chr5500a	Abby
+chr5660_c01	Officer Karen
+chr5660	Officer Nancy
+chr0712	Porco
+chr5695a	Nami
+chr0510b	Owner Charles
+chr5706	Lucia
+chr5610	Khawla
+chr0640	Lolo
+chr5676	Manager Giulia
+chr0716a	Transcent
+chr5680_c01	Receptionist Polecca
+chr0717a	Guide Hendrick
+chr0722	Tokey
+chr5532	Cathy
+chr0787	Delinquent
+chr5600a	Aslan's Fan
+chr5504	Aslan's Fan
+chr0710_c01	Meet-and-Greet Staff Member
+chr0710a	Meet-and-Greet Staff Member
+chr0717c	Salif
+chr0717a	Politician
+chr0715_c02	Politician
+chr5510a	Cathy's Mother
+chr0665	Merch Shop Man
+chr5804	Poster Girl
+chr0513	Scooter Character
+chr5730	Cocona
+chr0710	Cronin
+chr0666	Bradley
+chr5502	Junifer
+chr0503b	Graham
+chr5790_c01	Seyla
+chr5790	Seyla
+chr5711	Natalie
+chr5791_c01	Lulua
+chr5791	Lulua
+chr0657	Vicar Mansur
+chr5652	Priest Kyra
+chr5501	Selma
+chr0501b	Lodi
+chr0513	Gordon
+chr5504a	Primo
+chr0530	Rooney
+chr5640a	Irle
+chr5406	Shannon
+chr5407	Makino
+chr0611	Ponty
+chr0502	Ticket Clerk
+chr0660	Police Officer
+chr0513a	Reporter
+chr0711a	Photographer
+chr0716_c01	Gossip Reporter
+chr5402_c01	Selma
+chr5611a	Irle's Mother
+chr0668_c01	Scooter Character
+chr0716	Oslo
+chr0502	Simon
+chr0549	Kirk
+chr5630	Frawla
+chr5531	Sue
+chr5503	Mariquita
+chr0660_c01	Officer Young
+chr0848	Kanza
+chr0661_c01	Sr. Officer Colordo
+chr5660_c01	Receptionist Kiara
+chr0720_c02	Rumsfeld
+chr5676a	Cremona
+chr0725_c01	Hotel Employee
+chr0720	Senator Polanski
+chr5675_c01	President Jennifer
+chr0710b	Secretary
+chr5532a	Berzelia
+chr0725	Security Guard Simmons
+chr5711_c01	Manager Mohra
+chr5671	Naomi
+chr0531	Allen
+chr0710	Elite-Looking Young Adult
+chr0717	BOE President
+chr0501	Young Man
+chr0503a	Young Man
+chr0500b	Young Man
+chr0503b	Young Man
+chr0503a	Largo
+chr5671a	Scooter Character
+chr5513b	Francois
+chr0520a	Hopkins
+chr5530a	Eve
+chr0660	Officer Sergi
+chr5402	Ms. Sonia
+chr5402_c02	Ms. Sonia
+chr0703	Holland
+chr5502b	Lisa
+chr0652	Priest Alfred
+chr0655_c01	Priest Watson
+chr0658	Bishop Orwell
+chr5655	Sister Orze
+chr5650_c01	Sister Philia
+chr5513a	Nadiya
+chr5541	Amia
+chr0712_c01	Scooter Character
+chr0755	Soldier
+chr0755_c01	Soldier
+chr0710a	Scooter Character
+chr5511_c02	Tricia
+chr0711b	Hanjiao
+chr5705a	Suiran
+chr0700	Vittorino
+chr5561a	Xue
+chr0590	Yao
+chr0570a	Old Man Wang
+chr0665	Deliveryman Anthony
+chr0716_c01a	Touan
+chr0502a	Downey
+chr0500a	Hyades
+chr5680b	Guide Yilin
+chr0750_c01	Detective Dart
+chr0704	Owner Kuwano
+chr5695	Sicily
+chr0501b	Darren
+chr5504a	Katyusha
+chr5670b	Receptionist Humin
+chr0717b	Hongfa
+chr5551a	Aimin
+chr0670a	Wulai
+chr5513a	Josephine
+chr0510c	Liu-Ho
+chr0716_c02	Hanson
+chr5676b	Kumei
+chr0711a	Receptionist Calvin
+chr0717b	Laihong
+chr0715a	Customs Officer Rafale
+chr0600a	Faysal
+chr0756_c01	MCPO Abrams
+chr0756	Navy Ensign Glasley
+chr0668	Rosaro
+chr0570a	La-Kau
+chr5550	Miren
+chr5560a	Lanfa
+chr5590	Linlin
+chr0560a	Jiafei
+chr0745	Heydrich
+chr0551a	Qintao
+chr5580	Fuling
+chr0580	Tau
+chr5570	Pao
+chr0795	Haifeng
+chr0570	Ouran
+chr0561a	Ferryman Shou
+chr0715	Manager Hairen
+chr5782	Lince
+chr0850	Kan
+chr5671	Receptionist Fuuka
+chr5730_c01	Amalia
+chr0704	Wuhan
+chr5561_c01	Haimin
+chr0656	Vicar Hou-Seng
+chr5651	Priest Sei-Lan
+chr0716a	Mouton
+chr0724_c01	Poisson
+chr0561_c01	Shitao
+chr0513b	Gomez
+chr0319_c00	Houseman
+chr0835	Bracer Hornet
+chr0501b	Nick
+chr5711	Hostess
+chr5580	Tiantian
+chr0550	Yongfu
+chr5560	Tanwa
+chr0560	Beifan
+chr0860	Eichou
+chr0561a	Guide Kesen
+chr5710_c02	Lairei
+chr5570	Granny Honghua
+chr5590	Yunyun
+chr0532a	Sooyoung
+chr0580	Xingqi
+chr0550a	Koki
+chr0551_c01	Ryusei
+chr5551a	Mion
+chr0511b	Mirabo
+chr0724_c01	Mr. Ward
+chr5705a	Romy
+chr0512a	Elton
+chr5611a	Jumaana
+chr0520_c01	Moses
+chr5522	Belinda
+chr0520a	Grandpa Ahab
+chr0521	Old Man Romain
+chr5513	Genista
+chr5541b	Peggy
+chr0513_c01	Trout
+chr5600a	Urfa
+chr0512b	Yazan
+chr0560a	Laochao
+chr0500a	Leonardo
+chr5511_c01	Barbara
+chr5695	Sabrina
+chr0511	Sean
+chr0531a	Kane
+chr5530a	Chell
+chr0715b	Malcolm
+chr5675_c01	Carina
+chr5503b	Tabatha
+chr5670a	Female Reporter
+chr5735	Female Customer
+chr5680	Receptionist Esta
+chr0717	Manager Norris
+chr0500a	Carter
+chr0703	Mirco
+chr5434	Citrus
+chr0513	Butcher
+chr5520	Angela
+chr0665	Ivan
+chr5513b	Jane
+chr0655	Vicar Rodion
+chr0652	Priest Krenz
+chr5650	Sister Olga
+chr5531a	Mina
+chr0541a	Tony
+chr0510c	Mina's Father
+chr5510b	Tony's Mother
+chr5695	Josephina
+chr0669	Sailor Ramsay
+chr0668_c01	Deliveryman Bosch
+chr0661	Officer Radovan
+chr0715b	Mr. Steve
+chr0725_c01	Robson
+chr5715	Tiffany
+chr0716	Lux
+chr0731	Security Guard Garry
+chr0715c	Barker Gallico
+chr0785	Romeo
+chr5710	Patricia
+chr0520_c01	Will
+chr0705_c01	Mr. Ramon
+chr5706	Brittney
+chr0511a	Gunnar
+chr5501a	Pauline
+chr0530a	Martin
+chr5680a	Receptionist Elsie
+chr0730	Security Guard Hugo
+chr0668_c01	Staff Member Archie
+chr5402_c03	Betty
+chr0420	Ralph
+chr0421_c00	Aslan
+chr0665	Technician Rodney
+chr5800	Leslie
+chr5801	Linmei
+chr0513c	Carlos
+chr0501a	Jake
+chr5502b	Doris
+chr0520_c01	Ganho
+chr0540a	Yoki
+chr0512a	Belmont
+chr5530	Stephanie
+chr0712	Young Man
+chr0717c	Manager Iskhak
+chr5680	Guide Mindy
+chr0710	Carson
+chr5513a	Moira
+chr0540	Bart
+chr5675a	Dahlia
+chr0600a	Najib
+chr0715	Manager Bernhardt
+chr5511_c02	Amanda
+chr5504	Bridget
+chr5670b	Receptionist Mingyu
+chr0712a	Receptionist Edwin
+chr5502	Hannah
+chr0731	Security Guard Tyson
+chr5680_c01	Guide Cyndi
+chr0500a	Dennis
+chr5531_c01	Julietta
+chr5513	Julietta's Mother
+chr0710a	Kiefer
+chr5735_c01	Melanie
+chr5503b	Rosie
+chr5680_c01a	Guide Farrah
+chr5500	Jimmy's Colleague
+chr9992	Tourist (A)	no .mdl file
+chr9992	Tourist (B)	no .mdl file
+chr9992	Tourist (C)	no .mdl file
+chr5500b	Manager
+chr0711_c01	Reporter
+chr0670a	Verne Store Technician
+chr0670a	Merch Shop Staff
+chr0601a	Darvish
+chr5660a	Officer Vernier
+chr0600	Ihsan
+chr0721a	Butler Hardy
+chr5511	Orsini
+chr5531a	Elene
+chr0705_c01	Muhsin
+chr0715c	Barker Zaltz
+chr0512b	Bobly
+chr0660_c01	Officer Kelvin
+chr0716_c01	Clemens
+chr0503a	Nino
+chr5500a	Cervi
+chr5705a	Merch Shop Woman
+chr0724	Drink Stall Staff
+chr5601a	Philica
+chr0811	Sparks
+chr5501_c01	Nate's Girlfriend
+chr0610a	Shadīn
+chr5611a	Majelah
+chr0669a	Daskal
+chr0712b	Receptionist Rhasid
+chr5680_c01a	Receptionist Salma
+chr5501a	Shayla
+chr5502b	Laurel
+chr0720a	Manager David
+chr0116_c00	Harold
+chr0724_c01	Dealer
+chr0724	Lester
+chr0610_c01	Mourad
+chr5711b	Amala
+chr5682a	Rayhana
+chr5671	Receptionist Clammy
+chr0711a	Isaac
+chr5676	Female Moderator
+chr5804_c01	Poster Girl
+chr5676a	Chief Manager Dianne
+chr5670c	Receptionist Maawa
+chr0725_c02	Bolhos
+chr0724	Peterson
+chr5675_c01	Executive Director Suzanne
+chr0717c	Dahar
+chr5532b	Kaliyah
+chr0611a	Patriarch Bashar
+chr0631	Mundt
+chr5740	Berthier
+chr0611	Rasham
+chr5640	Imani
+chr0540a	Clim
+chr0511b	Ulrich
+chr5510	Jasmine
+chr5610a	Shahana
+chr0620	Abdullah
+chr0620_c01	Zaham
+chr5630a	Pichcha
+chr0702	Jaret
+chr5620	Balsheh
+chr5601	Monir
+chr0601a	Khosrow
+chr0610	Rahmani
+chr0657	Vicar Mukhtar
+chr5652	Priest Jamileh
+chr5600	Fet
+chr5671b	Receptionist Jibril
+chr0601	Mahdi
+chr5670c	Merch Shop Staff
+chr5522a	Heidi
+chr0666	Boss Grover
+chr0669	Deliveryman Jason
+chr0710a	Barnaby
+chr0513_c01	Boss Gowland
+chr0670	Voyager
+chr0520	Stinson
+chr0503	Gillies
+chr0668_c01	Deliveryman Marco
+chr0512a	Lawrence
+chr0712	Receptionist Alex
+chr0655	Vicar Flictam
+chr5650	Sister Paula
+chr0671	Chief Manager Eugen
+chr5795	Engineer Riel
+chr0541a	Nat
+chr5670a	Pier
+chr0715a	Banker Oliver
+chr5530a	Millia
+chr0661_c01	Sr. Officer Minster
+chr5680a	Receptionist Echo
+chr0735	Researcher Selion
+chr0730	Station Worker Carrick
+chr0501	Willy
+chr5680	Guide Finse
+chr0716_c02	Chamberlain
+chr5675a	Petra
+chr0530a	Dick
+chr5676	Section Chief Valeria
+chr0720	President Rooster
+chr0724_c02	Receptionist Freyd
+chr0711b	Lanmei
+chr0717	Manager Radad
+chr0665	Engineer Carter
+chr5513b	Anna
+chr5720	Pharmacist Luce
+chr0500a	De Niro
+chr0740	Coolidge
+chr0716_c01	Clerk Oluger
+chr5503b	Meryl
+chr0716a	Librarian Venter
+chr5725	Professor Aurelie
+chr0740_c01	Associate Professor Tain
+chr5720_c01a	Associate Professor Athena
+chr0735_c01	Moritz
+chr0735a	Gimbat
+chr0502a	Lucas
+chr5500b	Liz
+chr5720	Researcher Cindy
+chr0735	Researcher Aster
+chr0735_c01a	Researcher Nadir
+chr5005_c06	Risette Twinings
+chr0711_c01	Drink Stall Staff
+chr5671	Merch Shop Woman
+chr0502b	Scooter Character
+chr5570b	Receptionist Drusilla
+chr0832	Bracer Kazan
+chr0656	Vicar Murase
+chr5651	Priest Izumi
+chr0845_c01	Tsuruji
+chr5570a	Omoro
+chr0711	Tourism Bureau Worker
+chr0847	Kukai
+chr0730	Station Worker Cordeaux
+chr0550	Rito
+chr5735	Ludesia
+chr0561a	Gengfu
+chr0661	Sr. Officer Lambert
+chr0846	Walker
+chr5761	Torte
+chr0745	Rodrigo
+chr5730	Samantha
+chr5590a	Ino
+chr5550a	Nanai
+chr0561_c01	Shigi
+chr5561_c01	Fumi
+chr0848_c01	Manager Mamiya
+chr0849	Head Chef Hakurou
+chr5770	Hostess Mikasa
+chr0560a	Tousen
+chr5560	Sumi
+chr0501a	Novic
+chr5531	Lotta
+chr0550a	Taihong
+chr5118_c01	Woman in a Kimono
+chr5513b	Director Flona
+chr0532a	Jean
+chr5531_c01	Sophie
+chr0541	Todd
+chr5540b	Rinka
+chr5655	Sister Beatrice
+chr0730	Attendant Wood
+chr0660_c01	Officer Endeavor
+chr0521a	Cambridge
+chr5510b	Constance
+chr0510a	Sylvan
+chr5513a	Goethe
+chr0502b	Sutton
+chr5501b	Morie
+chr0500	Ricardo
+chr5532a	Tietta
+chr5541	Paulina
+chr0717a	Gustav
+chr5511_c02	Sabine
+chr5511b	Germay
+chr5513_c01	Diane
+chr0660	Officer Pascal
+chr5660_c01	Officer Katarina
+chr0712a	Norbert
+chr5424	Nelly
+chr5735_c01	Emma
+chr0669	Boss Philibert
+chr0661	Sr. Officer Irons
+chr0514	Baron Baudoin
+chr0531a	Manuel
+chr5531a	Charlene
+chr0716	Horton
+chr0710	Secretary Inno
+chr5521	Adelina
+chr0530a	Pino
+chr0652_c01	Priest Enel
+chr5510	Rosanna
+chr0540a	Harriet
+chr5671a	Irene
+chr5675_c01	Chief Manager Parler
+chr5735	Mathilde
+chr0667	Gaston
+chr0731	Security Guard Belfast
+chr5511a	Lovisa
+chr5540a	Rennes
+chr0721	Manager Delanoe
+chr5682	Receptionist Gelee
+chr0717_c01	Banker Dupont
+chr0510_c01	Doyen
+chr5510a	Vanessa
+chr5425	Officer Crema
+chr0501b	Cepages
+chr5504b	Amelie
+chr5520a	Desiree
+chr5513	Bernice
+chr5522	Timo
+chr0700	Andy
+chr0750	Ungern
+chr5505	Jolanda
+chr0504	Westache
+chr5730_c01	Fia
+chr5541b	Teto
+chr5676a	Receptionist Marion
+chr0724_c02	Cesar
+chr0513b	Keegan
+chr0512b	Pershing
+chr5504	Receptionist Luka
+chr0837	Bracer Kirchheim
+chr0710a	Reporter Ferdinand
+chr5550	Eastern Young Woman
+chr0550a	Eastern Young Adult
+chr5510a	Pamela
+chr0809	Elijah
+chr5700_c04	Thelma
+chr5700_c05	Sigourney
+chr0805_c04	Edmond
+chr5700_c06	Ariya
+chr0805_c05	Woody
+chr0805_c06	Donatello
+chr5704	Frederica
+chr0503	Roscoe
+chr0805_c08	Boys' Basketball Team Member
+chr0806	Boys' Basketball Team Member
+chr0503	Male Customer
+chr5513_c01	Lyle's Mother
+chr0530a	Lyle's Brother
+chr5541	Lyle's Sister
+chr0710	Edward
+chr0513	Dine-And-Dasher
+chr0807_c01	◆NPC Student By Stands Outside School
+chr0807_c02	◆NPC Student By Stands Outside School
+chr5701_c01	◆NPC Student By Stands Outside School
+chr5700_c09	Female Student
+chr0805_c03	Male Student
+chr5700_c10	Female Student
+chr5703	Female Student
+chr5700_c02	Female Student
+chr5700_c03	Female Student
+chr5701	◆Bazaar NPC Student
+chr0807_c01	◆Bazaar NPC Student
+chr0807_c02	◆Bazaar NPC Student
+chr0806	◆Courtyard Stall NPC Student
+chr5701_c01	◆Courtyard Stall NPC Student
+chr0806_c01	◆Courtyard Stall NPC Student
+chr5701	◆Courtyard Stall NPC Student
+chr5510	Visitor's Mother
+chr5531_c01	Visitor's Daughter
+chr5540b	Lost Child
+chr0711_c01	Guide Ewing
+chr0540	York
+chr0703	Head Chef Rutherford
+chr5703	Lydia
+chr5705a	Janice
+chr0521	Morley
+chr0669a	Engineer
+chr0436	Receptionist Legado
+chr0520a	Ludens
+chr0660	Officer Carton
+chr0530	Joule
+chr5531_c01	Marie
+chr5532	*Quest Girl
+chr5670b	Aoi
+chr5432	Mylène
+chr5675a	Sales Manager Melinda
+chr5540a	Charlotte
+chr0503a	Phillip
+chr5695	Claris
+chr0531a	Astell
+chr5511_c02	Gerbera
+chr0716_c01	Bryan
+chr0655	Vicar Artur
+chr5650_c02	Sister Lily
+chr0725	Security Personnel
+chr0725_c01	Security Personnel
+chr0502	Scooter Character
+chr0660_c01	Officer Burns
+chr0510	Weasley
+chr0540a	Connie
+chr0712a	Mitchie
+chr5502a	Tessa
+chr0522	Ticket Scalper Deech
+chr0531	Thomas
+chr5703_c01	Meloe
+chr0724_c01	Guide Romano
+chr5511	Lady Hepburn
+chr0514_c01	Lord Cromwell
+chr0710b	Entrepreneur Han
+chr0717_c02	Manager Alporto
+chr5670b	Yasmin
+chr0717_c01	Jeweler LeGrand
+chr0724_c02	Manager Chandler
+chr5685_c01	Momoka
+chr5685_c04	Christy
+chr0715_c02	Clemont
+chr5511b	Cecilia
+chr5671a	Lotte
+chr0513a	Matthew
+chr5520a	Granny Gooney
+chr0492	Service Penguin
+chr0724	Receptionist Mile
+chr5705a	Ashlyn
+chr0750	Genebeck
+chr0500a	Hoover
+chr5720_c02	Ashanti
+chr5717_c01	Iris
+chr5717	Paisley
+chr5717_c02	Maria
+chr0665	Scooter Character
+chr0510c	Scooter Character
+chr0521a	Padeux
+chr5513_c01	Maggie
+chr0513b	Ivan
+chr5505	Daisy
+chr5522a	Linda
+chr0721	Wagner
+chr5671_c01	Receptionist Rita
+chr0717a	Mayor Mason
+chr5670b	Secretary Kaori
+chr0730	Attendant Bowing
+chr0561_c01	Tatsu
+chr0669a	Denzel
+chr5660_c01	Officer Frances
+chr0660	Officer Jackson
+chr5520a	Granny O'Hara
+chr0658	Bishop Schoenberg
+chr0652	Priest Léon
+chr5650_c02	Sister Eriya
+chr0522	Hermann
+chr5671a	Receptionist Seunghee
+chr0715	Branch Manager
+chr0795_c01	Heiyue Member
+chr0795	Heiyue Member 2
+chr0511a	Viligan
+chr0541a	Chrom
+chr0716_c03	Harrison
+chr0530a	Yudy
+chr5590	Lanka
+chr5530a	Luna
+chr5504b	Scooter Character
+chr0712b	Hashim
+chr0731	Security Guard Rocky
+chr5670	Receptionist Karen
+chr5875	Nurse Plume
+chr0440	Dr. Usain
+chr5720_c01a	Pharmacist Velverine
+chr0866	Yuto
+chr5807	Betsy
+chr5418	Nurse Finlay
+chr0551a	Young Guide
+chr0319_c00	Carefree Old Man
+chr0724_c01	Butler
+chr0703	Chef
+chr5838	Maid
+chr5838_c01	Maid
+chr0669a	Haurvatat Mechanic
+chr0441	Lieutenant Colonel Kidman
+chr0786a	Last Minute Entrant Musician
+chr0787	Last Minute Entrant Musician
+chr0502b	Concert Audience
+chr5610	Ariya's Mother
+chr0640	Ariya's Younger Brother
+chr5670a	Suzan
+chr5560	Minfa
+chr0715	Section Chief
+chr5660	Female Police Officer
+chr5112	NPC Fie 0
+chr5112	Fie Claussell
+chr5112	NPC Fie 2
+chr5001_c74	Test Character 0 (Agnès DLC_test)
+chr0125_c70	Test Character 1 (Rufus DLC_test)
+chr5117_c70	Test Character 2 (Shizuna DLC_test)
+chr5121_c70	Test Character 3 (Altina/DLC Cold Steel IV Travel Attire)
+chr5001_c49	Test Character 4 (Agnès, Goddess_test)
+chr9991	Male Test 1	no .mdl file
+chr9991a	Male Test 2	no .mdl file
+chr9991b	Male Test 3	no .mdl file
+chr0113	Walter Test
+chr0113_c01	Walter Test
+chr5112	Fie Test
+chr5116_c00	Olympia test
+chr5300	Naje Test
+chr5316	Ashen Lu Test
+chr0327	Edmond Auclair Test
+chr5301	Aida Test
+chr0329	Colonel Gerald Test
+chr5320	Kaela McMillan
+chr5321	Professor Latoya Hamilton
+chr9990	Dummy
+chrx010	Transparent Human
+chr0500	Young Man 1 (City)
+chr0500a	Young Man 1 (City; Alt Color Version 1)
+chr0500b	Young Man 1 (City; Alt Color Version 2)
+chr0501	Young Man 2 (City)
+chr0501a	Young Man 2 (City; Alt Color Version 1)
+chr0501b	Young Man 2 (City; Alt Color Version 2)
+chr0502	Young Man 3 (City)
+chr0502a	Young Man 3 (City; Alt Color Version 1)
+chr0502b	Young Man 3 (City; Alt Color Version 2)
+chr0503	Young Man 4 (Rural)
+chr0503a	Young Man 4 (Rural; Alt Color Version 1)
+chr0503b	Young Man 4 (Rural; Alt Color Version 2)
+chr0504	Young Man 5 (Aristocratic)
+chr0505	Young Man 6 (Aristocratic)
+chr0510	Middle-Aged Man 1 (City)
+chr0510_c01	Middle-Aged Man 1 (City; Fat Version)
+chr0510a	Middle-Aged Man 1 (City; Alt Color Version 1)
+chr0510b	Middle-Aged Man 1 (City; Alt Color Version 2)
+chr0510c	Middle-Aged Man 1 (City; Skin/Hair Color Changed to Eastern Version)
+chr0511	Middle-Aged Man 2 (City)
+chr0511a	Middle-Aged Man 2 (City; Alt Color Version 1)
+chr0511b	Middle-Aged Man 2 (City; Alt Color Version 2)
+chr0512	Middle-Aged Man 3 (City)
+chr0512a	Middle-Aged Man 3 (City; Alt Color Version 1)
+chr0512b	Middle-Aged Man 3 (City; Alt Color Version 2)
+chr0513	Middle-Aged Man 4 (Rural)
+chr0513_c01	Middle-Aged Man 4 (Rural; Fat Version)
+chr0513a	Middle-Aged Man 4 (Rural; Alt Color Version 1)
+chr0513b	Middle-Aged Man 4 (Rural; Alt Color Version 2)
+chr0513c	Middle-Aged Man 4 (Rural; Skin/Hair Color Changed to Eastern Version)
+chr0514	Middle-Aged Man 5 (Aristocratic)
+chr0520	Old Man 1 (City)
+chr0520_c01	Old Man 1 (City; No Hat)
+chr0520a	Old Man 1 (City; Alt Color Version 1)
+chr0520a	Old Man 1 (City; Alt Color Version 1; Kind Eyes Version)
+chr0521	Old Man 2 (Rural)
+chr0521a	Old Man 2 (Rural; Alt Color Version 1)
+chr0522	Old Man 3 (Bald Version)
+chr0530	Young Boy 1 (City)
+chr0530a	Young Boy 1 (City; Alt Color Version 1)
+chr0531	Young Boy 2 (City)
+chr0531a	Young Boy 2 (City; Alt Color Version 1)
+chr0532	Young Boy 3 (City)
+chr0532a	Young Boy 3 (City; Alt Color Version 1)
+chr0540	Little Boy 1 (City)
+chr0540a	Little Boy 1 (City; Alt Color Version 1)
+chr0541	Little Boy 2 (Rural)
+chr0541a	Little Boy 2 (Rural; Alt Color Version 1)
+chr0548	Male Middle Schooler 1 (City)
+chr0549	Male Middle Schooler 2 (City)
+chr0550	Young Man 1 (Eastern)
+chr0550a	Young Man 1 (Eastern; Alt Color Version 1)
+chr0551	Young Man 2 (Eastern)
+chr0551a	Young Man 2 (Eastern; Alt Color Version 1)
+chr0551_c01	Young Man 2 (Eastern; Hair/Color Update 1)
+chr0560	Middle-Aged Man 1 (Eastern)
+chr0560a	Middle-Aged Man 1 (Eastern; Alt Color Version 1)
+chr0561	Middle-Aged Man 2 (Eastern)
+chr0561_c01	Middle-Aged Man 2 (Eastern; Fat Version)
+chr0561a	Middle-Aged Man 2 (Eastern; Alt Color Version 1)
+chr0570	Old Man 1 (Eastern)
+chr0570a	Old Man 1 (Eastern; Alt Color Version 1)
+chr0570_c01	Old Man 1 (Eastern; Hair Changed to Black/Skin Color Changed Version)
+chr0580	Young Boy 1 (Eastern)
+chr0580a	Young Boy 1 (Eastern; Alt Color 1)
+chr0590	Little Boy 1 (Eastern)
+chr0600	Young Man 1 (Central Eastern)
+chr0600a	Young Man 1 (Central Eastern; Alt Color Version 1)
+chr0601	Young Man 2 (Central Eastern)
+chr0601a	Young Man 2 (Central Eastern; Alt Color Version 1)
+chr0610	Middle-Aged Man 1 (Central Eastern)
+chr0610_c01	Middle-Aged Man 1 (Central Eastern; Fat Version)
+chr0610a	Middle-Aged Man 1 (Central Eastern; Alt Color Version 1)
+chr0611	Middle-Aged Man 2 (Central Eastern)
+chr0611a	Middle-Aged Man 2 (Central Eastern; Alt Color Version 1)
+chr0620	Old Man 1 (Central Eastern)
+chr0620_c01	Old Man 1 (Central Eastern; Hairstyle/Color Changed)
+chr0630	Young Boy 1 (Central Eastern)
+chr0630a	Young Boy 1 (Central Eastern; Alt Color Version 1)
+chr0640	Little Boy 1 (Central Eastern)
+chr0652	Caucasian Priest 1 (Young Man)
+chr0652_c01	Caucasian Priest 2 (Young Man)
+chr0653	Eastern Priest 1 (Young Man)
+chr0654	Central Eastern Priest 1 (Young Man)
+chr0655	Caucasian Priest 1 (Middle-Aged Man)
+chr0656	Eastern Priest 1 (Middle-Aged Man)
+chr0657	Central Eastern Priest 1 (Middle-Aged Man)
+chr0658	Archbishop 1 (Old Man)
+chr0660	Republic Police Officer 1 (Young Man)
+chr0660_c01	Republic Police Officer 2 (Young Man)
+chr0661	Republic Police Officer 1 (Middle-Aged Man)
+chr0661_c01	Republic Police Officer 2 (Middle-Aged Man)
+chr0665	Young Man Merchant 1
+chr0666	Middle-Aged Man Merchant 1
+chr0667	Old Man Merchant 1
+chr0668	Young Man Laborer 1
+chr0668_c01	Young Man Laborer 2
+chr0669	Young Man Laborer 1
+chr0669a	Young Man Laborer 1 (Skin and Hair Color Changed to Central Eastern 1)
+chr0670	Young Man Engineer 1
+chr0670a	Young Man Engineer 1 (Skin and Hair Color Changed to Eastern 1)
+chr0671	Middle-Aged Man Engineer 1
+chr0700	Caucasian Young Adult Chef 1
+chr0701	Eastern Young Adult Chef 1
+chr0702	Central Eastern Young Adult Chef 1
+chr0703	Caucasian Middle-Aged Chef 1
+chr0704	Eastern Middle-Aged Chef 1
+chr0705	Central Eastern Middle-Aged Chef 1
+chr0705_c01	Central Eastern Middle-Aged Chef 1 (Middle-Aged Man; Fat Version)
+chr0710	Young Man 1 (Suit)
+chr0710a	Young Man 1 (Suit; Alt Color Version 1)
+chr0710b	Young Man 1 (Suit; Alt Skin Color Version 1; Eastern)
+chr0710_c01	Young Man 1 (Suit; Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0711	Young Man 2 (Suit; No Jacket)
+chr0711a	Young Man 2 (Suit; No Jacket; Alt Color Version 1)
+chr0711b	Young Man 2 (Suit; No Jacket; Alt Skin Color Version 1)
+chr0711_c01	Young Man 2 (Suit; No Jacket; Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0712	Young Man 3 (Vest)
+chr0712a	Young Man 3 (Vest; Alt Color Version 1)
+chr0712b	Young Man 3 (Vest; Alt Skin Color Version 1; Central Eastern)
+chr0712_c01	Young Man 3 (Vest; Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0715	Middle-Aged Man 1 (Suit)
+chr0715a	Middle-Aged Man 1 (Suit; Alt Color Version 1)
+chr0715b	Middle-Aged Man 1 (Suit; Alt Color Version 2)
+chr0715c	Middle-Aged Man 1 (Suit; Alt Color Version 3)
+chr0715_c01	Middle-Aged Man 1 (Suit; Beard and Hat)
+chr0715_c02	Middle-Aged Man 1 (Suit; Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0716	Middle-Aged Man 2 (Suit; No Jacket)
+chr0716_c01	Middle-Aged Man 2 (Suit; No Jacket; Fat Version)
+chr0716_c01a	Middle-Aged Man 2 (Suit; No Jacket; Eastern)
+chr0716_c02	Middle-Aged Man 2 (Suit; No Jacket; Poker Use)
+chr0716_c03	Middle-Aged Man 2 (Suit; No Jacket; Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0716a	Middle-Aged Man 2 (Suit; No Jacket; Alt Color Version 1)
+chr0717	Middle-Aged Man 3 (High Grade)
+chr0717_c01	Middle-Aged Man 3 (High Grade; Fat Version)
+chr0717a	Middle-Aged Man 3 (High Grade; Alt Color Version 1)
+chr0717b	Middle-Aged Man 3 (High Grade; Eastern)
+chr0717c	Middle-Aged Man 3 (High Grade; Central Eastern)
+chr0717_c02	Middle-Aged Man 3 (Alt Clothes Color & Alt Hair Style/New For Kuro 2)
+chr0720	Old Man 1 (Suit)
+chr0720a	Old Man 1 (Suit; Alt Skin Color Version 1; Central Eastern)
+chr0720a	Old Man 1 (Suit; Alt Skin Color Version 1; Central Eastern; Kind Eyes Version)
+chr0720_c01	Old Man 1 (Suit; Old Man Huck Use)
+chr0720_c02	Old Man 1 (Suit; Alt Hair)
+chr0721	Old Man 2 (Suit Vest)
+chr0721a	Old Man 2 (Suit Vest; Central Eastern)
+chr0722	Old Man 3 (High Grade)
+chr0724	Young Man 3 (Dealer)
+chr0724_c01	Middle-Aged Man 1 (Dealer)
+chr0724_c02	Middle-Aged Man 2 (Dealer)
+chr0725	Young Adult SP 1 (Suit)
+chr0725_c01	Young Adult SP 2 (Suit)
+chr0725_c02	Young Adult SP 2 (Suit; SP Massive)
+chr0725_c03	Young Adult SP 2 (Suit; SP Massive)
+chr0726	Mafioso 1
+chr0726_c01	Mafioso 2
+chr0730	Young Man Station Worker 1
+chr0731	Young Man Station Worker 1 (Alt Station Worker Color)
+chr0732	Young Man Security Guard 1
+chr0732_c01	Young Man Security Guard 2
+chr0732_c02	Middle-Aged Man Security Guard 1
+chr0735	Young Man White Clothes 1
+chr0735a	Young Man White Clothes 1 (Alt Skin Color Version 1; Central Eastern)
+chr0735_c01	Young Man White Clothes 2
+chr0735_c01a	Young Man White Clothes 2 (Alt Skin Color Version 1; Central Eastern)
+chr0740	Middle-Aged Man White Clothes 1
+chr0740_c01	Middle-Aged Man White Clothes 2
+chr0745	Young Man Coat 1
+chr0750	Middle-Aged Man Coat 1
+chr0750_c01	Middle-Aged Man Coat 1 (No Hat)
+chr0756	Young Adult Navy Sailor 1 (Navy Color)
+chr0756_c01	Young Adult Navy Sailor 2 (Navy Color)
+chr0760	Hercules (Rifle)
+chr0780	Marduk Employee (Gun) (1) Security Guard Style
+chr0780_c01	Marduk Employee (Gun) (2) Security Guard Style
+chr0781	Marduk Employee (Gun) (1) Serious Style
+chr0781_c01	Marduk Employee (Gun) (2) Serious Style
+chr0785	Young Man Gangster 1
+chr0786	Young Man Gangster 2
+chr0787	Young Man Gangster 3
+chr0785a	Young Man Gangster 1 (Alt Color)
+chr0786a	Young Man Gangster 2 (Alt Color)
+chr0787a	Young Man Gangster 3 (Alt Color)
+chr0785_c01	Young Man Gangster 1 (Alt Hair Style 1)
+chr0786_c01	Young Man Gangster 2 (Alt Hair Style 1)
+chr0790	Jaeger Dropout 1 (Gun)
+chr0790_c01	Jaeger Dropout 2 (Sword)
+chr0795	Young Man Heiyue Member 1
+chr0795_c01	Young Man Heiyue Member 2
+chr0800	Member of Heiyue's Special Assassination Squad 1
+chr0801	Member of Heiyue's Special Assassination Squad 2
+chr0805	Male Student 1 (Year 1)
+chr0805_c01	Male Student 2 (Year 1)
+chr0805_c02	Male Student 3 (Year 2)
+chr0805_c03	Male Student 4 (Year ?)
+chr0810	Young Man Swimsuit 1
+chr0811	Young Man Swimsuit 2
+chr0820	Young Man Bath Getup 1
+chr0821	Middle-Aged Man Bath Getup 1
+chr0822	Old Man Bath Getup 1
+chr0845	Young Man Samue 1
+chr0845_c01	Young Man Samue 2
+chr0846	Middle-Aged Man Samue 1
+chr0847	Old Man Samue 1
+chr0848	Middle-Aged Man Samue (Ryokan Type) 1 (Hat)
+chr0848_c01	Middle-Aged Man Samue (Ryokan Type) 2
+chr0849	Old Man Samue (Ryokan Type) 1
+chr0850	Male Group Member 1 (Eastern Theater Troupe)
+chr0791	Jaeger Dropout Alt Color 1 (Gun)
+chr0791_c01	Jaeger Dropout Alt Color 1 (Sword)
+chr5500	Young Woman 1 (City)
+chr5500a	Young Woman 1 (City; Alt Color Version 1)
+chr5500b	Young Woman 1 (City; Alt Color Version 2)
+chr5501	Young Woman 2 (City)
+chr5501a	Young Woman 2 (City; Alt Color Version 1)
+chr5501b	Young Woman 2 (City; Alt Color Version 2)
+chr5501c	Young Woman 2 (City; Eastern, Black Hair)
+chr5502	Young Woman 3 (City)
+chr5502a	Young Woman 3 (City; Alt Color Version 1)
+chr5502b	Young Woman 3 (City; Alt Color Version 2)
+chr5503	Young Woman 4 (Rural)
+chr5503a	Young Woman 4 (Rural; Alt Color Version 1)
+chr5503b	Young Woman 4 (Rural; Alt Color Version 2)
+chr5504	Young Woman 5 (City)
+chr5504a	Young Woman 5 (City; Alt Color Version 1)
+chr5504b	Young Woman 5 (City; Alt Color Version 2)
+chr5505	Young Woman 6 (Rural)
+chr5510	Middle-Aged Woman 1 (City)
+chr5510a	Middle-Aged Woman 1 (City; Alt Color Version 1)
+chr5510b	Middle-Aged Woman 1 (City; Alt Color Version 2)
+chr5511	Middle-Aged Woman 2 (City)
+chr5511_c01	Middle-Aged Woman 2 (City; Fat Version)
+chr5511_c02	Middle-Aged Woman 2 (City; Alt Hairstyle and Skin Color 1)
+chr5511a	Middle-Aged Woman 2 (City; Alt Color Version 1)
+chr5511b	Middle-Aged Woman 2 (City; Alt Color Version 2)
+chr5513	Middle-Aged Woman 4 (Rural)
+chr5513_c01	Middle-Aged Woman 4 (Rural; Fat Version)
+chr5513a	Middle-Aged Woman 4 (Rural; Alt Color Version 1; Brown Hair)
+chr5513b	Middle-Aged Woman 4 (Rural; Alt Color Version 2)
+chr5520	Old Woman 1 (City)
+chr5520a	Old Woman 1 (City; Alt Color Version 1)
+chr5520b	Old Woman 1 (City; Mayor Wen's Wife)
+chr5521	Old Woman 2 (Rural)
+chr5522	Old Woman 3 (Rural)
+chr5522a	Old Woman 3 (Rural; Alt Color Version 1)
+chr5530	Young Girl 1 (City)
+chr5530a	Young Girl 1 (City; Alt Color Version 1)
+chr5531	Young Girl 2 (City)
+chr5531a	Young Girl 2 (City; Alt Color Version 1)
+chr5531_c01	Young Girl 2 (City; Alt Hairstyle and Skin Color 1; Wealthy)
+chr5532	Young Girl 2 (City)
+chr5532a	Young Girl 2 (City; Alt Color Version 1)
+chr5532b	Young Girl 2 (City; Alt Skin Color Version 1; Central Eastern)
+chr5540	Little Girl 1 (City)
+chr5540a	Little Girl 1 (City; Alt Color Version 1)
+chr5540b	Little Girl 1 (City; Alt Skin Color Version 1; Eastern)
+chr5541	Little Girl 2 (Rural)
+chr5541a	Little Girl 2 (Rural; Alt Color Version 1)
+chr5541b	Little Girl 2 (Rural; Alt Skin Color Version 1; Eastern)
+chr5550	Young Woman 1 (Eastern)
+chr5550a	Young Woman 1 (Eastern; Alt Color Version 1)
+chr5551	Young Woman 2 (Eastern)
+chr5551a	Young Woman 2 (Eastern; Alt Color Version 1)
+chr5560	Middle-Aged Woman 1 (Eastern)
+chr5560a	Middle-Aged Woman 1 (Eastern; Alt Color Version 1)
+chr5561	Middle-Aged Woman 2 (Eastern)
+chr5561_c01	Middle-Aged Woman 2 (Eastern; Fat Version)
+chr5561a	Middle-Aged Woman 2 (Eastern; Alt Color Version 1)
+chr5570	Old Woman 1 (Eastern)
+chr5570a	Old Woman 1 (Eastern; Alt Color Version 1)
+chr5570b	Old Woman 1 (Eastern; Alt Color Version 1; Caucasian)
+chr5580	Young Girl 1 (Eastern)
+chr5580a	Young Girl 1 (Eastern; Alt Color Version 1)
+chr5590	Little Girl 1 (Eastern)
+chr5590a	Little Girl 1 (Eastern; Alt Color Version 1; Subdued?)
+chr5600a	Young Woman 1 (Central Eastern; Alt Color Version 1)
+chr5601	Young Woman 2 (Central Eastern)
+chr5601a	Young Woman 2 (Central Eastern; Alt Color Version 1)
+chr5610	Middle-Aged Woman 1 (Central Eastern)
+chr5610a	Middle-Aged Woman 1 (Central Eastern; Alt Color Version 1)
+chr5611	Middle-Aged Woman 2 (Central Eastern)
+chr5611_c01	Middle-Aged Woman 2 (Central Eastern; Fat Version)
+chr5611a	Middle-Aged Woman 2 (Central Eastern; Alt Color Version 1)
+chr5620	Old Woman 1 (Central Eastern)
+chr5630	Young Girl 1 (Central Eastern)
+chr5630a	Young Girl 1 (Central Eastern; Alt Color Version 1)
+chr5640	Little Girl 1 (Central Eastern)
+chr5640a	Little Girl 1 (Central Eastern; Alt Color Version 1)
+chr5650	Caucasian Nun 1 (Young Woman)
+chr5650a	Caucasian Nun 1 (Young Woman; Central Eastern)
+chr5650_c01	Caucasian Nun 2 (Young Woman)
+chr5651	Eastern Nun 1 (Young Woman)
+chr5652	Central Eastern Nun 1 (Young Woman)
+chr5655	Caucasian Nun 1 (Middle-Aged Woman)
+chr5660	Republic Police Officer 1 (Young Woman)
+chr5660_c01	Republic Police Officer 2 (Young Woman)
+chr5660a	Republic Police Officer 1 (Young Woman; Central Eastern; No Hat)
+chr5660a_c01	Republic Police Officer 1 (Young Woman; Central Eastern; Dirty Clothes Version)
+chr5670	Suit 1 (Young Woman)
+chr5670a	Suit 1 (Young Woman; Alt Color Version 1)
+chr5670b	Suit 1 (Young Woman; Alt Skin Color Version 1; Eastern)
+chr5670c	Suit 1 (Young Woman; Alt Skin Color Version 2; Central Eastern)
+chr5671	Suit 2 (Young Woman)
+chr5671_c01	Suit 2 (Young Woman; Carol)
+chr5671a	Suit 2 (Young Woman; Alt Color Version 1)
+chr5671b	Suit 2 (Young Woman; Alt Skin Color Version 1; Central Eastern)
+chr5675	Suit 1 (Middle-Aged Woman)
+chr5675_c01	Suit 1 (Middle-Aged Woman; Alt Hairstyle Color 1)
+chr5675a	Suit 1 (Middle-Aged Woman; Alt Color Version 1)
+chr5676	Suit 2 (Middle-Aged Woman)
+chr5676a	Suit 2 (Middle-Aged Woman; Alt Color Version 1)
+chr5676b	Suit 2 (Middle-Aged Woman; Alt Skin Color Version 1; Eastern)
+chr5680	Young Woman 1 (Receptionist)
+chr5680a	Young Woman 1 (Receptionist; Alt Color Version 1)
+chr5680b	Young Woman 1 (Receptionist; Alt Skin Color; Eastern)
+chr5680_c01	Young Woman 2 (Receptionist)
+chr5680_c01a	Young Woman 2 (Receptionist; Alt Skin Color; Central Eastern)
+chr5682	Young Woman 1 (Dealer)
+chr5682a	Young Woman 1 (Dealer; Central Eastern)
+chr5695	Caucasian Female Chef (Young Woman)
+chr5695a	Caucasian Female Chef (Young Woman; Eastern)
+chr5700	Female Student 1
+chr5700_c01	Female Student 2
+chr5700_c02	Female Student 3
+chr5700_c03	Female Student 4
+chr5705a	Maid 1 (Alt Skin Color 1; Eastern)
+chr5706a	Waitress 1 (Alt Skin Color 1; Central Eastern)
+chr5710	Nightlife Dress Woman 1 (Young Woman)
+chr5710a	Nightlife Dress Woman 1 (Young Woman; Alt Color Version 1)
+chr5710b	Nightlife Dress Woman 1 (Young Woman; Central Eastern)
+chr5710_c01	Nightlife Dress Woman 1 (Young Woman; Alt Hair 1)
+chr5711	Nightlife Dress Woman 2 (Young Woman)
+chr5711a	Nightlife Dress Woman 2 (Young Woman; Alt Color Version 1)
+chr5711b	Nightlife Dress Woman 2 (Young Woman; Central Eastern)
+chr5711_c02	Nightlife Dress Woman 2 (Young Woman; Alt Hair 1)
+chr5715	Pole Dancer 1 (Young Woman)
+chr5715a	Pole Dancer 1 (Young Woman; Alt Color)
+chr5715_c01	Pole Dancer 2 (Young Woman)
+chr5715_c01a	Pole Dancer 2 (Young Woman; Alt Color)
+chr5720	White Clothes 1 (Young Woman)
+chr5720_c01	White Clothes 2 (Young Woman)
+chr5720_c01a	White Clothes 2 (Young Woman; Alt Skin Color 1)
+chr5725	White Clothes 2 (Middle-Aged Woman)
+chr5730	Coat 1 (Young Woman)
+chr5730_c01	Coat 2 (Young Woman; No Hat; Alt Clothes and Hair Color)
+chr5735	Coat 1 (Middle-Aged Woman)
+chr5735_c01	Coat 2 (Middle-Aged Woman; No Hat; Alt Clothes and Hair Color)
+chr5740	Swimsuit Female NPC 1 (Young Woman)
+chr5740a	Swimsuit Female NPC 1 (Young Woman) (Different Color Version 1)
+chr5741	Swimsuit Female NPC 2 (Young Woman)
+chr5741a	Swimsuit Female NPC 2 (Young Woman) (Different Color Version 1)
+chr5745	Bath Getup Female NPC 1 (Young Woman)
+chr5746	Bath Getup Female NPC 1 (Middle-Aged Woman)
+chr5750	Female Bracer 1 (Young Adult)
+chr5751	Female Bracer 2 (Young Adult)
+chr5753	Female Bracer 3 (Young Adult)
+chr5752	Female Bracer 2 (Middle-Aged)
+chr5795	Young Adult Woman Engineer 1
+chr5795_c01	Young Adult Woman Engineer 2
+chr5795_c02	Young Adult Woman Engineer 3
+chr5770	Young Woman Samue 1 (Hostess/Mikasa)
+chr5782	Group Member 1 (Middle-Aged Woman)
+chr0805_c04	Male Student 5 (Edmond) First Year
+chr0805_c05	Male Student 6 (Woody) Second Year
+chr0805_c06	Male Student 7 (Donatello) Second Year
+chr0805_c07	Male Student 8 (Elijah) Third Year
+chr0805_c08	Male Student 9 (Fully Generic 02) Caucasian First Year
+chr0805_c09	Male Student 10 (Fully Generic 03) Eastern First Year
+chr0805_c10	Male Student 11 (Fully Generic 04) Caucasian Second Year
+chr0805_c11	Male Student 12 (Fully Generic 05) Eastern Second Year
+chr0805_c12	Male Student 13 (Fully Generic 06) Caucasian Third Year
+chr5700_c04	Female Student 5 (Thelma) First Year
+chr5700_c05	Female Student 6 (Sigourney) First Year
+chr5700_c06	Female Student 7 (Aija) Second Year
+chr5700_c07	Female Student 8 (Frederica) Third Year
+chr5700_c08	Female Student 9 (Fully Generic 03) Central Eastern First Year
+chr5700_c09	Female Student 10 (Fully Generic 04) Caucasian Second Year
+chr5700_c10	Female Student 11 (Fully Generic 05) Caucasian Third Year
+chr5700_c11	Female Student 12 (Fully Generic 06) Central Eastern Second Year
+chr5807	Hospital Patient 1 (Young Woman)
+chr5808	Hospital Patient 2 (Old Woman)
+chr0805_c08	Male Student
+chr5008	Mare
+chr5009	Carmine Altera
+chr5500	Young Woman
+chr0500	Young Man
+chr5520	Old Woman
+chr0510	Middle-Aged Man
+chr5520	Old Woman A
+chr0510	Middle-aged Man A
+chr5007_c03	Grimcat
+chr0520	Older Man A
+chr0500	Young Man A
+chr0501	Young Man B
+chr0502	Young Man C
+chr5500	Young Woman A
+chr5113	Yin
+chr0000	Message
+chr5561_c01	Middle-Aged Woman
+chr5551a	Young Woman
+chr0561_c01	Middle-Aged Man
+chr0670	Man Dressed Like a Construction Worker
+
+Model files in this game without an entry in t_name.tbl (selected by file name):
+
+chr0000_c62
+chr0002_c60
+chr0004_c17b
+chr0123_c02_c
+chr0123_c70
+chr0127a
+chr0127b
+chr0130
+chr0311
+chr0428_c01_a
+chr0492a
+chr0792_c03
+chr0915
+chr5003_c58
+chr5003_c60
+chr5325
+chr5500_l1
+chr5501_l1
+chr5503_l1
+chr5850
+chr8500
+chr8997
+chr8998
+chr8999
