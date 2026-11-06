@@ -49,7 +49,7 @@ CalvardCompare:
 
 Keep a copy of the originals: Steam may restore changed archives when it verifies the files.
 
-Full guides: [CalvardTool](docs/ReadMe_CalvardTool.txt), [CalvardCompare](docs/ReadMe_CalvardCompare.txt). In Russian: [CalvardTool](docs/ReadMe_CalvardTool_RU.txt), [CalvardCompare](docs/ReadMe_CalvardCompare_RU.txt).
+Full guides: [CalvardTool](docs/EN/ReadMe_CalvardTool.txt), [CalvardCompare](docs/EN/ReadMe_CalvardCompare.txt). In Russian: [CalvardTool](docs/RU/ReadMe_CalvardTool.txt), [CalvardCompare](docs/RU/ReadMe_CalvardCompare.txt).
 
 ## CalvardTool
 
@@ -79,7 +79,7 @@ Rules for editing:
 - **Tables:** on the `Text` sheet, column A says where the string is, B is the text to edit and C is the original. Don't touch hidden column D or the `_internal` sheet, and don't delete or reorder rows.
 - **Textures:** save `.png` with transparency, and preferably at the same size.
 
-Which model and character ID belong to which character is listed for each game: [Daybreak](docs/character_models_daybreak.md), [Daybreak II](docs/character_models_daybreak2.md), [Horizon](docs/character_models_horizon.md).
+Which model and character ID belong to which character is listed for each game: [Daybreak](docs/EN/character_models_daybreak.md), [Daybreak II](docs/EN/character_models_daybreak2.md), [Horizon](docs/EN/character_models_horizon.md).
 
 ### Decompiling
 
@@ -170,7 +170,7 @@ The checks run in the background after loading, and the tab shows the number of 
 - **Open in Compare** goes to the line, and **Not an error** hides a finding. Hidden findings can be restored.
 - **Export to Excel** saves the findings to `.xlsx`, one sheet per section, with five lines of context before and after each one.
 
-The meaning of each service code is described in the [full guide](docs/ReadMe_CalvardCompare.txt).
+The meaning of each service code is described in the [full guide](docs/EN/ReadMe_CalvardCompare.txt).
 
 ### Icons and portraits
 

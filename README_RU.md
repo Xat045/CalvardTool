@@ -51,7 +51,7 @@ CalvardCompare:
 
 Сохраните копию оригиналов: Steam может восстановить изменённые архивы при проверке файлов.
 
-Подробные инструкции: [CalvardTool](docs/ReadMe_CalvardTool_RU.txt), [CalvardCompare](docs/ReadMe_CalvardCompare_RU.txt).
+Подробные инструкции: [CalvardTool](docs/RU/ReadMe_CalvardTool.txt), [CalvardCompare](docs/RU/ReadMe_CalvardCompare.txt).
 
 ## CalvardTool
 
@@ -81,7 +81,7 @@ CalvardCompare:
 - **Таблицы:** на листе `Text` в столбце A указано, где находится строка, в B текст для правки, в C оригинал. Не трогайте скрытый столбец D и лист `_internal`, не удаляйте и не переставляйте строки.
 - **Текстуры:** сохраняйте `.png` с прозрачностью, размер лучше не менять.
 
-Какая модель и какой ID у какого персонажа, указано отдельно для каждой игры (на английском): [Daybreak](docs/character_models_daybreak.md), [Daybreak II](docs/character_models_daybreak2.md), [Horizon](docs/character_models_horizon.md).
+Какая модель и какой ID у какого персонажа, указано отдельно для каждой игры (имена на английском): [Daybreak](docs/RU/character_models_daybreak.md), [Daybreak II](docs/RU/character_models_daybreak2.md), [Horizon](docs/RU/character_models_horizon.md).
 
 ### Разборка
 
@@ -172,7 +172,7 @@ JSON:   {"Bracer": "брейсер", "Spriggan": ["спригган", "спри�
 - **Открыть в сверке** переходит к строке, а **Не ошибка** скрывает находку. Скрытые находки можно вернуть.
 - **Выгрузить в Excel** сохраняет находки в `.xlsx`, по листу на раздел, с пятью репликами до и после каждой.
 
-Что означает каждый служебный код, описано в [подробной инструкции](docs/ReadMe_CalvardCompare_RU.txt).
+Что означает каждый служебный код, описано в [подробной инструкции](docs/RU/ReadMe_CalvardCompare.txt).
 
 ### Значки и портреты
 
