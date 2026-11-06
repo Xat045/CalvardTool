@@ -1,4 +1,4 @@
-CalvardTool 0.1 — разборка и сборка файлов игр Калварда (PC-версии)
+CalvardTool 0.2 — разборка и сборка файлов игр Калварда (PC-версии)
   The Legend of Heroes: Trails through Daybreak     (Kuro no Kiseki)
   The Legend of Heroes: Trails through Daybreak II  (Kuro no Kiseki II)
   The Legend of Heroes: Trails beyond the Horizon   (Kai no Kiseki)
@@ -56,6 +56,13 @@ CalvardTool 0.1 — разборка и сборка файлов игр Кал�
     Проект\mods\RU_MOD\script_eng\scena\a0000.json     ← из mods\RU_MOD.p3a
     Проект\multilanguage\message_en.yaml
   Служебное (.kai_*.tsv, папки _original и _english) не трогайте.
+
+  Формат таблиц выбирается в окне «Что разбирать», блок «Таблицы»:
+  • .xlsx — Excel: только текст для перевода;
+  • .json — все поля записей: текст и числа, можно менять параметры и модели. Названия полей взяты из схем
+    KuroTools. Если схемы нет, поля определяются по данным и названы по смещению: field8 — строка, int16 — число,
+    float24 — дробное число, short28, byte30. Настоящих имён у таких полей нет.
+  Без правок таблица в .json собирается байт в байт. Записи добавлять и удалять нельзя.
 
 ──────────────────────────────── ЧТО ВО ЧТО ПРЕВРАЩАЕТСЯ
 

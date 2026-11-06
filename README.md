@@ -68,7 +68,7 @@ The game is detected automatically, or you can choose it in the **Game** list. E
 | Content | In the game | For editing | Edit with |
 |---|---|---|---|
 | Dialogues and scripts | `.dat` | `.json` | Notepad++ or any text editor |
-| Tables | `.tbl` | `.xlsx` | Excel or WPS |
+| Tables | `.tbl` | `.xlsx` or `.json` | Excel or WPS; any text editor |
 | Textures | `.dds` | `.png`, or `.dds` as it is | Any image editor; for `.dds`, one with DDS support |
 | Interface text | `multilanguage\message_en.yaml` | `.yaml` | Any text editor |
 | Models, effects, sounds | as they are | as they are | Put your file with the same name in place of the old one |
@@ -175,7 +175,7 @@ The meaning of each service code is described in the [full guide](docs/EN/ReadMe
 ### Icons and portraits
 
 - `<I…>` codes can be shown as images from the game's textures, for PlayStation, Xbox, Switch, Steam Deck, Stadia, keyboard and mouse. A code without an icon can be assigned once in the **Icons** window.
-- Lines from `t_active_voice.xlsx` show the speaker's portrait.
+- Lines from `t_active_voice.xlsx` and scene dialogues show the speaker's portrait, found by the character ID in the line. Characters without an Active Voice portrait have none.
 
 This affects the display only, and nothing is written to the files.
 

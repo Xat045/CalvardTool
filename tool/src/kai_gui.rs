@@ -162,6 +162,7 @@ struct App {
 	build_est: u64,
 	build_once: Option<Vec<String>>,
 	tex_dds: bool,
+	tables_json: bool,
 	skip_check: bool,
 	last_build: Option<Vec<String>>,
 	build_ready: bool,
@@ -214,6 +215,7 @@ impl App {
 			build_est: 0,
 			build_once: None,
 			tex_dds: st.get("tex_fmt") == Some("dds"),
+			tables_json: st.get("table_fmt") == Some("json"),
 			skip_check: false,
 			last_build: None,
 			build_ready: false,
@@ -229,6 +231,7 @@ impl App {
 		st.set("mod_name", &self.mod_name);
 		st.set("mask", &self.mask);
 		st.set("tex_fmt", if self.tex_dds { "dds" } else { "png" });
+		st.set("table_fmt", if self.tables_json { "json" } else { "xlsx" });
 		st.set("mode", if self.mode == 1 { "mod" } else { "rebuild" });
 		st.set("title", &self.game_sel.to_string());
 		st.set("dark", if self.pal.dark { "1" } else { "0" });
@@ -281,7 +284,7 @@ impl App {
 			return (items[0].clone(), Vec::new());
 		}
 		let files: Vec<PathBuf> = items.into_iter().filter(|p| !p.is_dir()).collect();
-		let mut o = Options { game_dir: PathBuf::new(), sources: files.clone(), rebuild: true, proj_dir: PathBuf::new(), out_dir: PathBuf::new(), mod_name: String::new(), use_mods: true, scena: true, tables: true, textures: true, tex_dds: false, check: false, other: true, mask: String::new(), only_changed: true, overwrite_edited: false, game: None, include: None, build_only: None };
+		let mut o = Options { game_dir: PathBuf::new(), sources: files.clone(), rebuild: true, proj_dir: PathBuf::new(), out_dir: PathBuf::new(), mod_name: String::new(), use_mods: true, scena: true, tables: true, textures: true, tex_dds: false, tables_json: false, check: false, other: true, mask: String::new(), only_changed: true, overwrite_edited: false, game: None, include: None, build_only: None };
 		o.game_dir = kjobs::source_base(&o);
 		(o.game_dir, files)
 	}
@@ -300,6 +303,7 @@ impl App {
 			tables: true,
 			textures: true,
 			tex_dds: self.tex_dds,
+			tables_json: self.tables_json,
 			check: !self.skip_check,
 			other: true,
 			mask: self.mask.trim().to_string(),
@@ -334,6 +338,7 @@ impl App {
 			None => Picker::open(PMode::Decompile, &d, then_start, false, ctx),
 		};
 		pk.tex_dds = self.tex_dds;
+		pk.tables_json = self.tables_json;
 		self.pick = Some(pk);
 	}
 
@@ -930,6 +935,7 @@ impl eframe::App for App {
 						} else {
 							let n = pk.n_on();
 							self.tex_dds = pk.tex_dds;
+							self.tables_json = pk.tables_json;
 							self.save_settings();
 							self.dec_sel = Some((pk.dir.clone(), pk.items));
 							self.flash(&lformat!("Выбрано для разборки: {n}", "Selected to decompile: {n}"));

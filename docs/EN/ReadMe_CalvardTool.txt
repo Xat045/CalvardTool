@@ -1,4 +1,4 @@
-CalvardTool 0.1: decompiles and builds the files of the Calvard games (PC versions)
+CalvardTool 0.2: decompiles and builds the files of the Calvard games (PC versions)
   The Legend of Heroes: Trails through Daybreak     (Kuro no Kiseki)
   The Legend of Heroes: Trails through Daybreak II  (Kuro no Kiseki II)
   The Legend of Heroes: Trails beyond the Horizon   (Kai no Kiseki)
@@ -57,10 +57,17 @@ WHAT IT DOES
     Project\multilanguage\message_en.yaml
   Don't touch the internal files (.kai_*.tsv, the _original and _english folders).
 
+  The table format is chosen in the "What to decompile" window, the "Tables" block:
+  - .xlsx: Excel, only the text to translate;
+  - .json: all record fields, text and numbers, so parameters and models can be changed. Field names come from
+    the KuroTools schemas. Without a schema, fields are detected from the data and named by offset: field8 is a
+    string, int16 a number, float24 a fractional number, short28, byte30. These fields have no real names.
+  Without edits, a .json table builds back byte for byte. Records can't be added or removed.
+
 ──────────────────────────────── WHAT BECOMES WHAT
 
   dialogues and scripts  .dat → .json  (Notepad++)
-  tables                 .tbl → .xlsx  (Excel; tables without text are not exported)
+  tables                 .tbl → .xlsx  (Excel; tables without text are not exported) or .json (all fields)
   textures               .dds → .png   (or as they are, .dds, chosen in 'What to decompile'; rare formats are always .dds)
   interface text         multilanguage\message_en.yaml
   everything else (.mdl models, effects, sounds) stays as it is. To replace a model, put your file with the same name

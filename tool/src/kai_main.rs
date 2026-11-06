@@ -41,6 +41,7 @@ fn main() {
 		tables: true,
 		textures: true,
 		tex_dds: false,
+		tables_json: false,
 		check: true,
 		other: false,
 		mask: String::new(),
@@ -179,6 +180,7 @@ fn main() {
 			"--changed" => o.only_changed = true,
 			"--overwrite" => o.overwrite_edited = true,
 			"--dds" => o.tex_dds = true,
+			"--tables-json" => o.tables_json = true,
 			"--no-check" => o.check = false,
 			"--title" => { let v = val(); o.game = calvard_tool::kai::game::Game::from_key(&v); if o.game.is_none() { leprintln!("неизвестная игра {v}: daybreak, daybreak2, horizon", "unknown game {v}: daybreak, daybreak2, horizon"); std::process::exit(2) } }
 			x => { leprintln!("неизвестный параметр {x}", "unknown parameter {x}"); std::process::exit(2) }

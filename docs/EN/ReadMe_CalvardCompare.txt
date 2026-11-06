@@ -1,4 +1,4 @@
-CalvardCompare 0.1: translation compare for Trails through Daybreak, Daybreak II, Trails beyond the Horizon
+CalvardCompare 0.2: translation compare for Trails through Daybreak, Daybreak II, Trails beyond the Horizon
 
 WHAT IT DOES
   Shows the text of two languages side by side, line by line (Japanese, English or Russian, in any pair,
@@ -104,7 +104,8 @@ WHAT IT DOES
   The speaker comes from the table record (character number → their model in t_name), and the image is the same as in
   the game next to the phrase (from face_c####, or btlface0_c#### for those without one). The facial expression is ignored.
   Unnamed NPCs have no portraits. Portraits are in "data.dat" (each game has its own).
-  Ordinary scene dialogues have no portraits: the dialogue window shows a 3D model and the log only a name.
+  Scene lines get a portrait by the speaker's ID (system[5,6](ID, ...) to their model). These are the same portraits
+  as for t_active_voice: a character without one stays without a portrait.
 
 ──────────────────────────────── ICONS INSTEAD OF <I…> CODES
 
