@@ -2,6 +2,8 @@
 
 Из `t_name.tbl` игры, английский. Если полного имени там нет, оно взято из другой
 игры серии для того же номера модели. Имена оставлены как в английской версии игры.
+Один и тот же персонаж (тот же ID и модель) во всех трёх списках назван одинаково:
+имя и фамилия, должность в скобках.
 
 - **ID:** номер персонажа в `t_name.tbl`, его указывают скрипты, например
   `system[5,6](106, ...)`. Это не номер модели. `65535`, похоже, значит, что своего ID
@@ -22,25 +24,25 @@ ID    | CHR          | Полное имя в игре | Портрет
 6     | chr5005      | Risette Twinings | avfc5005
 7     | chr0113      | Walter Kron (the Direwolf) | avfc0113
 8     | chr0111      | Zin Vathek (the Immovable) | avfc0111
-9     | chr0112      | René Kincaid | avfc0112
+9     | chr0112      | René Kincaid (Presidential Aide) | avfc0112
 10    | chr5007      | Judith Lanster | avfc5007
-11    | chr5110      | Elaine Auclair | avfc5110
+11    | chr5110      | Elaine Auclair (Bracer Outfit) | avfc5110
 12    | chr5117      | Shizuna Rem Misurugi | avfc5117
 13    | chr0304      | Kurogane | avfc0304
 14    | chr5118      | Lucrezia Isselee (the Golden Butterfly) | avfc5118
-15    | chr0009      | Van/Grendel | btlface0_c0009
+15    | chr0009      | Grendel Van | btlface0_c0009
 62    | chr5113      | Rixia Mao | avfc5113
 63    | chr5112      | Fie Claussell | avfc5112
 100   | chr0114      | Alexandre | btlface0_c0114
 101   | chr0115      | Melchior | btlface0_c0115
 102   | chr0116      | Gerard Dantès | btlface0_c0116
 103   | chr0117      | Arioch | btlface0_c0117
-104   | chr0118      | Ellroy Harwood
+104   | chr0118      | Ellroy Harwood (the Oathbreaker) | avfc0118
 105   | chr0119      | Roy Gramheart (President)
 106   | chr0300      | Alvis (Bracer)
 107   | chr0301      | Cao Lee | avfc0301
 108   | chr0302      | Sherid Asval (Prince) | btlface0_c0302
-109   | chr5114      | Renne Bright
+109   | chr5114      | Renne Bright | avfc5114
 110   | chr5115      | Viola | btlface0_c5115
 111   | chr5116      | Olympia | btlface0_c5116
 112   | chr5300      | Naje Berka | btlface0_c5300
@@ -54,7 +56,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 117   | chr0311_c00  | Giacomo (Corpse Version)
 118   | chr0315      | Nate (Detective)
 119   | chr0314      | Daswani (Inspector)
-120   | chr5320      | Kaela McMillan (2nd Lieutenant)
+120   | chr5320      | Kaela McMillan (Second Lieutenant)
 121   | chr5313      | Marielle Aymé | btlface0_c5313
 121   | chr5313_c00  | Marielle Aymé (No Hat) | btlface0_c5313
 121   | chr5313_c01  | Marielle Aymé (Clothes Half-Disintegrated) | btlface0_c5313
@@ -70,7 +72,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 130   | chr0318      | Maxim Lugan | btlface0_c0318
 130   | chr0318_c00  | Maxim Lugan (Muddy) | btlface0_c0318
 131   | chr5316      | Ashen Lu
-132   | chr0320      | Fan Lu
+132   | chr0320      | Fan Lu (Dàrén)
 133   | chr0319      | Gien Lu (Elder)
 133   | chr0319_c00  | Gien Lu (Elder, Hawaiian Shirt)
 134   | chr0317      | Jack Trevor
@@ -87,22 +89,22 @@ ID    | CHR          | Полное имя в игре | Портрет
 143   | chr0325      | Giscard (Chief Engineer)
 144   | chr0326      | Bill Tausend (CEO)
 145   | chr0323      | David Callaghan (Professor)
-146   | chr0331      | Samuel Rocksmith
+146   | chr0331      | Samuel Rocksmith (Former President)
 147   | chr0330      | Cody McMillan (Warrant Officer)
 148   | chr0327      | Edmond Auclair (President)
-149   | chr0303      | Kasim Al-Fayed (Security Chief)
-149   | chr0303_c00  | Kasim Al-Fayed (Security Chief, Regular Clothes)
+149   | chr0303      | Kasim Al-Fayed (Security Chief) | avfc0303
+149   | chr0303_c00  | Kasim Al-Fayed (Security Chief, Regular Clothes) | avfc0303
 150   | chr0332      | Gilliam Thorndyke (General Manager)
-151   | chr5302      | Celis Ortesia (Dominion)
-152   | chr0306      | Leon Balthazar (Dominion)
-152   | chr0306_c00  | Leon Balthazar (Wearing Overcoat)
+151   | chr5302      | Celis Ortesia (Dominion) | avfc5302
+152   | chr0306      | Leon Balthazar (Dominion) | avfc0306
+152   | chr0306_c00  | Leon Balthazar (Wearing Overcoat) | avfc0306
 153   | chr0305      | Ashladd
 200   | chr5008      | Mare | avfc5008
 5000  | chr0785      | Gangster A | btlface0_c0785
 5001  | chr0786      | Gangster B | btlface0_c0786
 5002  | chr0787      | Gangster C | btlface0_c0787
-5003  | chr0726      | Mafia A | btlface0_c0726
-5004  | chr0726_c01  | Mafia B | btlface0_c0726_c01
+5003  | chr0726      | Mafioso A | btlface0_c0726
+5004  | chr0726_c01  | Mafioso B | btlface0_c0726_c01
 5100  | chr0550      | Sei
 5101  | chr0414      | Syd
 5102  | chr0551_c01  | Huang
@@ -131,8 +133,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling
 5351  | chr0833      | Bracer Lahad
-5353  | chr5116      | Olympia (Combat Walla)
-5400  | chr5401      | Hermès
+5353  | chr5116      | Olympia (Battle Gaya)
+5400  | chr5401      | Hermes
 8000  | chr0500      | Lott | btlface0_c0500
 8001  | chr0503      | Daniel | btlface0_c0503
 8002  | chr0787      | Gangster | btlface0_c0787
@@ -147,7 +149,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 8011  | chr0511a     | Richie
 8012  | chr5500b     | Amy
 8013  | chr0745      | Percy
-8014  | chr0730      | Station Worker
+8014  | chr0730      | Station Attendant
 8015  | chr0521a     | Bruno
 8016  | chr0710      | Roderick
 8017  | chr5541      | Lyla
@@ -172,7 +174,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 8036  | chr0712a     | Roger
 8037  | chr0786      | Damian | btlface0_c0786
 8038  | chr0731      | Security Guard A
-8039  | chr0731      | Security Guard
+8039  | chr0731      | Guard
 8040  | chr0740      | Harrison
 8041  | chr5720_c01  | Female Researcher?
 8042  | chr0717a     | Clément
@@ -212,8 +214,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 11026 | chr5795_c02  | Kaina
 11027 | chr0570_c01  | Mayor Weng
 11028 | chr5520b     | Annha
-11029 | chr0655_c01  | Vicar Johan
-11033 | chr0115_c01  | Traveler Melchior
+11029 | chr0655_c01  | Johan (Father)
+11033 | chr0115_c01  | Melchior (Traveler)
 11050 | chr0532      | Harry
 11051 | chr0540      | Mark
 11052 | chr5531      | Sheena
@@ -251,7 +253,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11087 | chr0500b     | Clutch
 11088 | chr5501b     | Gretta
 11089 | chr5502a     | Kopeyka
-11090 | chr0834      | Bracer Gray
+11090 | chr0834      | Gray (Bracer)
 11091 | chr0520_c01  | Hazel
 11092 | chr0712b     | Ilhan
 11093 | chr0711      | Manager Carlo
@@ -268,7 +270,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11116 | chr0405      | Jacobin
 11117 | chr0831      | Bracer Ewan
 11118 | chr5670      | Milty
-11120 | chr0570a     | Yimai
+11120 | chr0570a     | Yimai (Secondhand Dealer)
 11121 | chr0666      | Morgan
 11122 | chr5600a     | Maja
 11123 | chr5503a     | Lindsey
@@ -472,7 +474,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11468 | chr0669a     | Daskal
 11469 | chr5680_c01a | Receptionist Salma
 11470 | chr5501a     | Shayla
-11471 | chr5502b     | Laurel
+11471 | chr5502b     | Laure
 11472 | chr0720a     | Manager David
 11473 | chr0116_c00  | Harold
 11474 | chr0724_c01  | Dealer
@@ -540,7 +542,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11576 | chr0716_c02  | Chamberlain
 11577 | chr5675a     | Petra
 11578 | chr0530a     | Dick
-11579 | chr5676      | Chief Valeria
+11579 | chr5676      | Valeria (Section Chief)
 11580 | chr0720      | President Rooster
 11581 | chr0724_c02  | Receptionist Freyd
 11582 | chr0711b     | Lanmei
@@ -551,12 +553,12 @@ ID    | CHR          | Полное имя в игре | Портрет
 11587 | chr0500a     | De Niro
 11588 | chr0740      | Coolidge
 11589 | chr0660      | Police Officer
-11590 | chr0716_c01  | Clerk Oluger
+11590 | chr0716_c01  | Oluger (Clerk)
 11591 | chr5503b     | Meryl
 11592 | chr0716a     | Librarian Venter
 11593 | chr5725      | Professor Aurelie
 11594 | chr0740_c01  | Associate Professor Tain
-11595 | chr5720_c01a | Researcher Athena
+11595 | chr5720_c01a | Athena (Associate Professor)
 11596 | chr0410      | Researcher Lionel
 11597 | chr0735_c01  | Moritz
 11598 | chr0735a     | Gimbat
@@ -596,7 +598,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11676 | chr0501a     | Novic
 11677 | chr5531      | Lotta
 11678 | chr0550a     | Taihong
-11679 | chr5118_c01  | Kimono Woman
+11679 | chr5118_c01  | Woman in a Kimono
 11750 | chr5513b     | Director Flona
 11751 | chr0532a     | Jean
 11752 | chr5531_c01  | Sophie
@@ -735,27 +737,27 @@ ID    | CHR          | Полное имя в игре | Портрет
 15561 | chr0580      | Young Boy 1 (Eastern)
 15562 | chr0580a     | Young Boy 1 (Eastern; Alt Color 1)
 15563 | chr0590      | Little Boy 1 (Eastern)
-15564 | chr0600      | Young Man 1 (Middle Eastern)
-15565 | chr0600a     | Young Man 1 (Middle Eastern; Alt Color Version 1)
-15566 | chr0601      | Young Man 2 (Middle Eastern)
-15567 | chr0601a     | Young Man 2 (Middle Eastern; Alt Color Version 1)
-15568 | chr0610      | Middle-Aged Man 1 (Middle Eastern)
-15569 | chr0610_c01  | Middle-Aged Man 1 (Middle Eastern; Fat Version)
-15570 | chr0610a     | Middle-Aged Man 1 (Middle Eastern; Alt Color Version 1)
-15571 | chr0611      | Middle-Aged Man 2 (Middle Eastern)
-15572 | chr0611a     | Middle-Aged Man 2 (Middle Eastern; Alt Color Version 1)
-15573 | chr0620      | Old Man 1 (Middle Eastern)
-15574 | chr0620_c01  | Old Man 1 (Middle Eastern; Hairstyle/Color Changed)
-15575 | chr0630      | Young Boy 1 (Middle Eastern)
-15576 | chr0630a     | Young Boy 1 (Middle Eastern; Alt Color Version 1)
-15577 | chr0640      | Little Boy 1 (Middle Eastern)
+15564 | chr0600      | Young Man 1 (Central Eastern)
+15565 | chr0600a     | Young Man 1 (Central Eastern; Alt Color Version 1)
+15566 | chr0601      | Young Man 2 (Central Eastern)
+15567 | chr0601a     | Young Man 2 (Central Eastern; Alt Color Version 1)
+15568 | chr0610      | Middle-Aged Man 1 (Central Eastern)
+15569 | chr0610_c01  | Middle-Aged Man 1 (Central Eastern; Fat Version)
+15570 | chr0610a     | Middle-Aged Man 1 (Central Eastern; Alt Color Version 1)
+15571 | chr0611      | Middle-Aged Man 2 (Central Eastern)
+15572 | chr0611a     | Middle-Aged Man 2 (Central Eastern; Alt Color Version 1)
+15573 | chr0620      | Old Man 1 (Central Eastern)
+15574 | chr0620_c01  | Old Man 1 (Central Eastern; Hairstyle/Color Changed)
+15575 | chr0630      | Young Boy 1 (Central Eastern)
+15576 | chr0630a     | Young Boy 1 (Central Eastern; Alt Color Version 1)
+15577 | chr0640      | Little Boy 1 (Central Eastern)
 15578 | chr0652      | Caucasian Priest 1 (Young Man)
 15579 | chr0652_c01  | Caucasian Priest 2 (Young Man)
 15580 | chr0653      | Eastern Priest 1 (Young Man)
-15581 | chr0654      | Middle Eastern Priest 1 (Young Man)
-15582 | chr0655      | Caucasian Bishop 1 (Middle-Aged Man)
-15583 | chr0656      | Eastern Bishop 1 (Middle-Aged Man)
-15584 | chr0657      | Middle Eastern Bishop 1 (Middle-Aged Man)
+15581 | chr0654      | Central Eastern Priest 1 (Young Man)
+15582 | chr0655      | Caucasian Priest 1 (Middle-Aged Man)
+15583 | chr0656      | Eastern Priest 1 (Middle-Aged Man)
+15584 | chr0657      | Central Eastern Priest 1 (Middle-Aged Man)
 15585 | chr0658      | Archbishop 1 (Old Man)
 15586 | chr0660      | Republic Police Officer 1 (Young Man)
 15587 | chr0660_c01  | Republic Police Officer 2 (Young Man)
@@ -767,17 +769,17 @@ ID    | CHR          | Полное имя в игре | Портрет
 15593 | chr0668      | Young Man Laborer 1
 15594 | chr0668_c01  | Young Man Laborer 2
 15595 | chr0669      | Young Man Laborer 1
-15596 | chr0669a     | Young Man Laborer 1 (Skin and Hair Color Changed to Middle Eastern 1)
+15596 | chr0669a     | Young Man Laborer 1 (Skin and Hair Color Changed to Central Eastern 1)
 15597 | chr0670      | Young Man Engineer 1
 15598 | chr0670a     | Young Man Engineer 1 (Skin and Hair Color Changed to Eastern 1)
 15599 | chr0671      | Middle-Aged Man Engineer 1
 15600 | chr0700      | Caucasian Young Adult Chef 1
 15601 | chr0701      | Eastern Young Adult Chef 1
-15602 | chr0702      | Middle Eastern Young Adult Chef 1
+15602 | chr0702      | Central Eastern Young Adult Chef 1
 15603 | chr0703      | Caucasian Middle-Aged Chef 1
 15604 | chr0704      | Eastern Middle-Aged Chef 1
-15605 | chr0705      | Middle Eastern Middle-Aged Chef 1
-15606 | chr0705_c01  | Middle Eastern Middle-Aged Chef 1 (Middle-Aged Man; Fat Version)
+15605 | chr0705      | Central Eastern Middle-Aged Chef 1
+15606 | chr0705_c01  | Central Eastern Middle-Aged Chef 1 (Middle-Aged Man; Fat Version)
 15607 | chr0710      | Young Man 1 (Suit)
 15608 | chr0710a     | Young Man 1 (Suit; Alt Color Version 1)
 15609 | chr0710b     | Young Man 1 (Suit; Alt Skin Color Version 1; Eastern)
@@ -786,7 +788,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 15612 | chr0711b     | Young Man 2 (Suit; No Jacket; Alt Skin Color Version 1)
 15613 | chr0712      | Young Man 3 (Vest) | btlface0_c0712
 15614 | chr0712a     | Young Man 3 (Vest; Alt Color Version 1)
-15615 | chr0712b     | Young Man 3 (Vest; Alt Skin Color Version 1; Middle Eastern)
+15615 | chr0712b     | Young Man 3 (Vest; Alt Skin Color Version 1; Central Eastern)
 15616 | chr0715      | Middle-Aged Man 1 (Suit)
 15617 | chr0715a     | Middle-Aged Man 1 (Suit; Alt Color Version 1)
 15618 | chr0715b     | Middle-Aged Man 1 (Suit; Alt Color Version 2)
@@ -799,12 +801,12 @@ ID    | CHR          | Полное имя в игре | Портрет
 15625 | chr0717_c01  | Middle-Aged Man 3 (High Grade; Fat Version)
 15626 | chr0717a     | Middle-Aged Man 3 (High Grade; Alt Color Version 1)
 15627 | chr0717b     | Middle-Aged Man 3 (High Grade; Eastern)
-15628 | chr0717c     | Middle-Aged Man 3 (High Grade; Middle Eastern)
+15628 | chr0717c     | Middle-Aged Man 3 (High Grade; Central Eastern)
 15629 | chr0720      | Old Man 1 (Suit)
 15630 | chr0720_c01  | Old Man 1 (Suit; Old Man Huck Use)
-15631 | chr0720a     | Old Man 1 (Suit; Alt Skin Color Version 1; Middle Eastern)
+15631 | chr0720a     | Old Man 1 (Suit; Alt Skin Color Version 1; Central Eastern)
 15632 | chr0721      | Old Man 2 (Suit Vest)
-15633 | chr0721a     | Old Man 2 (Suit Vest; Middle Eastern)
+15633 | chr0721a     | Old Man 2 (Suit Vest; Central Eastern)
 15634 | chr0722      | Old Man 3 (High Grade)
 15635 | chr0724      | Young Man 3 (Dealer)
 15636 | chr0724_c01  | Middle-Aged Man 1 (Dealer)
@@ -815,9 +817,9 @@ ID    | CHR          | Полное имя в игре | Портрет
 15644 | chr0730      | Young Man Station Worker 1
 15645 | chr0731      | Young Man Station Worker 1 (Alt Station Worker Color)
 15646 | chr0735      | Young Man White Clothes 1
-15647 | chr0735a     | Young Man White Clothes 1 (Alt Skin Color Version 1; Middle Eastern)
+15647 | chr0735a     | Young Man White Clothes 1 (Alt Skin Color Version 1; Central Eastern)
 15648 | chr0735_c01  | Young Man White Clothes 2
-15649 | chr0735_c01a | Young Man White Clothes 2 (Alt Skin Color Version 1; Middle Eastern)
+15649 | chr0735_c01a | Young Man White Clothes 2 (Alt Skin Color Version 1; Central Eastern)
 15650 | chr0740      | Middle-Aged Man White Clothes 1
 15651 | chr0740_c01  | Middle-Aged Man White Clothes 2
 15652 | chr0745      | Young Man Coat 1
@@ -890,7 +892,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 15731 | chr5513b     | Middle-Aged Woman 4 (Rural; Alt Color Version 2)
 15732 | chr5520      | Old Woman 1 (City)
 15733 | chr5520a     | Old Woman 1 (City; Alt Color Version 1)
-15734 | chr5520b     | Old Woman 1 (City; Mayor Weng's Wife)
+15734 | chr5520b     | Old Woman 1 (City; Mayor Wen's Wife)
 15735 | chr5521      | Old Woman 2 (Rural)
 15736 | chr5522      | Old Woman 3 (Rural)
 15737 | chr5522a     | Old Woman 3 (Rural; Alt Color Version 1)
@@ -901,7 +903,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 15742 | chr5531a     | Young Girl 2 (City; Alt Color Version 1)
 15743 | chr5532      | Young Girl 2 (City)
 15744 | chr5532a     | Young Girl 2 (City; Alt Color Version 1)
-15745 | chr5532b     | Young Girl 2 (City; Alt Skin Color Version 1; Middle Eastern)
+15745 | chr5532b     | Young Girl 2 (City; Alt Skin Color Version 1; Central Eastern)
 15746 | chr5540      | Little Girl 1 (City)
 15747 | chr5540a     | Little Girl 1 (City; Alt Color Version 1)
 15748 | chr5540b     | Little Girl 1 (City; Alt Skin Color Version 1; Eastern)
@@ -924,37 +926,37 @@ ID    | CHR          | Полное имя в игре | Портрет
 15765 | chr5580a     | Young Girl 1 (Eastern; Alt Color Version 1)
 15766 | chr5590      | Little Girl 1 (Eastern)
 15767 | chr5590a     | Little Girl 1 (Eastern; Alt Color Version 1; Subdued?)
-15768 | chr5600      | Young Woman (Middle Eastern) 1
-15769 | chr5600a     | Young Woman 1 (Middle Eastern; Alt Color Version 1)
-15770 | chr5601      | Young Woman 2 (Middle Eastern)
-15771 | chr5601a     | Young Woman 2 (Middle Eastern; Alt Color Version 1)
-15772 | chr5610      | Middle-Aged Woman 1 (Middle Eastern)
-15773 | chr5610a     | Middle-Aged Woman 1 (Middle Eastern; Alt Color Version 1)
-15774 | chr5611      | Middle-Aged Woman 2 (Middle Eastern)
-15775 | chr5611_c01  | Middle-Aged Woman 2 (Middle Eastern; Fat Version)
-15776 | chr5611a     | Middle-Aged Woman 2 (Middle Eastern; Alt Color Version 1)
-15777 | chr5620      | Old Woman 1 (Middle Eastern)
-15778 | chr5630      | Young Girl 1 (Middle Eastern)
-15779 | chr5630a     | Young Girl 1 (Middle Eastern; Alt Color Version 1)
-15780 | chr5640      | Little Girl 1 (Middle Eastern)
-15781 | chr5640a     | Little Girl 1 (Middle Eastern; Alt Color Version 1)
+15768 | chr5600      | Young Woman (Central Eastern) 1
+15769 | chr5600a     | Young Woman 1 (Central Eastern; Alt Color Version 1)
+15770 | chr5601      | Young Woman 2 (Central Eastern)
+15771 | chr5601a     | Young Woman 2 (Central Eastern; Alt Color Version 1)
+15772 | chr5610      | Middle-Aged Woman 1 (Central Eastern)
+15773 | chr5610a     | Middle-Aged Woman 1 (Central Eastern; Alt Color Version 1)
+15774 | chr5611      | Middle-Aged Woman 2 (Central Eastern)
+15775 | chr5611_c01  | Middle-Aged Woman 2 (Central Eastern; Fat Version)
+15776 | chr5611a     | Middle-Aged Woman 2 (Central Eastern; Alt Color Version 1)
+15777 | chr5620      | Old Woman 1 (Central Eastern)
+15778 | chr5630      | Young Girl 1 (Central Eastern)
+15779 | chr5630a     | Young Girl 1 (Central Eastern; Alt Color Version 1)
+15780 | chr5640      | Little Girl 1 (Central Eastern)
+15781 | chr5640a     | Little Girl 1 (Central Eastern; Alt Color Version 1)
 15782 | chr5650      | Caucasian Nun 1 (Young Woman)
-15783 | chr5650a     | Caucasian Nun 1 (Young Woman; Middle Eastern)
+15783 | chr5650a     | Caucasian Nun 1 (Young Woman; Central Eastern)
 15784 | chr5650_c01  | Caucasian Nun 2 (Young Woman)
 15785 | chr5651      | Eastern Nun 1 (Young Woman)
-15786 | chr5652      | Middle Eastern Nun 1 (Young Woman)
+15786 | chr5652      | Central Eastern Nun 1 (Young Woman)
 15787 | chr5655      | Caucasian Nun 1 (Middle-Aged Woman)
 15788 | chr5660      | Republic Police Officer 1 (Young Woman)
-15789 | chr5660a     | Republic Police Officer 1 (Young Woman; Middle Eastern; No Hat)
+15789 | chr5660a     | Republic Police Officer 1 (Young Woman; Central Eastern; No Hat)
 15790 | chr5660_c01  | Republic Police Officer 2 (Young Woman)
 15791 | chr5670      | Suit 1 (Young Woman)
 15792 | chr5670a     | Suit 1 (Young Woman; Alt Color Version 1)
 15793 | chr5670b     | Suit 1 (Young Woman; Alt Skin Color Version 1; Eastern)
-15794 | chr5670c     | Suit 1 (Young Woman; Alt Skin Color Version 2; Middle Eastern)
+15794 | chr5670c     | Suit 1 (Young Woman; Alt Skin Color Version 2; Central Eastern)
 15795 | chr5671      | Suit 2 (Young Woman)
 15796 | chr5671_c01  | Suit 2 (Young Woman; Carol)
 15797 | chr5671a     | Suit 2 (Young Woman; Alt Color Version 1)
-15798 | chr5671b     | Suit 2 (Young Woman; Alt Skin Color Version 1; Middle Eastern)
+15798 | chr5671b     | Suit 2 (Young Woman; Alt Skin Color Version 1; Central Eastern)
 15799 | chr5675      | Suit 1 (Middle-Aged Woman)
 15800 | chr5675_c01  | Suit 1 (Middle-Aged Woman; Alt Hairstyle Color 1)
 15801 | chr5675a     | Suit 1 (Middle-Aged Woman; Alt Color Version 1)
@@ -965,9 +967,9 @@ ID    | CHR          | Полное имя в игре | Портрет
 15806 | chr5680a     | Young Woman 1 (Receptionist; Alt Color Version 1)
 15807 | chr5680b     | Young Woman 1 (Receptionist; Alt Skin Color; Eastern)
 15808 | chr5680_c01  | Young Woman 2 (Receptionist)
-15809 | chr5680_c01a | Young Woman 2 (Receptionist; Alt Skin Color; Middle Eastern)
+15809 | chr5680_c01a | Young Woman 2 (Receptionist; Alt Skin Color; Central Eastern)
 15810 | chr5682      | Young Woman 1 (Dealer)
-15811 | chr5682a     | Young Woman 1 (Dealer; Middle Eastern)
+15811 | chr5682a     | Young Woman 1 (Dealer; Central Eastern)
 15812 | chr5695      | Caucasian Female Chef (Young Woman)
 15813 | chr5695a     | Caucasian Female Chef (Young Woman; Eastern)
 15814 | chr5700      | Female Student 1
@@ -976,13 +978,13 @@ ID    | CHR          | Полное имя в игре | Портрет
 15817 | chr5705      | Maid 1
 15818 | chr5705a     | Maid 1 (Alt Skin Color 1; Eastern)
 15819 | chr5706      | Waitress 1
-15820 | chr5706a     | Waitress 1 (Alt Skin Color 1; Middle Eastern)
+15820 | chr5706a     | Waitress 1 (Alt Skin Color 1; Central Eastern)
 15821 | chr5710      | Nightlife Dress Woman 1 (Young Woman) | btlface0_c5710
 15822 | chr5710a     | Nightlife Dress Woman 1 (Young Woman; Alt Color Version 1)
-15823 | chr5710b     | Nightlife Dress Woman 1 (Young Woman; Middle Eastern)
+15823 | chr5710b     | Nightlife Dress Woman 1 (Young Woman; Central Eastern)
 15824 | chr5711      | Nightlife Dress Woman 2 (Young Woman) | btlface0_c5711
 15825 | chr5711a     | Nightlife Dress Woman 2 (Young Woman; Alt Color Version 1)
-15826 | chr5711b     | Nightlife Dress Woman 2 (Young Woman; Middle Eastern)
+15826 | chr5711b     | Nightlife Dress Woman 2 (Young Woman; Central Eastern)
 15827 | chr5715      | Pole Dancer 1 (Young Woman)
 15828 | chr5715a     | Pole Dancer 1 (Young Woman; Alt Color)
 15829 | chr5715_c01  | Pole Dancer 2 (Young Woman)
@@ -1016,13 +1018,13 @@ ID    | CHR          | Полное имя в игре | Портрет
 15874 | chr0791      | Jaeger Dropout Alt Color 1 (Gun) | btlface0_c0791
 15875 | chr0791_c01  | Jaeger Dropout Alt Color 1 (Sword) | btlface0_c0791_c01
 15876 | chr0520a     | Old Man 1 (City; Alt Color Version 1; Kind Eyes Version)
-15879 | chr0720a     | Old Man 1 (Suit; Alt Skin Color Version 1; Middle Eastern; Kind Eyes Version)
+15879 | chr0720a     | Old Man 1 (Suit; Alt Skin Color Version 1; Central Eastern; Kind Eyes Version)
 15883 | chr5505      | Young Woman 6 (Rural)
 15884 | chr5501_c01  | Young Woman 2 Alt Color and Alt Hair
 15885 | chr5700_c03  | Female Student 4
 15886 | chr5753      | Female Bracer 3 (Young Adult)
 15887 | chr0720_c02  | Old Man 1 (Suit; Alt Hair)
-15888 | chr0631      | Young Boy (Middle Eastern) 2
+15888 | chr0631      | Young Boy (Central Eastern) 2
 15889 | chr0715c     | Middle-Aged Man 1 (Suit; Alt Color Version 3)
 15890 | chr5710_c01  | Nightlife Dress Woman 1 (Young Woman; Alt Hair 1)
 15891 | chr5711_c02  | Nightlife Dress Woman 2 (Young Woman; Alt Hair 1)
@@ -1032,16 +1034,16 @@ ID    | CHR          | Полное имя в игре | Портрет
 19403 | chr0510      | Middle-Aged Man
 19404 | chr5710      | Hostess | btlface0_c5710
 19405 | chr5520      | Old Woman A
-19406 | chr0510      | Middle-Aged Man A
+19406 | chr0510      | Middle-aged Man A
 19407 | chr5007_c03  | Grimcat | avfc5007_c03
-19408 | chr0520      | Old Man A
+19408 | chr0520      | Older Man A
 19410 | chr0500      | Young Man A | btlface0_c0500
 19411 | chr0501      | Young Man B | btlface0_c0501
 19412 | chr0502      | Young Man C
 19413 | chr5500      | Young Woman A
 19414 | chr5113      | Yin | avfc5113_c00
-19415 | chr0000      | Incoming Call Message
-19797 | chr9990      | Dummy-kun
+19415 | chr0000      | Message
+19797 | chr9990      | Dummy
 49990 | chr5116      | Test Character 0
 49991 | chr5003_c50  | Test Character 1 (DLC/Feri)
 49992 | chr5005_c50  | Test Character 2 (DLC/Risette)

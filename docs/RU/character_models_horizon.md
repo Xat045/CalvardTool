@@ -2,6 +2,8 @@
 
 Из `t_name.tbl` игры, английский. Если полного имени там нет, оно взято из другой
 игры серии для того же номера модели. Имена оставлены как в английской версии игры.
+Один и тот же персонаж (тот же ID и модель) во всех трёх списках назван одинаково:
+имя и фамилия, должность в скобках.
 
 - **ID:** номер персонажа в `t_name.tbl`, его указывают скрипты, например
   `system[5,6](106, ...)`. Это не номер модели. `65535`, похоже, значит, что своего ID
@@ -45,7 +47,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 103   | chr0117_c10  | Arioch
 104   | chr0118      | Ellroy Harwood (the Oathbreaker) | avfc0118
 105   | chr0119      | Roy Gramheart (President)
-106   | chr0300      | Alvis | btlface0_c0300
+106   | chr0300      | Alvis (Bracer) | btlface0_c0300
 107   | chr0301      | Cao Lee | avfc0301
 108   | chr0302      | Sherid Asval (Prince) | btlface0_c0302
 110   | chr5115_c10  | Viola
@@ -58,7 +60,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 117   | chr0311_c11  | Giacomo
 118   | chr0315      | Nate (Detective)
 119   | chr0314      | Daswani (Inspector) | btlface0_c0314
-120   | chr5320      | Second Lieutenant Kaela | btlface0_c5320
+120   | chr5320      | Kaela McMillan (Second Lieutenant) | btlface0_c5320
 121   | chr5313      | Marielle Aymé | btlface0_c5313
 122   | chr0316      | Dingo Brad | btlface0_c0316
 123   | chr0313      | Bermotti
@@ -70,8 +72,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 129   | chr5315      | Nina Fenly | btlface0_c5315
 130   | chr0318      | Maxim Lugan | btlface0_c0318
 131   | chr5316      | Ashen Lu | btlface0_c5316
-132   | chr0320      | Fan Dàrén
-133   | chr0319      | Gien Lu
+132   | chr0320      | Fan Lu (Dàrén)
+133   | chr0319      | Gien Lu (Elder)
 134   | chr0317      | Jack Trevor | btlface0_c0317
 135   | chr5314      | Halle Coleman | btlface0_c5314
 136   | chr5317      | Saara
@@ -84,14 +86,14 @@ ID    | CHR          | Полное имя в игре | Портрет
 143   | chr0325      | Giscard (Chief Engineer)
 144   | chr0326      | Bill Tausend (CEO)
 145   | chr0323      | David Callaghan (Professor)
-146   | chr0331      | Former President Rocksmith
+146   | chr0331      | Samuel Rocksmith (Former President)
 147   | chr0330      | Cody McMillan (Warrant Officer)
 148   | chr0327      | Edmond Auclair (President)
 149   | chr0303      | Kasim Al-Fayed (Security Chief) | avfc0303
-150   | chr0332      | Gilliam Thorndyke
+150   | chr0332      | Gilliam Thorndyke (General Manager)
 151   | chr5302      | Celis Ortesia (Dominion) | avfc5302
 152   | chr0306      | Leon Balthazar (Dominion) | avfc0306
-153   | chr0305_c01  | Ashladd | btlface0_c0305_c01
+153   | chr0305_c01  | Ashladd (Vice Captain) | btlface0_c0305_c01
 155   | chr0010      | Grendel Zolga | btlface0_c0010
 158   | chr0122_c10  | Ixs the Glinting Bullet
 159   | chr5120      | Jorda Eldarion | avfc5120
@@ -423,8 +425,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 11026 | chr5795_c02  | Kaina
 11027 | chr0570_c01  | Mayor Weng
 11028 | chr5520b     | Annha
-11029 | chr0655_c01  | Father Johan
-11033 | chr0115_c01  | Melchior
+11029 | chr0655_c01  | Johan (Father)
+11033 | chr0115_c01  | Melchior (Traveler)
 11050 | chr0532      | Harry
 11051 | chr0540      | Mark
 11052 | chr5531      | Sheena
@@ -462,7 +464,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11087 | chr0500b     | Clutch
 11088 | chr5501b     | Gretta
 11089 | chr5502a     | Kopeyka
-11090 | chr0834      | Gray
+11090 | chr0834      | Gray (Bracer)
 11091 | chr0520_c01  | Hazel
 11092 | chr0712b     | Ilhan
 11093 | chr0711      | Manager Carlo
@@ -479,7 +481,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11116 | chr0405      | Jacobin
 11117 | chr0831      | Bracer Ewan
 11118 | chr5670      | Milty
-11120 | chr0570a     | Secondhand Dealer Yimai
+11120 | chr0570a     | Yimai (Secondhand Dealer)
 11121 | chr0666      | Morgan
 11122 | chr5600a     | Maja
 11123 | chr5503a     | Lindsey
@@ -770,7 +772,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11576 | chr0716_c02  | Chamberlain
 11577 | chr5675a     | Petra
 11578 | chr0530a     | Dick
-11579 | chr5676      | Section Chief Valeria
+11579 | chr5676      | Valeria (Section Chief)
 11580 | chr0720      | President Rooster
 11581 | chr0724_c02  | Receptionist Freyd
 11582 | chr0711b     | Lanmei
@@ -781,12 +783,12 @@ ID    | CHR          | Полное имя в игре | Портрет
 11587 | chr0500a     | De Niro
 11588 | chr0740      | Coolidge
 11589 | chr0660      | Police Officer
-11590 | chr0716_c01  | Clerk Oluger
+11590 | chr0716_c01  | Oluger (Clerk)
 11591 | chr5503b     | Meryl
 11592 | chr0716a     | Librarian Venter
 11593 | chr5725      | Professor Aurelie
 11594 | chr0740_c01  | Associate Professor Tain
-11595 | chr5720_c01a | Associate Professor Athena
+11595 | chr5720_c01a | Athena (Associate Professor)
 11596 | chr0410      | Researcher Lionel
 11597 | chr0735_c01  | Moritz
 11598 | chr0735a     | Gimbat

@@ -2,6 +2,8 @@
 
 Из `t_name.tbl` игры, английский. Если полного имени там нет, оно взято из другой
 игры серии для того же номера модели. Имена оставлены как в английской версии игры.
+Один и тот же персонаж (тот же ID и модель) во всех трёх списках назван одинаково:
+имя и фамилия, должность в скобках.
 
 - **ID:** номер персонажа в `t_name.tbl`, его указывают скрипты, например
   `system[5,6](106, ...)`. Это не номер модели. `65535`, похоже, значит, что своего ID
@@ -23,7 +25,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 6     | chr5005      | Risette Twinings (Risette's Double) | avfc5005
 7     | chr0113      | Walter Kron (the Direwolf) | avfc0113
 8     | chr0111      | Zin Vathek (the Immovable) | avfc0111
-9     | chr0112      | René Kincaid | avfc0112
+9     | chr0112      | René Kincaid (Presidential Aide) | avfc0112
 9     | chr0112_c02  | René Kincaid (Towel) | avfc0112
 10    | chr5007      | Judith Lanster | avfc5007
 11    | chr5110      | Elaine Auclair (Bracer Outfit) | avfc5110
@@ -45,7 +47,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 103   | chr0117      | Arioch | btlface0_c0117
 104   | chr0118      | Ellroy Harwood (the Oathbreaker) | btlface0_c0118
 105   | chr0119      | Roy Gramheart (President)
-106   | chr0300      | Alvis | btlface0_c0300
+106   | chr0300      | Alvis (Bracer) | btlface0_c0300
 107   | chr0301      | Cao Lee | avfc0301
 108   | chr0302      | Sherid Asval (Prince) | btlface0_c0302
 110   | chr5115      | Viola | btlface0_c5115
@@ -61,7 +63,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 117   | chr0311_c00  | Giacomo (Corpse Version)
 118   | chr0315      | Nate (Detective)
 119   | chr0314      | Daswani (Inspector)
-120   | chr5320      | Second Lieutenant Kaela | btlface0_c5320
+120   | chr5320      | Kaela McMillan (Second Lieutenant) | btlface0_c5320
 121   | chr5313      | Marielle Aymé | btlface0_c5313
 121   | chr5313_c00  | Marielle Aymé (No Hat) | btlface0_c5313
 121   | chr5313_c01  | Marielle Aymé (Clothes Half-Disintegrated) | btlface0_c5313
@@ -78,9 +80,9 @@ ID    | CHR          | Полное имя в игре | Портрет
 130   | chr0318      | Maxim Lugan | btlface0_c0318
 130   | chr0318_c00  | Maxim Lugan (Muddy) | btlface0_c0318
 131   | chr5316      | Ashen Lu
-132   | chr0320      | Fan Lu
-133   | chr0319      | Gien Lu
-133   | chr0319_c00  | Gien Lu (Hawaiian Shirt)
+132   | chr0320      | Fan Lu (Dàrén)
+133   | chr0319      | Gien Lu (Elder)
+133   | chr0319_c00  | Gien Lu (Elder, Hawaiian Shirt)
 134   | chr0317      | Jack Trevor | btlface0_c0317
 135   | chr5314      | Halle Coleman | btlface0_c5314
 136   | chr5317      | Saara
@@ -96,26 +98,26 @@ ID    | CHR          | Полное имя в игре | Портрет
 143   | chr0325      | Giscard (Chief Engineer)
 144   | chr0326_c00  | Bill Tausend
 145   | chr0323      | David Callaghan (Professor)
-146   | chr0331      | Samuel Rocksmith
+146   | chr0331      | Samuel Rocksmith (Former President)
 147   | chr0330      | Cody McMillan (Warrant Officer) | btlface0_c0330_c00
 147   | chr0330_c00  | Cody McMillan (Warrant Officer, Special Ops Uniform) | btlface0_c0330_c00
 148   | chr0327      | Edmond Auclair (President)
 149   | chr0303      | Kasim Al-Fayed (Security Chief) | avfc0303
-150   | chr0332      | Mr. Thorndyke
+150   | chr0332      | Gilliam Thorndyke (General Manager)
 151   | chr5302      | Celis Ortesia (Dominion) | avfc5302
 151   | chr5302_c02  | Celis Ortesia (Towel) | avfc5302
 152   | chr0306      | Leon Balthazar (Dominion) | avfc0306
 152   | chr0306_c02  | Leon Balthazar (Towel) | avfc0306
 152   | chr0306_c03  | Leon Balthazar (Injured) | avfc0306
-153   | chr0305_c01  | Vice Captain Ashladd | btlface0_c0305_c01
+153   | chr0305_c01  | Ashladd (Vice Captain) | btlface0_c0305_c01
 155   | chr0010      | Grendel Zolga | btlface0_c0010
 158   | chr0122      | Ixs | btlface0_c0122
 158   | chr0122_c00  | Ixs (Twin Enforcer - Brother/Hooded) | btlface0_c0122
 159   | chr5120      | Jorda Eldarion | btlface0_c5120
 159   | chr5120_c00  | Jorda Eldarion (Twin Enforcer - Sister/Hooded) | btlface0_c5120
 160   | chr0334      | Gaolang | btlface0_c0334
-161   | chr0121      | Gardenmaster | btlface0_c0121
-163   | chr0333      | Man in a Black Coat
+161   | chr0121      | The Gardenmaster | btlface0_c0121
+163   | chr0333      | Man in Black Coat
 164   | chr5324      | Princess Zita | btlface0_c5324
 165   | chr5325      | Mirabel
 165   | chr5325_c00  | Mirabel (No Headset)
@@ -126,7 +128,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 172   | chr0122_c01  | Ixs (Disguised)
 200   | chr5008      | Mare | avfc5008
 215   | chr5009_c00  | Lapis Rosenberg | avfc5009_00
-220   | chr5009      | Carmine Altera
+220   | chr5009      | Carmine Altera | avfc5009
 550   | chr0805_c08  | Male Student
 551   | chr5700_c09  | Female Student
 5000  | chr0785      | Gangster A | btlface0_c0785
@@ -162,13 +164,13 @@ ID    | CHR          | Полное имя в игре | Портрет
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling | btlface0_c5751
 5351  | chr0833      | Bracer Lahad
-5353  | chr5116      | Olympia (Combat Walla)
-5400  | chr5401      | Hermès
+5353  | chr5116      | Olympia (Battle Gaya)
+5400  | chr5401      | Hermes
 5450  | chr0712_c01  | Ethan
 5451  | chr0427      | Glasgow
 5550  | chr0413      | Ronald
-5551  | chr0668      | Man Dressed As Construction Worker
-5700  | chr0510b     | Terrorist Remnant
+5551  | chr0668      | Man Dressed Like a Construction Worker
+5700  | chr0510b     | Remnant Terrorist
 5800  | chr0790      | Jaeger Dropout | btlface0_c0790
 5801  | chr0790      | Jaeger Dropout | btlface0_c0790
 5802  | chr0790      | Jaeger Dropout | btlface0_c0790
@@ -188,7 +190,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 8011  | chr0511a     | Richie
 8012  | chr5500b     | Amy
 8013  | chr0745      | Percy
-8014  | chr0730      | Station Worker
+8014  | chr0730      | Station Attendant
 8015  | chr0521a     | Bruno
 8016  | chr0710      | Roderick
 8017  | chr5541      | Lyla
@@ -213,7 +215,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 8036  | chr0712a     | Roger | btlface0_c0712a
 8037  | chr0786      | Damian | btlface0_c0786
 8038  | chr0731      | Security Guard A
-8039  | chr0731      | Security Guard
+8039  | chr0731      | Guard
 8040  | chr0740      | Harrison
 8041  | chr5720_c01  | Female Researcher?
 8042  | chr0717a     | Clément
@@ -273,15 +275,15 @@ ID    | CHR          | Полное имя в игре | Портрет
 8098  | chr5560a     | Judge
 8099  | chr0716      | Minhou
 8100  | chr0710b     | Shipping Worker
-8101  | chr0757      | Devancy Eldest Son | btlface0_c0757
+8101  | chr0757      | Eldest Devancy Brother | btlface0_c0757
 8102  | chr0731_c01  | Devancy Middle Son | btlface0_c0731_c01
 8103  | chr0665_c01  | Devancy Youngest Son | btlface0_c0665_c01
 8105  | chr5675a     | Teresa
-8106  | chr0711_c01  | Staff Member | btlface0_c0711_c01
-8107  | chr0665      | Man Handing Out Balloons
-8108  | chr5511b     | Suspicious Woman | btlface0_c5511b
+8106  | chr0711_c01  | Staff | btlface0_c0711_c01
+8107  | chr0665      | Young Man Handing Out Balloons
+8108  | chr5511b     | Suspicious Middle-Aged Woman | btlface0_c5511b
 8109  | chr0511b     | Conrad
-8110  | chr0710_c01  | Party Planner
+8110  | chr0710_c01  | Event Planner
 8111  | chr0419      | Dunne
 8112  | chr0412      | Hubert
 8113  | chr0724      | Kenny
@@ -289,7 +291,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 8115  | chr0512a     | Suspicious Man
 8116  | chr5504b     | Dorothea
 8117  | chr0806      | Boys' Basketball Team Captain
-8118  | chr0805_c10  | Boys' Basketball Team Manager
+8118  | chr0805_c10  | Manager of the Boys' Basketball Team
 8119  | chr5700_c03  | Girls' Basketball Team Manager
 11000 | chr0661_c01  | Sr. Officer Walley
 11001 | chr0666      | Boss Goddard
@@ -317,8 +319,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 11026 | chr5795_c02  | Kaina
 11027 | chr0570_c01  | Mayor Weng
 11028 | chr5520b     | Annha
-11029 | chr0655_c01  | Vicar Johan
-11033 | chr0115_c01  | Melchior
+11029 | chr0655_c01  | Johan (Father)
+11033 | chr0115_c01  | Melchior (Traveler)
 11050 | chr0532      | Harry
 11051 | chr0540      | Mark
 11052 | chr5531      | Sheena
@@ -356,7 +358,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11087 | chr0500b     | Clutch
 11088 | chr5501b     | Gretta
 11089 | chr5502a     | Kopeyka
-11090 | chr0834      | Bracer Gray
+11090 | chr0834      | Gray (Bracer)
 11091 | chr0520_c01  | Hazel
 11092 | chr0712b     | Ilhan
 11093 | chr0711      | Manager Carlo
@@ -373,7 +375,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11116 | chr0405      | Jacobin
 11117 | chr0831      | Bracer Ewan
 11118 | chr5670      | Milty
-11120 | chr0570a     | Secondhand Dealer Yimai
+11120 | chr0570a     | Yimai (Secondhand Dealer)
 11121 | chr0666      | Morgan
 11122 | chr5600a     | Maja
 11123 | chr5503a     | Lindsey
@@ -655,7 +657,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11576 | chr0716_c02  | Chamberlain
 11577 | chr5675a     | Petra
 11578 | chr0530a     | Dick
-11579 | chr5676      | Chief Valeria
+11579 | chr5676      | Valeria (Section Chief)
 11580 | chr0720      | President Rooster
 11581 | chr0724_c02  | Receptionist Freyd
 11582 | chr0711b     | Lanmei
@@ -666,12 +668,12 @@ ID    | CHR          | Полное имя в игре | Портрет
 11587 | chr0500a     | De Niro
 11588 | chr0740      | Coolidge
 11589 | chr0660      | Police Officer
-11590 | chr0716_c01  | Office Worker Oluger
+11590 | chr0716_c01  | Oluger (Clerk)
 11591 | chr5503b     | Meryl
 11592 | chr0716a     | Librarian Venter
 11593 | chr5725      | Professor Aurelie
 11594 | chr0740_c01  | Associate Professor Tain
-11595 | chr5720_c01a | Researcher Athena
+11595 | chr5720_c01a | Athena (Associate Professor)
 11596 | chr0410      | Researcher Lionel
 11597 | chr0735_c01  | Moritz
 11598 | chr0735a     | Gimbat
@@ -827,7 +829,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 11938 | chr0806_c01  | ◆Courtyard Stall NPC Student
 11939 | chr5701      | ◆Courtyard Stall NPC Student
 11940 | chr5540b     | Lost Child
-11941 | chr5510      | Visitor
+11941 | chr5510      | Visitor's Mother
 11942 | chr5531_c01  | Visitor's Daughter
 12000 | chr5411      | Meixin
 12001 | chr5580      | Tiantian
@@ -1403,9 +1405,9 @@ ID    | CHR          | Полное имя в игре | Портрет
 19403 | chr0510      | Middle-Aged Man
 19404 | chr5710      | Hostess | btlface0_c5710
 19405 | chr5520      | Old Woman A
-19406 | chr0510      | Middle-Aged Man A
+19406 | chr0510      | Middle-aged Man A
 19407 | chr5007_c03  | Grimcat | avfc5007_c03
-19408 | chr0520      | Old Man A
+19408 | chr0520      | Older Man A
 19410 | chr0500      | Young Man A | btlface0_c0500
 19411 | chr0501      | Young Man B | btlface0_c0501
 19412 | chr0502      | Young Man C
@@ -1416,7 +1418,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 19417 | chr5561_c01  | Middle-Aged Woman
 19418 | chr5551a     | Young Woman
 19419 | chr0561_c01  | Middle-Aged Man
-19420 | chr0670      | Man Dressed As Construction Worker
+19420 | chr0670      | Man Dressed Like a Construction Worker
 19797 | chr9990      | Dummy
 49990 | chr0120_c03  | Test Character 0 (Mare)
 49991 | chr0000_c62  | Test Character 1 (Costume Van Test)
