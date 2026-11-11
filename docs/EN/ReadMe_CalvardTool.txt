@@ -11,12 +11,14 @@ WHAT IT DOES
 
 ──────────────────────────────── QUICK START
 
-  1. 'Game folder or files': 'Browse…' → the game folder or a translation mod's folder. You can also drop the game
+  The window has two tabs: 'Decompile' and 'Build'. They share the project folder, the file mask and the log.
+
+  1. The 'Decompile' tab. 'Game folder or files': 'Browse…' → the game folder or a translation mod's folder. You can also drop the game
      folder or .p3a files on the window.
   2. The 'What to decompile' window opens: tick what you need and click 'Done'.
-  3. 'Project folder (for editing)' is where the files go; 'Output folder' is a separate folder for the result.
+  3. 'Project folder (for editing)' is where the files go; on the 'Build' tab, 'Output folder' is a separate folder for the result.
   4. 'Decompile all' → edit the files in the project folder.
-  5. 'Build' → tick the folders in the 'What to build' window → 'Build'.
+  5. The 'Build' tab, 'Build' → tick the folders in the 'What to build' window → 'Build'.
      Copy the result into the game folder, replacing the files. KEEP A COPY OF THE ORIGINALS
      (Steam may "repair" changed archives when it verifies the files).
 

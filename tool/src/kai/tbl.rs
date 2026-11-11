@@ -260,7 +260,7 @@ fn write_book(rows: &[Row], file_name: &str, names: &HashMap<usize, (u64, String
 		let ws = wb.add_worksheet();
 		ws.set_name(SHEET).map_err(e)?;
 		ws.write_string_with_format(0, 0, tr("ID (раздел#номер.поле)", "ID (section#number.field)"), &head).map_err(e)?;
-		ws.write_string_with_format(0, 1, &lformat!("Текст — редактируйте этот столбец ({file_name})", "Text: edit this column ({file_name})"), &head).map_err(e)?;
+		ws.write_string_with_format(0, 1, lformat!("Текст — редактируйте этот столбец ({file_name})", "Text: edit this column ({file_name})"), &head).map_err(e)?;
 		ws.write_string_with_format(0, 2, tr("Оригинал (для справки)", "Original (for reference)"), &head).map_err(e)?;
 		ws.write_string_with_format(0, 3, tr("служебное", "internal"), &head).map_err(e)?;
 		ws.set_column_width(0, 34).map_err(e)?;
@@ -279,7 +279,7 @@ fn write_book(rows: &[Row], file_name: &str, names: &HashMap<usize, (u64, String
 			ws.write_string_with_format(n, 0, &r.id, &grey).map_err(e)?;
 			ws.write_string_with_format(n, 1, &r.text, &wrap).map_err(e)?;
 			ws.write_string_with_format(n, 2, &r.text, &grey).map_err(e)?;
-			ws.write_string(n, 3, &r.ptr_pos.to_string()).map_err(e)?;
+			ws.write_string(n, 3, r.ptr_pos.to_string()).map_err(e)?;
 			let rec = r.id.strip_prefix(NAME_TABLE).and_then(|x| x.strip_prefix('#')).and_then(|x| x.split('.').next()).and_then(|x| x.parse::<usize>().ok());
 			if let Some((id, model)) = rec.and_then(|x| names.get(&x)) {
 				ws.write_number_with_format(n, 4, *id as f64, &grey).map_err(e)?;
@@ -347,11 +347,10 @@ pub fn compile_checked(book: &[u8], orig: &[u8]) -> Result<(Vec<u8>, Vec<String>
 						if p < data_end || p >= orig.len() {
 							continue;
 						}
-						if let Some(s) = read_cstr(orig, p) {
-							if !s.is_empty() {
+						if let Some(s) = read_cstr(orig, p)
+							&& !s.is_empty() {
 								all.push((id, s.to_string()));
 							}
-						}
 					}
 				}
 			}

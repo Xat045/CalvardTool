@@ -346,7 +346,7 @@ fn write(o: &mut Out, orig: &[u8], pos: &mut usize, ty: &Value, v: &Value, what:
 		let mut r = *pos;
 		let old = read(orig, &mut r, ty);
 		if old.as_ref() != Some(v) {
-			while o.b.len() % n != 0 {
+			while !o.b.len().is_multiple_of(n) {
 				o.b.push(0);
 			}
 			let np = o.b.len() as u64;

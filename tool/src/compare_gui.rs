@@ -60,6 +60,50 @@ fn clamp_safe(v: f32, min: f32, max: f32) -> f32 {
 }
 
 const FACE: f32 = 52.0;
+const CELL: u32 = 96;
+const CELL_COLS: u32 = 16;
+
+struct CalTables {
+	cells: HashMap<u32, u32>,
+	voice: HashMap<u32, u32>,
+	names: HashMap<u32, (String, String)>,
+	model_id: HashMap<String, u32>,
+	models: HashMap<String, (Option<u32>, String)>,
+}
+
+fn cal_tables(dir: &'static str) -> &'static CalTables {
+	static T: std::sync::OnceLock<std::sync::Mutex<HashMap<&'static str, &'static CalTables>>> = std::sync::OnceLock::new();
+	let mut m = T.get_or_init(Default::default).lock().unwrap();
+	m.entry(dir).or_insert_with(|| {
+		let text = |f: &str| crate::kai_buttons::pack::get(&format!("{dir}/{f}")).map(|b| String::from_utf8_lossy(b).to_string()).unwrap_or_default();
+		let mut names = HashMap::new();
+		let mut model_id = HashMap::new();
+		for l in text("names.tsv").lines() {
+			let c: Vec<&str> = l.split('\t').collect();
+			if let (3, Ok(id)) = (c.len(), c[0].parse::<u32>()) {
+				model_id.entry(c[1].to_string()).or_insert(id);
+				names.insert(id, (c[1].to_string(), c[2].to_string()));
+			}
+		}
+		let mut models = HashMap::new();
+		for l in text("models.tsv").lines() {
+			let c: Vec<&str> = l.split('\t').collect();
+			if c.len() == 4 {
+				models.insert(c[0].to_string(), (c[1].parse().ok(), c[3].to_string()));
+			}
+		}
+		Box::leak(Box::new(CalTables { cells: compare::number_pairs(&text("portraits.tsv")), voice: compare::number_pairs(&text("active_voice.tsv")), names, model_id, models }))
+	})
+}
+
+fn row_skin<'a>(t: &CalTables, pair: &'a compare::Pair) -> Option<&'a str> {
+	let known = pair.who.is_some_and(|id| t.names.contains_key(&id));
+	match pair.skin.strip_prefix('~') {
+		Some(_) if known => None,
+		Some(m) => Some(m),
+		None => (!pair.skin.is_empty()).then_some(pair.skin.as_str()),
+	}
+}
 
 fn face_index(pack: &'static [u8]) -> HashMap<u32, &'static [u8]> {
 	let mut out = HashMap::new();
@@ -131,7 +175,7 @@ fn group(n: usize) -> String {
 	let s = n.to_string();
 	let mut out = String::new();
 	for (i, c) in s.chars().enumerate() {
-		if i > 0 && (s.len() - i) % 3 == 0 {
+		if i > 0 && (s.len() - i).is_multiple_of(3) {
 			out.push('\u{202f}');
 		}
 		out.push(c);
@@ -180,8 +224,13 @@ pub struct App {
 	inline: Option<Inline>,
 	face_idx: HashMap<&'static str, HashMap<u32, &'static [u8]>>,
 	face_tex: HashMap<(&'static str, u32), Option<egui::TextureHandle>>,
+	atlas: HashMap<&'static str, Option<image::RgbaImage>>,
+	chars: Chars,
+	show_faces: bool,
 	open_group: Option<(usize, String)>,
 	top_row: usize,
+	top_off: f32,
+	anchor: Option<(usize, f32)>,
 	checks_off: f32,
 	restore_row: Option<(bool, String, String)>,
 	restore_file: Option<String>,
@@ -260,8 +309,13 @@ impl App {
 			inline: None,
 			face_idx: HashMap::new(),
 			face_tex: HashMap::new(),
+			atlas: HashMap::new(),
+			chars: Chars::default(),
+			show_faces: st.get("faces") != Some("0"),
 			open_group: None,
 			top_row: 0,
+			top_off: 0.0,
+			anchor: None,
 			checks_off: 0.0,
 			restore_row: None,
 			restore_file: None,
@@ -337,6 +391,7 @@ impl App {
 		st.set("english", &self.en);
 		st.set("russian", &self.ru);
 		st.set("whole", if self.whole { "1" } else { "0" });
+		st.set("faces", if self.show_faces { "1" } else { "0" });
 		st.set("dictok", if self.mark_ok { "1" } else { "0" });
 		st.set("dark", if self.pal.dark { "1" } else { "0" });
 		st.set("lang", if ui_en() { "en" } else { "ru" });
@@ -475,20 +530,18 @@ impl App {
 		if !self.search.trim().is_empty() {
 			self.do_search();
 		}
-		if let (Some(f), Some(d)) = (self.restore_file.take(), self.data.as_ref()) {
-			if let Some(n) = d.files.keys().position(|k| *k == f) {
+		if let (Some(f), Some(d)) = (self.restore_file.take(), self.data.as_ref())
+			&& let Some(n) = d.files.keys().position(|k| *k == f) {
 				self.file_sel = n + 1;
 				self.show_file();
 			}
-		}
-		if let (Some((sel, f, id)), Some(d)) = (self.restore_row.take(), self.data.as_ref()) {
-			if let Some(i) = self.rows.iter().position(|&k| d.pairs[k].file == f && d.pairs[k].id == id) {
+		if let (Some((sel, f, id)), Some(d)) = (self.restore_row.take(), self.data.as_ref())
+			&& let Some(i) = self.rows.iter().position(|&k| d.pairs[k].file == f && d.pairs[k].id == id) {
 				self.scroll_to = Some(i);
 				if sel {
 					self.selected = Some(i);
 				}
 			}
-		}
 	}
 
 	fn load_dict(&mut self, path: &std::path::Path, force: bool) {
@@ -538,17 +591,37 @@ impl App {
 			self.reset_layouts();
 			return;
 		}
-		let Some(d) = self.data.as_ref() else {
+		if self.data.is_none() {
 			if self.loading.is_none() {
 				self.dialog = Dialog::Info(tr("Сначала нажмите «Загрузить».", "Click 'Load' first.").into());
 			}
 			return;
-		};
-		let (all, total) = compare::search(d, &q, 0, self.whole, usize::MAX);
+		}
+		let who = if self.chars.open { self.chars.sel } else { None };
+		if who.is_some() && q.is_empty() {
+			self.chars_select(who);
+			return;
+		}
+		let d = self.data.as_ref().unwrap();
+		let (mut all, mut total) = compare::search(d, &q, 0, self.whole, usize::MAX);
+		let who_name = who.and_then(|id| self.chars.list.iter().find(|r| r.id == id)).map(|r| format!("{}: ", r.name)).unwrap_or_default();
+		if let Some(id) = who {
+			all.retain(|&i| Self::row_who(&d.pairs[i]) == Some(id));
+			total = all.len();
+		} else if compare::ed7().is_some() && q.chars().count() >= 3 {
+			let ql = q.to_lowercase();
+			let ids: Vec<u32> = ed7_names().iter().filter(|x| x.2.to_lowercase().contains(&ql)).filter_map(|x| ed7_who(x.0)).collect();
+			if !ids.is_empty() {
+				let mut set: std::collections::BTreeSet<usize> = all.iter().copied().collect();
+				set.extend((0..d.pairs.len()).filter(|&i| Self::row_who(&d.pairs[i]).is_some_and(|w| ids.contains(&w))));
+				all = set.into_iter().collect();
+				total = all.len();
+			}
+		}
 		let rows: Vec<usize> = all[..all.len().min(LIMIT)].to_vec();
 		let files: std::collections::BTreeSet<&str> = rows.iter().map(|&i| d.pairs[i].file.as_str()).collect();
-		self.found = if total == 0 {
-			tr("Ничего не найдено", "Nothing found").into()
+		self.found = who_name.clone() + &if total == 0 {
+			tr("Ничего не найдено", "Nothing found").to_string()
 		} else if total > rows.len() {
 			lformat!("Найдено: {} в {} — показаны первые {}", "Found: {} in {}, showing the first {}", plural(total, tr("строка", "line"), tr("строки", "lines"), tr("строк", "lines")), plural(files.len(), tr("файле", "file"), tr("файлах", "files"), tr("файлах", "files")), group(rows.len()))
 		} else {
@@ -601,6 +674,9 @@ impl App {
 	}
 
 	fn reset_layouts(&mut self) {
+		if self.top_row > 0 && self.top_row < self.rows.len() && self.anchor.is_none() {
+			self.anchor = Some((self.top_row, self.top_off));
+		}
 		self.layouts = (0..self.rows.len()).map(|_| None).collect();
 		self.layout_next = 0;
 		let (ten, tru) = compare::pair_terms_for_query(&self.dict, &self.query);
@@ -778,32 +854,47 @@ impl App {
 			Some(calvard_tool::scena::Title::Azure) => "Azure/faces.bin",
 			Some(_) => "Zero/faces.bin",
 			None => match game::current() {
-				Game::Daybreak => "Daybreak-1/faces.bin",
-				Game::Daybreak2 => "Daybreak-2/faces.bin",
-				Game::Horizon => "Horizon/faces.bin",
+				Game::Daybreak => "Daybreak-1",
+				Game::Daybreak2 => "Daybreak-2",
+				Game::Horizon => "Horizon",
 			},
 		}
 	}
 
 	fn row_face(&self, i: usize) -> Option<u32> {
+		if !self.show_faces {
+			return None;
+		}
 		let d = self.data.as_ref()?;
 		let pair = &d.pairs[*self.rows.get(i)?];
 		if compare::ed7().is_some() {
 			return pair.ru.as_ref().and_then(|s| face_code(&s.text)).or_else(|| pair.en.as_ref().and_then(|s| face_code(&s.text)));
 		}
+		let t = cal_tables(Self::face_pack());
+		if let Some(cell) = row_skin(t, pair).and_then(|m| t.models.get(m)).and_then(|x| x.0) {
+			return Some(cell);
+		}
+		t.cells.get(&Self::row_who(pair)?).copied()
+	}
+
+	fn row_who(pair: &compare::Pair) -> Option<u32> {
+		if compare::ed7().is_some() {
+			let code = pair.ru.as_ref().and_then(|s| face_code(&s.text)).or_else(|| pair.en.as_ref().and_then(|s| face_code(&s.text)))?;
+			return ed7_who(code);
+		}
 		if let Some(id) = pair.who {
-			return compare::speaker_face(Self::face_pack().split('/').next()?, id);
+			let t = cal_tables(Self::face_pack());
+			if !t.names.contains_key(&id)
+				&& let Some(&real) = row_skin(t, pair).and_then(|m| t.model_id.get(m)) {
+					return Some(real);
+				}
+			return Some(id);
 		}
 		if !pair.file.ends_with("t_active_voice.xlsx") {
 			return None;
 		}
-		let n: usize = pair.id.strip_prefix("ActiveVoiceTableData#")?.strip_suffix(".voice_subtitle")?.parse().ok()?;
-		let av = crate::kai_buttons::pack::get(&Self::face_pack().replace("faces.bin", "active_voice.bin"))?;
-		if av.len() < 12 || &av[..5] != b"KAVF1" {
-			return None;
-		}
-		let code = u32::from_le_bytes(av.get(12 + n * 4..16 + n * 4)?.try_into().ok()?);
-		(code != u32::MAX).then_some(code)
+		let n: u32 = pair.id.strip_prefix("ActiveVoiceTableData#")?.strip_suffix(".voice_subtitle")?.parse().ok()?;
+		cal_tables(Self::face_pack()).voice.get(&n).copied()
 	}
 
 	fn row_voice(&self, i: usize) -> Option<String> {
@@ -821,9 +912,17 @@ impl App {
 		if let Some(t) = self.face_tex.get(&(game, code)) {
 			return t.clone();
 		}
-		let idx = self.face_idx.entry(game).or_insert_with(|| crate::kai_buttons::pack::get(game).map(face_index).unwrap_or_default());
-		let tex = idx.get(&code).and_then(|png| image::load_from_memory(png).ok()).map(|img| {
-			let img = img.to_rgba8();
+		let img = if compare::ed7().is_some() {
+			let idx = self.face_idx.entry(game).or_insert_with(|| crate::kai_buttons::pack::get(game).map(face_index).unwrap_or_default());
+			idx.get(&code).and_then(|png| image::load_from_memory(png).ok()).map(|i| i.to_rgba8())
+		} else {
+			let atlas = self.atlas.entry(game).or_insert_with(|| crate::kai_buttons::pack::get(&format!("{game}/portraits.png")).and_then(|b| image::load_from_memory(b).ok()).map(|i| i.to_rgba8()));
+			atlas.as_ref().and_then(|a| {
+				let (x, y) = ((code % CELL_COLS) * CELL, (code / CELL_COLS) * CELL);
+				(x + CELL <= a.width() && y + CELL <= a.height()).then(|| image::imageops::crop_imm(a, x, y, CELL, CELL).to_image())
+			})
+		};
+		let tex = img.map(|img| {
 			let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
 			ctx.load_texture(format!("face{game}_{code}"), ci, egui::TextureOptions::LINEAR)
 		});
@@ -928,12 +1027,11 @@ impl App {
 		let fy = y + lh + 5.0;
 		{
 			let (ch, cl) = path_and_browse(ui, &p, "en", &mut self.en, Rect::from_min_size(Pos2::new(x0, fy), Vec2::new(c1, 36.0)), !busy);
-			if cl {
-				if let Some(d) = pick_folder(&self.en) {
+			if cl
+				&& let Some(d) = pick_folder(&self.en) {
 					self.en = d.display().to_string();
 					self.save_settings();
 				}
-			}
 			if ch {
 				self.save_settings();
 			}
@@ -944,12 +1042,11 @@ impl App {
 		{
 			let rect = Rect::from_min_size(Pos2::new(x2, fy), Vec2::new(c2, 36.0));
 			let (ch, cl) = path_and_browse(ui, &p, "ru", &mut self.ru, rect, !busy);
-			if cl {
-				if let Some(d) = pick_folder(&self.ru) {
+			if cl
+				&& let Some(d) = pick_folder(&self.ru) {
 					self.ru = d.display().to_string();
 					self.save_settings();
 				}
-			}
 			if ch {
 				self.save_settings();
 			}
@@ -1007,11 +1104,10 @@ impl App {
 		let g = ui.fonts(|f| f.layout_job(job));
 		let sresp = ui.interact(Rect::from_min_size(Pos2::new(x4, y), Vec2::new(last, lh)), ui.id().with("loadstat"), Sense::hover());
 		ui.painter().galley(Pos2::new(x4 + (last - g.size().x) / 2.0, y + 2.0), g, p.muted);
-		if self.load_warn > 0 {
-			if let Some(d) = &self.data {
+		if self.load_warn > 0
+			&& let Some(d) = &self.data {
 				sresp.on_hover_text(lformat!("{}\n\nНе прочитаны (ошибка в файле — например, «\\» без n):\n{}", "{}\n\nNot read (an error in the file, for example a '\\' without n):\n{}", self.load_status, d.warnings.iter().take(10).cloned().collect::<Vec<_>>().join("\n")));
 			}
-		}
 		{
 			let rect = Rect::from_min_size(Pos2::new(x4, fy), Vec2::new(last, 36.0));
 			let mut r = ui.new_child(egui::UiBuilder::new().max_rect(rect));
@@ -1155,6 +1251,15 @@ impl App {
 		if small_button(&mut r, &p, &bl, Some("gamepad"), 30.0, true, if self.btn.on { p.accent_strong } else { p.text }).on_hover_text(tr("Значки предметов и кнопок вместо кодов <I…> в русском тексте", "Item and button icons instead of <I…> codes in the Russian text")).clicked() {
 			self.btn_open = true;
 		}
+		{
+			let on = self.chars.open;
+			if small_button(&mut r, &p, tr("Персонажи", "Characters"), Some("filter"), 30.0, self.data.is_some(), if on { p.accent_strong } else { p.text }).on_hover_text(tr("Все реплики выбранного персонажа", "All lines of the chosen character")).clicked() {
+				self.chars.open = !on;
+				if on {
+					self.chars_select(None);
+				}
+			}
+		}
 		r.add_space(12.0);
 		let cw = (w * 0.22).clamp(200.0, 380.0).min((r.available_width() - left_used - 12.0).max(140.0));
 		self.file_items[0] = tr("(все найденные — через поиск)", "(all found, use search)").to_string();
@@ -1281,6 +1386,9 @@ impl App {
 		let body = Rect::from_min_max(Pos2::new(inner.min.x, hy + 1.0), inner.max);
 		let key = ((wen.round()) as u32, (wru.round()) as u32, p.dark, (self.zoom * 100.0).round() as u32);
 		if key != self.layout_key {
+			if self.layout_key != (0, 0, false, 0) && self.top_row > 0 && self.anchor.is_none() {
+				self.anchor = Some((self.top_row, self.top_off));
+			}
 			self.layout_key = key;
 			for l in &mut self.layouts {
 				*l = None;
@@ -1325,6 +1433,17 @@ impl App {
 		let mut child = ui.new_child(egui::UiBuilder::new().max_rect(rows_rect));
 		child.set_clip_rect(rows_rect.intersect(ui.clip_rect()));
 		let mut sa = egui::ScrollArea::vertical().id_salt("table").auto_shrink([false, false]).scroll_bar_visibility(egui::scroll_area::ScrollBarVisibility::AlwaysHidden);
+		if let Some((a, d)) = self.anchor {
+			if a >= n || self.scroll_to.is_some() || self.scroll_top || self.bar_set.contains_key("table") || auto_v != 0.0 || ctx.input(|i| i.raw_scroll_delta.y != 0.0) {
+				self.anchor = None;
+			} else {
+				let off: f32 = self.layouts[..a].iter().map(|l| l.as_ref().map(|l| l.h).unwrap_or(est)).sum();
+				sa = sa.vertical_scroll_offset(off + d);
+				if self.layout_next >= a {
+					self.anchor = None;
+				}
+			}
+		}
 		if let Some(o) = self.bar_set.remove("table") {
 			sa = sa.vertical_scroll_offset(o);
 		}
@@ -1363,6 +1482,7 @@ impl App {
 				}
 				if first {
 					self.top_row = i;
+					self.top_off = (vp.min.y - y).max(0.0);
 					first = false;
 				}
 				if self.layouts[i].is_none() {
@@ -1490,7 +1610,7 @@ impl App {
 						ui.set_width(cell.width() - 16.0);
 						let mut t: &str = &il.text;
 						let resp = ui.add(egui::TextEdit::multiline(&mut t).id(egui::Id::new("inline_te")).frame(false).font(if il.col == 0 { f_mono(12.5) } else { f_body(14.0 * self.zoom) }).desired_width(cell.width() - 16.0).desired_rows(1).margin(egui::Margin::ZERO));
-						if !resp.has_focus() && ui.input(|i| i.pointer.any_click()) == false {
+						if !resp.has_focus() && !ui.input(|i| i.pointer.any_click()) {
 							resp.request_focus();
 						}
 					});
@@ -1499,13 +1619,11 @@ impl App {
 			if ctx.input(|i| i.key_pressed(egui::Key::Escape) || i.key_pressed(egui::Key::Enter)) {
 				close = true;
 			}
-			if ctx.input(|i| i.pointer.any_pressed()) {
-				if let Some(pp) = pos {
-					if !area.response.rect.contains(pp) && clicked.map(|c| !c.2).unwrap_or(true) {
+			if ctx.input(|i| i.pointer.any_pressed())
+				&& let Some(pp) = pos
+					&& !area.response.rect.contains(pp) && clicked.map(|c| !c.2).unwrap_or(true) {
 						close = true;
 					}
-				}
-			}
 			if close {
 				self.inline = None;
 			}
@@ -1619,12 +1737,11 @@ impl App {
 		}
 		let copy_req = ctx.input(|i| i.events.iter().any(|e| matches!(e, egui::Event::Copy)));
 		let editing = ctx.memory(|m| m.focused().is_some());
-		if copy_req && !editing && self.inline.is_none() {
-			if let Some(r) = self.selected {
+		if copy_req && !editing && self.inline.is_none()
+			&& let Some(r) = self.selected {
 				let what = match self.click_col { 0 => 3, 1 => 1, _ => 2 };
 				self.copy(ctx, r, what);
 			}
-		}
 		if matches!(self.dialog, Dialog::None) && self.inline.is_none() && self.menu.is_none() && !self.hidden_open && !self.btn_open {
 			let (f5, find, tab1, tab2) = ctx.input_mut(|i| {
 				(
@@ -1714,7 +1831,11 @@ impl App {
 			y += 30.0 + 16.0;
 			self.result_row(ui, ctx, x0, w, y);
 			y += 26.0 + 10.0;
-			let trect = Rect::from_min_max(Pos2::new(x0, y), Pos2::new(x0 + w, full.max.y - 22.0));
+			let mut trect = Rect::from_min_max(Pos2::new(x0, y), Pos2::new(x0 + w, full.max.y - 22.0));
+			if self.chars.open {
+				self.chars_panel(ui, ctx, Rect::from_min_max(trect.min, Pos2::new(trect.min.x + 300.0, trect.max.y)));
+				trect.min.x += 312.0;
+			}
 			self.table(ui, ctx, trect);
 		});
 		self.context_menu(ctx);
@@ -1754,11 +1875,10 @@ fn build_date() -> String {
 }
 
 fn display_name(p: &compare::Pair) -> String {
-	if compare::ed7().is_some() {
-		if let Some(n) = p.ru.as_ref().or(p.en.as_ref()).and_then(|s| s.path.file_name()) {
+	if compare::ed7().is_some()
+		&& let Some(n) = p.ru.as_ref().or(p.en.as_ref()).and_then(|s| s.path.file_name()) {
 			return n.to_string_lossy().to_string();
 		}
-	}
 	p.file.rsplit('/').next().unwrap_or(&p.file).to_string()
 }
 
@@ -1767,13 +1887,249 @@ pub fn app_icon() -> egui::IconData {
 }
 
 pub fn run_main() {
+	let title = TITLE_MAIN.to_string();
 	let opts = eframe::NativeOptions {
-		viewport: egui::ViewportBuilder::default().with_title(TITLE_MAIN).with_inner_size([1180.0, 800.0]).with_min_inner_size([960.0, 600.0]).with_drag_and_drop(true).with_icon(app_icon()),
+		viewport: egui::ViewportBuilder::default().with_title(&title).with_inner_size([1180.0, 800.0]).with_min_inner_size([960.0, 600.0]).with_drag_and_drop(true).with_icon(app_icon()),
 		centered: true,
 		..Default::default()
 	};
-	if let Err(e) = eframe::run_native(TITLE_MAIN, opts, Box::new(|cc| Ok(Box::new(App::new(cc))))) {
+	if let Err(e) = eframe::run_native(&title, opts, Box::new(|cc| Ok(Box::new(App::new(cc))))) {
 		eprintln!("{e}");
+	}
+}
+
+#[derive(Default)]
+struct Chars {
+	open: bool,
+	q: String,
+	sel: Option<u32>,
+	list: Vec<CharRow>,
+	list_for: (usize, &'static str),
+}
+
+struct CharRow {
+	id: u32,
+	lines: usize,
+	model: String,
+	name: String,
+	face: Option<(u32, String)>,
+	range: Vec<(u32, u32)>,
+}
+
+fn ed7_names() -> &'static Vec<(u32, u32, String)> {
+	static T: std::sync::OnceLock<std::sync::Mutex<HashMap<&'static str, &'static Vec<(u32, u32, String)>>>> = std::sync::OnceLock::new();
+	let dir = if matches!(compare::ed7(), Some(calvard_tool::scena::Title::Azure)) { "Azure" } else { "Zero" };
+	let mut m = T.get_or_init(Default::default).lock().unwrap();
+	m.entry(dir).or_insert_with(|| {
+		let text = crate::kai_buttons::pack::get(&format!("{dir}/names.tsv")).map(|b| String::from_utf8_lossy(b).to_string()).unwrap_or_default();
+		let v = text
+			.lines()
+			.filter_map(|l| {
+				let c: Vec<&str> = l.split('\t').collect();
+				(c.len() == 3).then(|| Some((c[0].parse().ok()?, c[1].parse().ok()?, c[2].to_string()))).flatten()
+			})
+			.collect();
+		Box::leak(Box::new(v))
+	})
+}
+
+fn ed7_who(code: u32) -> Option<u32> {
+	let name = &ed7_names().iter().find(|x| x.0 <= code && code <= x.1)?.2;
+	ed7_names().iter().find(|x| &x.2 == name).map(|x| x.0)
+}
+
+fn ed7_ranges(id: u32) -> Vec<(u32, u32)> {
+	let Some(name) = ed7_names().iter().find(|x| x.0 == id).map(|x| &x.2) else { return Vec::new() };
+	ed7_names().iter().filter(|x| &x.2 == name).map(|x| (x.0, x.1)).collect()
+}
+
+impl App {
+	fn chars_build(&mut self) {
+		let Some(d) = self.data.as_ref() else {
+			self.chars.list.clear();
+			return;
+		};
+		let dir = Self::face_pack();
+		if self.chars.list_for == (d.pairs.len(), dir) {
+			return;
+		}
+		if compare::ed7().is_some() {
+			let mut n: HashMap<u32, usize> = HashMap::new();
+			for p in &d.pairs {
+				if let Some(id) = Self::row_who(p) {
+					*n.entry(id).or_default() += 1;
+				}
+			}
+			let names = ed7_names();
+			let mut list: Vec<CharRow> = n
+				.into_iter()
+				.filter_map(|(id, lines)| {
+					let (a, _, name) = names.iter().find(|x| x.0 == id)?;
+					Some(CharRow { id, lines, model: ed7_ranges(id).iter().map(|(a, b)| format!("ka{a:05}–ka{b:05}")).collect::<Vec<_>>().join(", "), name: name.clone(), face: Some((*a, format!("ka{a:05}"))), range: ed7_ranges(id) })
+				})
+				.collect();
+			list.sort_by(|a, b| b.lines.cmp(&a.lines).then(a.id.cmp(&b.id)));
+			self.chars.list = list;
+			self.chars.list_for = (d.pairs.len(), dir);
+			self.chars.sel = None;
+			return;
+		}
+		let t = cal_tables(dir);
+		let mut n: HashMap<u32, usize> = HashMap::new();
+		let mut actor: HashMap<u32, (String, String)> = HashMap::new();
+		for p in &d.pairs {
+			if let Some(id) = Self::row_who(p) {
+				*n.entry(id).or_default() += 1;
+				if !t.names.contains_key(&id) {
+					let model = row_skin(t, p).unwrap_or("").to_string();
+					let e = actor.entry(id).or_default();
+					if e.0.is_empty() && !model.is_empty() {
+						e.0 = model;
+					}
+					let shown = p.shown.trim();
+					if e.1.is_empty() && !shown.is_empty() && !shown.chars().all(|c| c == '?') {
+						e.1 = shown.to_string();
+					}
+				}
+			}
+		}
+		let text = |f: &str| crate::kai_buttons::pack::get(&format!("{dir}/{f}")).map(|b| String::from_utf8_lossy(b).to_string()).unwrap_or_default();
+		let mut names: HashMap<u32, (String, String)> = HashMap::new();
+		for l in text("names.tsv").lines() {
+			let c: Vec<&str> = l.split('\t').collect();
+			if let (3, Ok(id)) = (c.len(), c[0].parse()) {
+				names.insert(id, (c[1].to_string(), c[2].to_string()));
+			}
+		}
+		let mut faces: HashMap<u32, (u32, String)> = HashMap::new();
+		for l in text("portraits.tsv").lines() {
+			let c: Vec<&str> = l.split('\t').collect();
+			if let (3, Ok(id), Ok(cell)) = (c.len(), c[0].parse(), c[1].parse()) {
+				faces.insert(id, (cell, c[2].to_string()));
+			}
+		}
+		let mut list: Vec<CharRow> = n
+			.into_iter()
+			.map(|(id, lines)| {
+				if let Some((model, name)) = names.get(&id).cloned() {
+					return CharRow { id, lines, model, name, face: faces.get(&id).cloned(), range: Vec::new() };
+				}
+				let (model, shown) = actor.get(&id).cloned().unwrap_or_default();
+				let m = t.models.get(&model);
+				let name = if !shown.is_empty() {
+					lformat!("{shown} (сцена)", "{shown} (scene)")
+				} else if let Some((_, mn)) = m {
+					lformat!("{mn} (сцена)", "{mn} (scene)")
+				} else if id == 65535 {
+					tr("(без ID)", "(no ID)").into()
+				} else {
+					tr("(нет в character_models)", "(not in character_models)").into()
+				};
+				let face = m.and_then(|x| x.0).map(|c| (c, model.clone()));
+				CharRow { id, lines, model, name, face, range: Vec::new() }
+			})
+			.collect();
+		list.sort_by(|a, b| b.lines.cmp(&a.lines).then(a.id.cmp(&b.id)));
+		self.chars.list = list;
+		self.chars.list_for = (d.pairs.len(), dir);
+		self.chars.sel = None;
+	}
+
+	fn chars_select(&mut self, id: Option<u32>) {
+		self.chars.sel = id;
+		if !self.search.trim().is_empty() && self.data.is_some() && self.loading.is_none() {
+			self.do_search();
+			return;
+		}
+		let Some(d) = self.data.as_ref() else { return };
+		match id {
+			Some(id) => {
+				let all: Vec<usize> = (0..d.pairs.len()).filter(|&i| Self::row_who(&d.pairs[i]) == Some(id)).collect();
+				let name = self.chars.list.iter().find(|r| r.id == id).map(|r| r.name.clone()).unwrap_or_default();
+				let tag = if compare::ed7().is_some() { self.chars.list.iter().find(|r| r.id == id).map(|r| r.model.clone()).unwrap_or_default() } else { format!("ID {id}") };
+				self.found = format!("{name} ({tag}): {}", plural(all.len(), tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines")));
+				self.total = all.len();
+				self.rows = all;
+				self.searched = true;
+			}
+			None => {
+				self.rows.clear();
+				self.found.clear();
+				self.total = 0;
+				self.searched = false;
+			}
+		}
+		self.file_sel = 0;
+		self.chip = None;
+		self.selected = None;
+		self.inline = None;
+		self.scroll_top = true;
+		self.reset_layouts();
+	}
+
+	fn chars_panel(&mut self, ui: &mut egui::Ui, ctx: &egui::Context, rect: Rect) {
+		let p = self.pal;
+		self.chars_build();
+		ui.painter().rect(rect, 10, p.surface, Stroke::new(1.0, p.div), StrokeKind::Inside);
+		let inner = rect.shrink(10.0);
+		let sr = Rect::from_min_size(inner.min, Vec2::new(inner.width(), 32.0));
+		ui.painter().rect(sr, 8, p.bg, Stroke::new(1.0, p.div), StrokeKind::Inside);
+		let mut c = ui.new_child(egui::UiBuilder::new().max_rect(sr.shrink2(Vec2::new(10.0, 0.0))).layout(egui::Layout::left_to_right(egui::Align::Center)));
+		let hint = if compare::ed7().is_some() { tr("Имя или код лица (ka00800)", "Name or face code (ka00800)") } else { tr("Имя, ID или chr0000_c15", "Name, ID or chr0000_c15") };
+		c.add(egui::TextEdit::singleline(&mut self.chars.q).frame(false).font(f_body(13.0)).hint_text(egui::RichText::new(hint).color(p.muted)).desired_width(sr.width() - 20.0).margin(egui::Margin::ZERO));
+		let q = self.chars.q.trim().to_lowercase();
+		let code: Option<u32> = q.strip_prefix("ka").unwrap_or(&q).parse().ok();
+		let shown: Vec<usize> = (0..self.chars.list.len())
+			.filter(|&k| {
+				let r = &self.chars.list[k];
+				q.is_empty()
+					|| r.name.to_lowercase().contains(&q)
+					|| r.model.to_lowercase().contains(&q)
+					|| r.id.to_string() == q
+					|| r.face.as_ref().is_some_and(|f| f.1.to_lowercase().contains(&q))
+					|| code.is_some_and(|c| r.range.iter().any(|&(a, b)| a <= c && c <= b))
+			})
+			.collect();
+		let tex: Vec<Option<egui::TextureHandle>> = shown.iter().map(|&k| self.chars.list[k].face.as_ref().map(|f| f.0)).collect::<Vec<_>>().into_iter().map(|c| c.and_then(|c| self.face(ctx, c))).collect();
+		let lr = Rect::from_min_max(Pos2::new(inner.min.x, sr.max.y + 8.0), inner.max);
+		let mut pick = None;
+		let mut lu = ui.new_child(egui::UiBuilder::new().max_rect(lr));
+		egui::ScrollArea::vertical().id_salt("chars_list").auto_shrink([false, false]).show(&mut lu, |ui| {
+			for (j, &k) in shown.iter().enumerate() {
+				let r = &self.chars.list[k];
+				let (row, resp) = ui.allocate_exact_size(Vec2::new(ui.available_width(), 58.0), Sense::click());
+				if self.chars.sel == Some(r.id) {
+					ui.painter().rect_filled(row, 6, p.sel);
+				} else if resp.hovered() {
+					ui.painter().rect_filled(row, 6, p.div2);
+				}
+				let fr = Rect::from_min_size(Pos2::new(row.min.x + 4.0, row.min.y + 5.0), Vec2::splat(48.0));
+				match &tex[j] {
+					Some(t) => {
+						ui.painter().image(t.id(), fr, Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::WHITE);
+					}
+					None => {
+						ui.painter().rect(fr, 6, Color32::TRANSPARENT, Stroke::new(1.0, p.div), StrokeKind::Inside);
+					}
+				}
+				let tx = fr.max.x + 8.0;
+				let tw = row.max.x - tx - 4.0;
+				paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 5.0), Vec2::new(tw, 17.0)), &r.name, f_body(13.0), p.text, Align2::LEFT_TOP);
+				if !r.range.is_empty() {
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 26.0), Vec2::new(tw, 15.0)), &format!("{} · {}", r.model, plural(r.lines, tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines"))), f_mono(11.0), p.muted, Align2::LEFT_TOP);
+				} else {
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 22.0), Vec2::new(tw, 15.0)), &format!("ID {} · {} · {}", r.id, if r.model.is_empty() { "—" } else { &r.model }, plural(r.lines, tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines"))), f_mono(11.0), p.muted, Align2::LEFT_TOP);
+					let f = r.face.as_ref().map_or(tr("портрета нет", "no portrait").to_string(), |f| f.1.clone());
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 38.0), Vec2::new(tw, 15.0)), &f, f_mono(11.0), if r.face.is_some() { p.accent } else { p.muted }, Align2::LEFT_TOP);
+				}
+				if resp.clicked() {
+					pick = Some(r.id);
+				}
+			}
+		});
+		if let Some(id) = pick {
+			self.chars_select(if self.chars.sel == Some(id) { None } else { Some(id) });
+		}
 	}
 }
 
@@ -1961,26 +2317,26 @@ impl App {
 								let p = &d.pairs[k];
 								let me = k == it.pair;
 								let f = if me { &hit } else { &ctx_f };
-								ws.write_string_with_format(r, 0, &cut(&it.file), f)?;
+								ws.write_string_with_format(r, 0, cut(&it.file), f)?;
 								ws.write_number_with_format(r, 1, line_of(p) as f64, f)?;
 								ws.write_string_with_format(r, 2, if me { cut(&it.what) } else { String::new() }, f)?;
-								ws.write_string_with_format(r, 3, &cut(&raw(&p.en)), f)?;
-								ws.write_string_with_format(r, 4, &cut(&raw(&p.ru)), f)?;
+								ws.write_string_with_format(r, 3, cut(&raw(&p.en)), f)?;
+								ws.write_string_with_format(r, 4, cut(&raw(&p.ru)), f)?;
 								if me {
 									ws.write_number_with_format(r, 5, it.count as f64, f)?;
-									ws.write_string_with_format(r, 6, &cut(&it.files), f)?;
+									ws.write_string_with_format(r, 6, cut(&it.files), f)?;
 								}
 								r += 1;
 							}
 						}
 						None => {
-							ws.write_string_with_format(r, 0, &cut(&it.file), &hit)?;
+							ws.write_string_with_format(r, 0, cut(&it.file), &hit)?;
 							ws.write_number_with_format(r, 1, it.line as f64, &hit)?;
-							ws.write_string_with_format(r, 2, &cut(&it.what), &hit)?;
-							ws.write_string_with_format(r, 3, &cut(&it.en), &hit)?;
-							ws.write_string_with_format(r, 4, &cut(&it.ru), &hit)?;
+							ws.write_string_with_format(r, 2, cut(&it.what), &hit)?;
+							ws.write_string_with_format(r, 3, cut(&it.en), &hit)?;
+							ws.write_string_with_format(r, 4, cut(&it.ru), &hit)?;
 							ws.write_number_with_format(r, 5, it.count as f64, &hit)?;
-							ws.write_string_with_format(r, 6, &cut(&it.files), &hit)?;
+							ws.write_string_with_format(r, 6, cut(&it.files), &hit)?;
 							r += 1;
 						}
 					}
@@ -2341,11 +2697,10 @@ impl App {
 		let DEVICES = devs;
 		let p = self.pal;
 		self.btn.ensure_loaded();
-		if self.btn_codes.is_none() {
-			if let Some(d) = self.data.as_ref() {
+		if self.btn_codes.is_none()
+			&& let Some(d) = self.data.as_ref() {
 				self.btn_codes = Some(kb::scan(d.pairs.iter().filter_map(|x| x.ru.as_ref().map(|s| s.text.clone()))));
 			}
-		}
 		let codes: Vec<(u32, usize, String)> = self.btn_codes.as_ref().map(|m| m.iter().map(|(k, v)| (*k, v.0, v.1.clone())).collect()).unwrap_or_default();
 		let actions: Vec<&(u32, usize, String)> = codes.iter().filter(|x| !kb::is_atlas(x.0)).collect();
 		let n_atlas = codes.iter().filter(|x| kb::is_atlas(x.0)).count();
@@ -2378,6 +2733,12 @@ impl App {
 				let mut on = self.btn.on;
 				if checkbox(&mut r, &p, &mut on, tr("Показывать значки в тексте", "Show icons in the text"), 16.0, f_body(13.5)).changed() {
 					self.btn.on = on;
+					changed = true;
+				}
+				r.add_space(24.0);
+				let mut faces = self.show_faces;
+				if checkbox(&mut r, &p, &mut faces, tr("Показывать портреты в тексте", "Show portraits in the text"), 16.0, f_body(13.5)).on_hover_text(tr("Портрет говорящего в столбце «Файл»", "The speaker's portrait in the File column")).changed() {
+					self.show_faces = faces;
 					changed = true;
 				}
 			}
@@ -2501,7 +2862,7 @@ impl App {
 					ui.spacing_mut().item_spacing = Vec2::new(4.0, 4.0);
 					for (key, val) in &items {
 						let (r, resp) = ui.allocate_exact_size(Vec2::new(cw, if self.btn.device < 5 { 56.0 } else { 46.0 }), Sense::click());
-						let cur = sel.map(|n| if self.btn.device < 5 { self.btn.pad_of(n) } else { self.btn.kb_of(n) }).flatten().map(|c| kb::split_combo(&c).contains(val)).unwrap_or(false);
+						let cur = sel.and_then(|n| if self.btn.device < 5 { self.btn.pad_of(n) } else { self.btn.kb_of(n) }).map(|c| kb::split_combo(&c).contains(val)).unwrap_or(false);
 						if cur {
 							ui.painter().rect(r, 7, p.sel, Stroke::new(1.0, p.accent), StrokeKind::Inside);
 						} else if resp.hovered() {
@@ -2520,9 +2881,8 @@ impl App {
 							paint_text_clipped(ui, Rect::from_min_size(Pos2::new(r.min.x, r.max.y - 16.0), Vec2::new(cw, 14.0)), lab, f_body(10.5), p.muted, Align2::CENTER_CENTER);
 						}
 						let resp = resp.on_hover_text(val.as_str());
-						if resp.clicked() && sel.is_some() {
+						if let (true, Some(n)) = (resp.clicked(), sel) {
 							let add = ui.input(|i| i.modifiers.ctrl || i.modifiers.shift);
-							let n = sel.unwrap();
 							let now = if self.btn.device < 5 { self.btn.pad_of(n) } else { self.btn.kb_of(n) };
 							chosen = Some(match (add, now) {
 								(true, Some(c)) => {
@@ -2559,8 +2919,8 @@ impl App {
 				close = true;
 			}
 			let can_clear = sel.map(|n| if self.btn.device < 5 { self.btn.pad.contains_key(&n) } else { self.btn.kb.contains_key(&n) }).unwrap_or(false);
-			if small_button(&mut fu, &p, tr("Убрать своё назначение", "Remove my assignment"), Some("eraser"), 34.0, can_clear, p.text).clicked() {
-				if let Some(n) = sel {
+			if small_button(&mut fu, &p, tr("Убрать своё назначение", "Remove my assignment"), Some("eraser"), 34.0, can_clear, p.text).clicked()
+				&& let Some(n) = sel {
 					if self.btn.device < 5 {
 						self.btn.pad.remove(&n);
 					} else {
@@ -2570,7 +2930,6 @@ impl App {
 					self.btn.changed();
 					changed = true;
 				}
-			}
 			let mut lu = ui.new_child(egui::UiBuilder::new().max_rect(fr).layout(egui::Layout::left_to_right(egui::Align::Center)));
 			lu.label(egui::RichText::new(lformat!("Назначения хранятся в {} рядом с программой.", "Assignments are stored in {} next to the program.", kb::map_file())).font(f_body(11.5)).color(p.muted));
 		});
@@ -2712,13 +3071,12 @@ fn vbar(ui: &egui::Ui, p: &Pal, id: &'static str, track: Rect, offset: f32, cont
 			let y = (pp.y - grab - track.min.y).clamp(0.0, free);
 			new = Some(y / free * max_off);
 		}
-	} else if resp.dragged() {
-		if let Some(pp) = resp.interact_pointer_pos() {
+	} else if resp.dragged()
+		&& let Some(pp) = resp.interact_pointer_pos() {
 			let grab: f32 = ui.ctx().data(|d| d.get_temp(grab_id)).unwrap_or(hh / 2.0);
 			let y = (pp.y - grab - track.min.y).clamp(0.0, free);
 			new = Some(y / free * max_off);
 		}
-	}
 	let hot = resp.hovered() || resp.dragged();
 	let painter = ui.painter();
 	painter.rect(track, 6, p.div2.gamma_multiply(0.6), Stroke::new(1.0, p.div), StrokeKind::Inside);

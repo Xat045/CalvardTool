@@ -42,7 +42,7 @@ CalvardCompare:
 1. Download the archives from [Releases](../../releases) and unpack them anywhere. `data.dat` must stay next to `CalvardCompare.exe`: it holds the game icons and portraits shown in the text.
 2. In CalvardTool, choose the game folder under **Game folder or files**, or drop the folder on the window.
 3. In the **What to decompile** window, tick what you need.
-4. Set the **Project folder (for editing)** and a separate **Output folder**.
+4. Set the **Project folder (for editing)** and, on the **Build** tab, a separate **Output folder**.
 5. Click **Decompile all** and edit the files in the project folder.
 6. Click **Build**, tick the folders in the **What to build** window and build.
 7. Copy the result into the game folder, replacing the files.
@@ -163,7 +163,7 @@ The checks run in the background after loading, and the tab shows the number of 
 | Section | What it finds |
 |---|---|
 | **Service codes** | Lost or extra codes (`<C…>`, `</C>`, `{11}{…}`, `{16}`, `<K>`, `<E…>`, `<B>`), broken line breaks, changed service names, `.json` files that can't be read |
-| **Not translated** | Scene lines left in English or Japanese; tables, the interface and debug scenes are not checked |
+| **Not translated** | Scene lines left untranslated, fully or partly; for a Japanese and English pair, Japanese text left in the English files. Tables, the interface and debug scenes are not checked |
 | **Placeholders** | `%d`, `%s`, `%.1f` where the game inserts a number or a name; if their count differs from the original, the game may show the wrong text or crash |
 
 - Identical errors are grouped, with the files and an example.
@@ -196,7 +196,7 @@ This affects the display only, and nothing is written to the files.
 
 ```
 CalvardTool decompile --game <game folder or .p3a file> --proj <project folder>
-            [--types scena,tables,textures,other] [--mask a0000,c01*] [--no-mods] [--overwrite]
+            [--types scena,tables,textures,other] [--mask a0000,c01*] [--no-mods] [--overwrite] [--dds] [--tables-json]
 CalvardTool compile   --proj <project folder> --out <output folder>
             [--rebuild --game <game folder> | --name RU_MOD] [--changed]
 CalvardTool extract   --game <game folder> --proj <folder> --mask chr0000*

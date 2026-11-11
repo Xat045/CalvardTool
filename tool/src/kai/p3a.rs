@@ -48,7 +48,7 @@ impl Archive {
 		let n = u64at(&head, 16)? as usize;
 		let (toc_start, esize) = if version >= 1200 { (0x30u64, u32at(&head, 0x2c)? as usize) } else { (0x20u64, 0x128usize) };
 		let file_len = f.metadata().map(|m| m.len()).unwrap_or(u64::MAX);
-		if n > 10_000_000 || esize < 0x120 || esize > 0x1000 || toc_start + (n * esize) as u64 > file_len {
+		if n > 10_000_000 || !(0x120..=0x1000).contains(&esize) || toc_start + (n * esize) as u64 > file_len {
 			return Err(lformat!("{}: повреждённое оглавление", "{}: damaged table of contents", path.display()));
 		}
 		f.seek(SeekFrom::Start(toc_start)).map_err(err)?;
@@ -317,8 +317,8 @@ fn write_rebuilt(src: &Archive, head: &[u8], toc: &[u8], new_blocks: &[Option<Sp
 		*written += b.len() as u64;
 		Ok(())
 	};
-	put(&mut w, &head, &mut written)?;
-	put(&mut w, &toc, &mut written)?;
+	put(&mut w, head, &mut written)?;
+	put(&mut w, toc, &mut written)?;
 	if let Some(d) = &src.dict_block {
 		put(&mut w, d, &mut written)?;
 	}

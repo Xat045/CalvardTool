@@ -161,9 +161,8 @@ fn json_errors(json_src: &str, clm: &str) -> String {
 		let line_end = clm[start..].find('\n').map(|p| start + p).unwrap_or(clm.len());
 		let line = clm[line_start..line_end].trim_start_matches('\t');
 		let mut cands: Vec<String> = Vec::new();
-		if let Some(q) = d.text.1.split_once("encode \"").map(|x| x.1) {
-			if let Some(q) = q.rsplit_once("\" as") { cands.push(q.0.to_string()) }
-		}
+		if let Some(q) = d.text.1.split_once("encode \"").map(|x| x.1)
+			&& let Some(q) = q.rsplit_once("\" as") { cands.push(q.0.to_string()) }
 		for l in clm[line_start..end.max(line_end)].split('\n').skip(1) {
 			let l = l.trim_start_matches('\t');
 			if l.len() > 3 && l != "}" && l != "} {" { cands.push(l.to_string()) }

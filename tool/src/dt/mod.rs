@@ -104,11 +104,10 @@ fn keyed(doc: &Doc) -> Vec<(String, String, String)> {
 			let mut pi = 0usize;
 			for t in toks {
 				if let Tok::Ptr { target, .. } = t {
-					if let Some(slot) = refkey.get_mut(*target) {
-						if slot.is_none() {
+					if let Some(slot) = refkey.get_mut(*target)
+						&& slot.is_none() {
 							*slot = Some(format!("d{di}.{pi}"));
 						}
-					}
 					pi += 1;
 				}
 			}

@@ -70,11 +70,10 @@ pub fn detect(dir: &Path) -> Option<Game> {
 }
 
 fn detect_here(p: &Path) -> Option<Game> {
-	if let Ok(s) = std::fs::read_to_string(p.join(".kai_game.txt")) {
-		if let Some(g) = Game::from_key(&s) {
+	if let Ok(s) = std::fs::read_to_string(p.join(".kai_game.txt"))
+		&& let Some(g) = Game::from_key(&s) {
 			return Some(g);
 		}
-	}
 	let has = |n: &str| p.join(n).exists();
 	if has("kuro2.exe") {
 		return Some(Game::Daybreak2);

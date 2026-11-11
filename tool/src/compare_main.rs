@@ -42,7 +42,7 @@ fn main() {
 	if std::env::var("FILESTATS").is_ok() {
 		let mut m: std::collections::BTreeMap<String, (usize, usize, usize)> = Default::default();
 		for p in &d.pairs {
-			if std::env::var("FILESTATS").ok().as_deref() == Some(p.file.as_str()) && p.en.is_none() { if let Some(r) = &p.ru { println!("ONLYRU {} {} {}", p.id, r.path.display(), r.text.chars().take(50).collect::<String>()) } }
+			if std::env::var("FILESTATS").ok().as_deref() == Some(p.file.as_str()) && p.en.is_none() && let Some(r) = &p.ru { println!("ONLYRU {} {} {}", p.id, r.path.display(), r.text.chars().take(50).collect::<String>()) }
 			let e = m.entry(p.file.clone()).or_default();
 			match (&p.en, &p.ru) { (Some(_), Some(_)) => e.0 += 1, (Some(_), None) => e.1 += 1, (None, Some(_)) => e.2 += 1, _ => {} }
 		}

@@ -42,7 +42,7 @@ fn write_raw(rows: &[(String, String, String)], data: &[(String, bool)], file_na
 		let ws = wb.add_worksheet();
 		ws.set_name(TEXT_SHEET).map_err(e)?;
 		ws.write_string_with_format(0, 0, "ID", &head).map_err(e)?;
-		ws.write_string_with_format(0, 1, &lformat!("Текст — редактируйте этот столбец ({file_name})", "Text: edit this column ({file_name})"), &head).map_err(e)?;
+		ws.write_string_with_format(0, 1, lformat!("Текст — редактируйте этот столбец ({file_name})", "Text: edit this column ({file_name})"), &head).map_err(e)?;
 		ws.write_string_with_format(0, 2, tr("Оригинал (для справки, при сборке не используется)", "Original (for reference, not used when building)"), &head).map_err(e)?;
 		ws.set_column_width(0, 8).map_err(e)?;
 		ws.set_column_width(1, 70).map_err(e)?;

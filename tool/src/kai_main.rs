@@ -44,6 +44,7 @@ fn main() {
 		tables_json: false,
 		check: true,
 		other: false,
+		keep_failed: true,
 		mask: String::new(),
 		only_changed: false,
 		overwrite_edited: false,

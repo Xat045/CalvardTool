@@ -37,6 +37,7 @@ pub struct Options {
 	pub tables_json: bool,
 	pub check: bool,
 	pub other: bool,
+	pub keep_failed: bool,
 	pub mask: String,
 	pub only_changed: bool,
 	pub overwrite_edited: bool,
@@ -321,11 +322,10 @@ impl Manifest {
 		let mut m = Manifest::default();
 		if let Ok(s) = std::fs::read_to_string(dir.join(MANIFEST)) {
 			for l in s.lines() {
-				if let Some((p, h)) = l.split_once('\t') {
-					if let Ok(h) = u64::from_str_radix(h.trim(), 16) {
+				if let Some((p, h)) = l.split_once('\t')
+					&& let Ok(h) = u64::from_str_radix(h.trim(), 16) {
 						m.map.insert(p.to_string(), h);
 					}
-				}
 			}
 		}
 		m
@@ -365,11 +365,10 @@ fn load_state(dir: &Path) -> HashMap<String, (String, u64, u64)> {
 	if let Ok(s) = std::fs::read_to_string(dir.join(STATE)) {
 		for l in s.lines() {
 			let v: Vec<&str> = l.split('\t').collect();
-			if v.len() == 4 {
-				if let (Ok(a), Ok(b)) = (v[2].parse(), v[3].parse()) {
+			if v.len() == 4
+				&& let (Ok(a), Ok(b)) = (v[2].parse(), v[3].parse()) {
 					m.insert(v[0].to_string(), (v[1].to_string(), a, b));
 				}
-			}
 		}
 	}
 	m
@@ -387,11 +386,10 @@ fn load_paths(dir: &Path) -> BTreeMap<String, (String, Kind)> {
 	if let Ok(s) = std::fs::read_to_string(dir.join(PATHS)) {
 		for l in s.lines() {
 			let mut it = l.split('\t');
-			if let (Some(p), Some(v), Some(k)) = (it.next(), it.next(), it.next()) {
-				if let Some(k) = Kind::from_code(k) {
+			if let (Some(p), Some(v), Some(k)) = (it.next(), it.next(), it.next())
+				&& let Some(k) = Kind::from_code(k) {
 					m.insert(p.to_string(), (v.to_string(), k));
 				}
-			}
 		}
 	}
 	m
@@ -625,11 +623,10 @@ pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
 		let sig = src.sig();
 		let check = |pname: &str| -> Option<Outcome> {
 			let dst = o.proj_dir.join(pname);
-			if let Some((s0, sz, t)) = state.lock().unwrap().get(pname) {
-				if *s0 == sig && stamp(&dst) == Some((*sz, *t)) {
+			if let Some((s0, sz, t)) = state.lock().unwrap().get(pname)
+				&& *s0 == sig && stamp(&dst) == Some((*sz, *t)) {
 					return Some(Outcome::Same);
 				}
-			}
 			if dst.exists() && !o.overwrite_edited {
 				let known = manifest.lock().unwrap().map.get(pname).copied();
 				let cur = std::fs::read(&dst).map(|d| fnv(&d)).ok();
@@ -660,6 +657,7 @@ pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
 		if let Some(p) = dst.parent() { let _ = std::fs::create_dir_all(p); }
 		let first_kind = k;
 		let mut json_warn = None;
+		let failed = |e: String| -> Result<Option<String>, Outcome> { if o.keep_failed { Ok(Some(lformat!("{e}, в проекте как есть", "{e}, copied to the project as it is"))) } else { Err(Outcome::Skip(Some(lformat!("{e} — пропущен", "{e}: skipped")))) } };
 		let (bytes, warn): (Vec<u8>, Option<String>) = match k {
 			Kind::Scena => match scena::decompile(&data) {
 				Ok((json, _)) => {
@@ -667,25 +665,34 @@ pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
 					(json.replace('\n', "\r\n").into_bytes(), None)
 				}
 				Err(_) if !has_text(&data) => {
+					if !o.other { return Outcome::Skip(None) }
 					if let Err(e) = save_orig() { return Outcome::Fail(e) }
 					k = Kind::Other;
 					(Vec::new(), None)
 				}
-				Err(e) => return Outcome::Fail(e),
+				Err(e) => match failed(lformat!("сцена не разобралась: {e}", "scene not unpacked: {e}")) {
+					Ok(w) => { json_warn = w; k = Kind::Other; (Vec::new(), None) }
+					Err(r) => return r,
+				},
 			},
+			Kind::Table if o.tables_json && matches!(tbl::decompile(&data, &pname), Ok((_, 0, _))) => {
+				if !o.other { return Outcome::Skip(None) }
+				k = Kind::Other;
+				(Vec::new(), None)
+			}
 			Kind::Table if o.tables_json => match tbl_json::decompile(&data) {
 				Ok(j) => {
 					if let Err(e) = save_orig() { return Outcome::Fail(e) }
 					(j, None)
 				}
-				Err(e) => {
-					json_warn = Some(lformat!("таблица не разобралась в JSON, в проекте как есть: {e}", "couldn't decompile the table to JSON, it stays in the project as is: {e}"));
-					k = Kind::Other;
-					(Vec::new(), None)
-				}
+				Err(e) => match failed(lformat!("таблица не разобралась в JSON: {e}", "table not unpacked to JSON: {e}")) {
+					Ok(w) => { json_warn = w; k = Kind::Other; (Vec::new(), None) }
+					Err(r) => return r,
+				},
 			},
 			Kind::Table => match tbl::decompile(&data, &pname) {
 				Ok((_, 0, _)) => {
+					if !o.other { return Outcome::Skip(None) }
 					k = Kind::Other;
 					(Vec::new(), None)
 				}
@@ -693,14 +700,20 @@ pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
 					if let Err(e) = save_orig() { return Outcome::Fail(e) }
 					(book, None)
 				}
-				Err(e) => return Outcome::Fail(e),
+				Err(e) => match failed(lformat!("таблица не разобралась: {e}", "table not unpacked: {e}")) {
+					Ok(w) => { json_warn = w; k = Kind::Other; (Vec::new(), None) }
+					Err(r) => return r,
+				},
 			},
 			Kind::Texture => match dds::decompile(&data) {
 				Ok(d) => {
 					if let Err(e) = save_orig() { return Outcome::Fail(e) }
 					(d.png, None)
 				}
-				Err(e) => return Outcome::Fail(e),
+				Err(e) => match failed(lformat!("текстура не разобралась: {e}", "texture not unpacked: {e}")) {
+					Ok(w) => { json_warn = w; k = Kind::Other; (Vec::new(), None) }
+					Err(r) => return r,
+				},
 			},
 			Kind::Yaml | Kind::Other => (data.clone(), None),
 		};
@@ -804,11 +817,10 @@ pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
 	let paths = load_paths(&o.proj_dir);
 	let state = load_state(&o.proj_dir);
 	let untouched = |pname: &str, f: &Path| -> bool {
-		if let Some((_, sz, t)) = state.get(pname) {
-			if stamp(f) == Some((*sz, *t)) {
+		if let Some((_, sz, t)) = state.get(pname)
+			&& stamp(f) == Some((*sz, *t)) {
 				return true;
 			}
-		}
 		match manifest.map.get(pname) {
 			Some(h) => std::fs::read(f).map(|d| fnv(&d)).ok() == Some(*h),
 			None => false,
@@ -834,9 +846,8 @@ pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
 		let low = pname.to_lowercase();
 		let fname = f.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
 		if fname.starts_with("~$") || fname.starts_with('.') { continue }
-		if let Some(only) = &o.build_only {
-			if !only.iter().any(|p| low.starts_with(p.as_str())) { continue }
-		}
+		if let Some(only) = &o.build_only
+			&& !only.iter().any(|p| low.starts_with(p.as_str())) { continue }
 		let base = pname.rsplit_once('.').map(|x| x.0.to_string()).unwrap_or(pname.clone());
 		let (k, vpath) = if let Some((v, k)) = paths.get(&pname) {
 			(*k, v.clone())
@@ -862,12 +873,11 @@ pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
 			continue;
 		}
 		if !enabled(o, k) || !mask_ok(o, &vpath) { continue }
-		if o.only_changed && (k == Kind::Yaml || originals.contains_key(&vpath)) {
-			if untouched(&pname, &f) {
+		if o.only_changed && (k == Kind::Yaml || originals.contains_key(&vpath))
+			&& untouched(&pname, &f) {
 				unchanged += 1;
 				continue;
 			}
-		}
 		tasks.push((pname, vpath, k, f));
 	}
 	sink.log(&lformat!("Сборка: {} → {}", "Building: {} → {}", o.proj_dir.display(), o.out_dir.display()));
@@ -923,7 +933,7 @@ pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
 				used.insert(l);
 			}
 		}
-		let archives: u64 = used.iter().map(|l| size_of(*l, &arch[*l])).sum();
+		let archives: u64 = used.iter().map(|l| size_of(l, &arch[*l])).sum();
 		let need = rebuild_space(archives, edited);
 		if let Some(free) = free_space(&o.out_dir).filter(|&f| f < need) {
 			sink.log(&lformat!("✖ НЕ ХВАТИТ МЕСТА: для сборки нужно примерно {:.1} ГБ (временный файл и новые архивы), а на диске папки для собранного свободно {:.1} ГБ. Сборка не начиналась — освободите место или выберите другую папку.", "✖ NOT ENOUGH SPACE: the build needs about {:.1} GB (a temporary file and the new archives), but the disk of the output folder has {:.1} GB free. The build did not start. Free some space or choose another folder.",
@@ -1071,8 +1081,9 @@ pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
 		report(sink, tr("сборка", "build"), &s);
 		return s;
 	}
-	let modfiles = load_kv(&o.proj_dir.join(MODFILES));
-	if !modfiles.is_empty() {
+	let modfiles_path = o.proj_dir.join(MODFILES);
+	if modfiles_path.is_file() {
+		let modfiles = load_kv(&modfiles_path);
 		originals.retain(|v, _| modfiles.contains_key(v));
 	}
 	let mut packed: Vec<(String, Vec<u8>)> = Vec::new();
@@ -1291,7 +1302,7 @@ pub fn free_space(path: &Path) -> Option<u64> {
 	}
 }
 
-fn disk_full(msg: &str) -> bool {
+pub(crate) fn disk_full(msg: &str) -> bool {
 	msg.contains("os error 112") || msg.contains("os error 28") || msg.to_lowercase().contains("no space left")
 }
 
@@ -1417,8 +1428,14 @@ pub fn scan_project(proj: &Path) -> Vec<ProjItem> {
 	let labels: Vec<String> = arch.keys().cloned().collect();
 	let mod_size: u64 = {
 		let mut v = Vec::new();
-		walk_all(&proj.join(ORIG_DIR), &mut v);
-		v.iter().map(|f| std::fs::metadata(f).map(|m| m.len()).unwrap_or(0)).sum()
+		let orig = proj.join(ORIG_DIR);
+		walk_all(&orig, &mut v);
+		let mf = proj.join(MODFILES);
+		let keep = mf.is_file().then(|| load_kv(&mf));
+		v.iter()
+			.filter(|f| keep.as_ref().is_none_or(|k| k.contains_key(&rel_str(f, &orig).to_lowercase())))
+			.map(|f| std::fs::metadata(f).map(|m| m.len()).unwrap_or(0))
+			.sum()
 	};
 	let manifest = Manifest::load(proj);
 	let state = load_state(proj);

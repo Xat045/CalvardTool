@@ -41,6 +41,8 @@ pub struct Pair {
 	pub ru_key: String,
 	pub service: bool,
 	pub who: Option<u32>,
+	pub skin: String,
+	pub shown: String,
 }
 
 #[derive(Default)]
@@ -126,11 +128,14 @@ fn fold(s: &str) -> String {
 		.collect()
 }
 
+#[derive(Default)]
 struct Item {
 	key: String,
 	id: String,
 	text: String,
 	line: usize,
+	skin: String,
+	shown: String,
 }
 
 fn strip_ln(code: &str) -> String {
@@ -191,18 +196,26 @@ fn speaker_of(key: &str) -> Option<u32> {
 	key.split_once('|')?.1.strip_prefix("system[5,6](")?.split(',').next()?.trim().parse().ok()
 }
 
-pub fn speaker_face(game: &str, id: u32) -> Option<u32> {
-	static T: std::sync::OnceLock<Vec<(&'static str, u32, u32)>> = std::sync::OnceLock::new();
-	let t = T.get_or_init(|| {
-		include_str!("speakers.tsv")
-			.lines()
-			.filter_map(|l| {
-				let mut c = l.split('\t');
-				Some((c.next()?, c.next()?.parse().ok()?, c.next()?.parse().ok()?))
-			})
-			.collect()
-	});
-	t.iter().find(|x| x.0 == game && x.1 == id).map(|x| x.2)
+fn actor_call(line: &str) -> Option<(&'static str, u32, String)> {
+	let body = strip_ln(line);
+	for call in ["chr_create", "chr_change_skin", "chr_set_display_name"] {
+		let Some(rest) = body.strip_prefix(call).and_then(|r| r.strip_prefix('(')) else { continue };
+		let (n, arg) = rest.split_once(',')?;
+		let n = n.trim().parse().ok()?;
+		let arg = arg.trim();
+		let s = arg.strip_prefix('"').and_then(|a| a.find('"').map(|e| a[..e].to_string()))?;
+		return Some((call, n, s));
+	}
+	None
+}
+
+pub fn number_pairs(text: &str) -> std::collections::HashMap<u32, u32> {
+	text.lines()
+		.filter_map(|l| {
+			let mut c = l.split('\t');
+			Some((c.next()?.trim().parse().ok()?, c.next()?.trim().parse().ok()?))
+		})
+		.collect()
 }
 
 fn read_json(path: &Path) -> Result<Vec<Item>, String> {
@@ -212,7 +225,7 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 		return Ok(read_ed7_json(&src, &v, true));
 	}
 	if v.get("headers").is_some() && v.get("kiseki").is_none() {
-		return Ok(super::tbl_json::texts(&v).into_iter().enumerate().map(|(n, (id, text))| Item { key: id.clone(), id, text, line: n + 2 }).collect());
+		return Ok(super::tbl_json::texts(&v).into_iter().enumerate().map(|(n, (id, text))| Item { key: id.clone(), id, text, line: n + 2, ..Default::default() }).collect());
 	}
 	if v.get("kiseki").and_then(|k| k.as_str()) != Some("kai-scena") {
 		return Err(tr("не файл диалогов CalvardTool", "not a dialogue file of CalvardTool").into());
@@ -240,6 +253,9 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 	let mut depth = 0i32;
 	let mut calls: Option<(i32, usize, Option<usize>)> = None;
 	let mut func = String::new();
+	let mut skin_fn: HashMap<u32, String> = HashMap::new();
+	let mut skin_file: HashMap<u32, String> = HashMap::new();
+	let mut shown_fn: HashMap<u32, String> = HashMap::new();
 	for it in v.get("script").and_then(|s| s.as_array()).map(|a| a.as_slice()).unwrap_or(&[]) {
 		if let Some(line) = it.as_str() {
 			let t = line.trim();
@@ -247,6 +263,20 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 			depth += braces(t);
 			if before == 0 && t.starts_with("fn ") {
 				func = t[3..].split(['(', ' ']).next().unwrap_or("").to_string();
+				skin_fn.clear();
+				shown_fn.clear();
+			}
+			if let Some((call, n, arg)) = actor_call(t) {
+				match call {
+					"chr_set_display_name" => {
+						shown_fn.insert(n, arg);
+					}
+					_ if !arg.is_empty() => {
+						skin_fn.insert(n, arg.clone());
+						skin_file.insert(n, arg);
+					}
+					_ => {}
+				}
 			}
 			if calls.is_none() && t.starts_with("fn ") && t.ends_with(" calls {") {
 				calls = Some((before, out.len(), None));
@@ -270,11 +300,18 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 		let code = obj.get("code").and_then(|c| c.as_str()).unwrap_or("");
 		let key = plain_strings(&strip_ln(code).replace(", \"\");", ");"));
 		n_line += 1;
-		for (i, t) in obj.get("text").and_then(|t| t.as_array()).map(|a| a.as_slice()).unwrap_or(&[]).iter().enumerate() {
+		let texts = obj.get("text").and_then(|t| t.as_array()).map(|a| a.as_slice()).unwrap_or(&[]);
+		if let Some(n) = strip_ln(code).strip_prefix("chr_set_display_name(").and_then(|r| r.split(',').next()).and_then(|x| x.trim().parse::<u32>().ok()) {
+			shown_fn.insert(n, texts.first().and_then(|t| t.as_str()).unwrap_or("").to_string());
+		}
+		let who = speaker_of(&format!("|{key}"));
+		let skin = who.and_then(|n| skin_fn.get(&n).cloned().or_else(|| skin_file.get(&n).map(|m| format!("~{m}")))).unwrap_or_default();
+		let shown = who.and_then(|n| shown_fn.get(&n).cloned()).unwrap_or_default();
+		for (i, t) in texts.iter().enumerate() {
 			let text = t.as_str().unwrap_or("").to_string();
 			let line = lines_of_texts.get(k).copied().unwrap_or(0);
 			k += 1;
-			out.push(Item { key: format!("{func}|{key}#{i}"), id: lformat!("реплика {n_line}", "line {n_line}"), text, line });
+			out.push(Item { key: format!("{func}|{key}#{i}"), id: lformat!("реплика {n_line}", "line {n_line}"), text, line, skin: skin.clone(), shown: shown.clone() });
 		}
 	}
 	Ok(out)
@@ -297,7 +334,7 @@ fn text_lines(src: &str) -> Vec<usize> {
 				in_text = true;
 			} else if rest.starts_with('"') {
 				let n_items = serde_json::from_str::<Vec<serde_json::Value>>(&format!("[{}", rest.trim_end_matches(','))).map(|v| v.len()).unwrap_or(1);
-				out.extend(std::iter::repeat(n + 1).take(n_items));
+				out.extend(std::iter::repeat_n(n + 1, n_items));
 			}
 		}
 	}
@@ -318,7 +355,7 @@ fn read_ed7_json(src: &str, v: &serde_json::Value, with_lines: bool) -> Vec<Item
 				for (i, x) in t.iter().enumerate() {
 					let ln = lines.get(*k).copied().unwrap_or(0);
 					*k += 1;
-					out.push(Item { key: format!("{line}#{i}"), id: lformat!("реплика {}", "line {}", *n), text: x.as_str().unwrap_or("").to_string(), line: ln });
+					out.push(Item { key: format!("{line}#{i}"), id: lformat!("реплика {}", "line {}", *n), text: x.as_str().unwrap_or("").to_string(), line: ln, ..Default::default() });
 				}
 			}
 			if let Some(b) = o.get("body").and_then(|b| b.as_array()) {
@@ -342,13 +379,13 @@ fn read_dt(path: &Path) -> Result<Vec<Item>, String> {
 	let data = std::fs::read(path).map_err(|e| e.to_string())?;
 	let n = path.file_name().map(|n| n.to_string_lossy().to_lowercase()).unwrap_or_default();
 	let stem = n.split('.').next().unwrap_or(&n).to_string();
-	Ok(crate::dt::texts(&data, &stem)?.into_iter().map(|(id, key, text)| Item { key, id, text, line: 0 }).collect())
+	Ok(crate::dt::texts(&data, &stem)?.into_iter().map(|(id, key, text)| Item { key, id, text, line: 0, ..Default::default() }).collect())
 }
 
 fn read_xlsx(path: &Path) -> Result<Vec<Item>, String> {
 	if ed7().is_some() {
 		let book = std::fs::read(path).map_err(|e| e.to_string())?;
-		return Ok(crate::dt::texts_xlsx(&book)?.into_iter().enumerate().map(|(n, (id, key, text))| Item { key, id, text: text.replace("\r\n", "\n"), line: n + 2 }).collect());
+		return Ok(crate::dt::texts_xlsx(&book)?.into_iter().enumerate().map(|(n, (id, key, text))| Item { key, id, text: text.replace("\r\n", "\n"), line: n + 2, ..Default::default() }).collect());
 	}
 	use calamine::{Data, Reader, Xlsx};
 	let mut wb: Xlsx<_> = calamine::open_workbook(path).map_err(|e| lformat!("не удалось открыть Excel: {e}", "could not open Excel: {e}"))?;
@@ -365,7 +402,7 @@ fn read_xlsx(path: &Path) -> Result<Vec<Item>, String> {
 		if id.trim().is_empty() {
 			continue;
 		}
-		out.push(Item { key: id.clone(), id, text: cell(row.get(1)).replace("\r\n", "\n"), line: row0 + r + 1 });
+		out.push(Item { key: id.clone(), id, text: cell(row.get(1)).replace("\r\n", "\n"), line: row0 + r + 1, ..Default::default() });
 	}
 	Ok(out)
 }
@@ -405,7 +442,7 @@ fn read_yaml(path: &Path) -> Result<Vec<Item>, String> {
 			continue;
 		}
 		if let Some((k, v)) = t.split_once(':') {
-			out.push(Item { key: k.trim().to_string(), id: k.trim().to_string(), text: unquote_yaml(v), line: n + 1 });
+			out.push(Item { key: k.trim().to_string(), id: k.trim().to_string(), text: unquote_yaml(v), line: n + 1, ..Default::default() });
 		}
 	}
 	Ok(out)
@@ -721,11 +758,10 @@ pub fn load(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Syn
 pub fn load_cached(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Sync), cache: Option<&Path>) -> Data {
 	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}|{}", en_dir.display(), ru_dir.display(), ED7.load(std::sync::atomic::Ordering::Relaxed)).as_bytes()))));
 	let old: HashMap<String, cache::Entry> = cache_file.as_deref().and_then(cache::read).unwrap_or_default();
-	if ed7().is_none() {
-		if let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
+	if ed7().is_none()
+		&& let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
 			super::game::set(g);
 		}
-	}
 	let en = collect(en_dir, false);
 	let ru = collect(ru_dir, true);
 	let mut keys: Vec<String> = en.keys().chain(ru.keys()).cloned().collect();
@@ -876,6 +912,8 @@ fn pair_files(key: &str, ep: &Option<PathBuf>, rp: &Option<PathBuf>, by_id: bool
 				en: e.map(|x| side(x, ep)),
 				ru: r.map(|x| side(x, rp)),
 				who: r.or(e).and_then(|x| speaker_of(&x.key)),
+				skin: r.filter(|x| !x.skin.is_empty()).or(e).map(|x| x.skin.clone()).unwrap_or_default(),
+				shown: r.filter(|x| !x.shown.is_empty()).or(e).map(|x| x.shown.clone()).unwrap_or_default(),
 				service,
 			});
 		}
@@ -994,9 +1032,10 @@ mod cache {
 				let (en, ru) = (r.side()?, r.side()?);
 				let service = r.n()? == 1;
 				let who = u32::try_from(r.n()?).ok();
+				let (skin, shown) = (r.s()?, r.s()?);
 				let en_key = en.as_ref().map(|x| search_key(&x.text)).unwrap_or_default();
 				let ru_key = ru.as_ref().map(|x| search_key(&x.text)).unwrap_or_default();
-				pairs.push(Pair { file, id, en, ru, en_key, ru_key, service, who });
+				pairs.push(Pair { file, id, en, ru, en_key, ru_key, service, who, skin, shown });
 			}
 			let mut warn = Vec::new();
 			for _ in 0..r.n()? {
@@ -1026,6 +1065,8 @@ mod cache {
 				w.side(&p.ru);
 				w.n(p.service as u64);
 				w.n(p.who.map_or(u64::MAX, u64::from));
+				w.s(&p.skin);
+				w.s(&p.shown);
 			}
 			w.n(e.warn.len() as u64);
 			for x in &e.warn {
@@ -1276,11 +1317,10 @@ pub fn dict_from_books<'a>(books: impl IntoIterator<Item = (&'a str, &'a [u8])>)
 		used += 1;
 		for r in &rows[h + 1..] {
 			let get = |i: usize| r.get(i).map(|s| s.as_str()).unwrap_or("");
-			if let Some(f) = fin {
-				if !matches!(get(f), "TRUE" | "☑" | "✓") {
+			if let Some(f) = fin
+				&& !matches!(get(f), "TRUE" | "☑" | "✓") {
 					continue;
 				}
-			}
 			let (e, t) = (get(en), get(ru));
 			if t.is_empty() || t.contains("??") {
 				continue;
@@ -1711,8 +1751,33 @@ mod tests {
 	}
 
 	#[test]
+	fn scene_actors() {
+		let dir = std::env::temp_dir().join(format!("kc_actors_{}", std::process::id()));
+		std::fs::create_dir_all(&dir).unwrap();
+		let p = dir.join("e4800.json");
+		std::fs::write(&p, r#"{"kiseki":"kai-scena","script":[
+			"fn a() {", "124@chr_change_skin(62990, \"chr5117_c12\");", "125@chr_change_skin(0, \"chr0000_c02\");",
+			"247@chr_set_display_name(62990, \"???\");",
+			{"code":"257@system[5,6](62990, 255@\"<#E[P]#M_0#B_0>\", 11, 42228, $1);","text":["Heehee..."]},
+			{"code":"258@system[5,6](0, 255@\"<#E_0#M_0#B_0>\", $1);","text":["Van."]},
+			"}", "fn b() {",
+			{"code":"260@chr_set_display_name(15100, $1);","text":["Jess"]},
+			{"code":"261@system[5,6](62990, 1@\"<#E_0#M_0#B_0>\", $1);","text":["Again"]},
+			{"code":"262@system[5,6](15100, 1@\"<#E_0#M_0#B_0>\", $1);","text":["Hi"]},
+			"}"]}"#).unwrap();
+		let it = read_json(&p).unwrap();
+		let _ = std::fs::remove_dir_all(&dir);
+		let get = |t: &str| it.iter().find(|x| x.text == t).map(|x| (x.skin.as_str(), x.shown.as_str())).unwrap();
+		assert_eq!(get("Heehee..."), ("chr5117_c12", "???"));
+		assert_eq!(get("Van."), ("chr0000_c02", ""));
+		assert_eq!(get("Again"), ("~chr5117_c12", ""));
+		assert_eq!(get("Jess"), ("", ""));
+		assert_eq!(get("Hi"), ("", "Jess"));
+	}
+
+	#[test]
 	fn align_inserted_line() {
-		let it = |k: &str| Item { key: k.into(), id: String::new(), text: String::new(), line: 0 };
+		let it = |k: &str| Item { key: k.into(), id: String::new(), text: String::new(), line: 0, ..Default::default() };
 		let a = vec![it("a"), it("b"), it("c")];
 		let b = vec![it("a"), it("x"), it("b"), it("c")];
 		assert_eq!(align(&a, &b), vec![(Some(0), Some(0)), (None, Some(1)), (Some(1), Some(2)), (Some(2), Some(3))]);

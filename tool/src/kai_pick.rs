@@ -103,6 +103,8 @@ pub struct Picker {
 	pending: Option<Arc<Mutex<Option<Vec<Item>>>>>,
 	pub tex_dds: bool,
 	pub tables_json: bool,
+	pub other_files: bool,
+	pub keep_failed: bool,
 	page: u8,
 }
 
@@ -279,13 +281,15 @@ fn ed7_items(v: Vec<calvard_tool::jobs::Ed7Folder>, mode: Mode) -> Vec<Item> {
 	let decomp = mode == Mode::Decompile;
 	let mut out: Vec<Item> = v
 		.into_iter()
-		.filter(|f| f.scenes + f.tables + f.textures + f.others > 0)
+		.filter(|f| f.scenes + f.tables + f.textures + f.sprites + f.others > 0)
 		.map(|f| {
 			let text = f.scenes + f.tables > 0;
 			let group = if text { G_TEXT } else { G_TEX };
 			let us = f.key.ends_with("_us");
-			let lang = if us {
+			let lang = if us || (f.scenes == 0 && f.tables > 0 && f.tables_us == f.tables) {
 				tr("Английские файлы", "English files")
+			} else if f.tables_us > 0 {
+				tr("Японские и английские файлы", "Japanese and English files")
 			} else if text {
 				tr("Японские файлы", "Japanese files")
 			} else if keys.contains(&format!("{}_us", f.key)) {
@@ -298,10 +302,14 @@ fn ed7_items(v: Vec<calvard_tool::jobs::Ed7Folder>, mode: Mode) -> Vec<Item> {
 				parts.push(format!("{} {}", plural(f.scenes, tr("сцена", "scene"), tr("сцены", "scenes"), tr("сцен", "scenes")), if decomp { ".bin → .json" } else { ".json → .bin" }));
 			}
 			if f.tables > 0 {
-				parts.push(format!("{} {}", plural(f.tables, tr("таблица", "table"), tr("таблицы", "tables"), tr("таблиц", "tables")), if decomp { "._dt → .xlsx" } else { ".xlsx → ._dt" }));
+				let game = if f.dt2 == 0 { "._dt" } else if f.dt2 == f.tables { ".dt2" } else { "._dt / .dt2" };
+				parts.push(format!("{} {}", plural(f.tables, tr("таблица", "table"), tr("таблицы", "tables"), tr("таблиц", "tables")), if decomp { format!("{game} → .xlsx") } else { format!(".xlsx → {game}") }));
 			}
 			if f.textures > 0 {
 				parts.push(format!("{} {}", plural(f.textures, tr("картинка", "image"), tr("картинки", "images"), tr("картинок", "images")), if decomp { tr(".itp → .png или .dds", ".itp → .png or .dds") } else { ".png / .dds → .itp" }));
+			}
+			if f.sprites > 0 {
+				parts.push(format!("{} {}", plural(f.sprites, tr("спрайт", "sprite"), tr("спрайта", "sprites"), tr("спрайтов", "sprites")), if decomp { tr(".itc → кадры .png", ".itc → .png frames") } else { tr("кадры .png → .itc", ".png frames → .itc") }));
 			}
 			if f.others > 0 {
 				parts.push(lformat!("{} как есть", "{} as is", plural(f.others, tr("другой файл", "other file"), tr("других файла", "other files"), tr("других файлов", "other files"))));
@@ -327,31 +335,27 @@ impl Picker {
 	}
 
 	fn fmt_title(&self) -> &'static str {
-		match self.fmt_kinds() {
-			(true, true) => tr("Формат файлов", "File format"),
-			(false, true) => tr("Формат таблиц", "Table format"),
-			_ => tr("Формат текстур", "Texture format"),
-		}
+		tr("Формат файлов", "File format")
 	}
 
 	pub fn open(mode: Mode, dir: &str, then_start: bool, mod_mode: bool, ctx: &egui::Context) -> Picker {
-		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, page: 0 };
+		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 };
 		p.rescan(ctx);
 		p
 	}
 
 	pub fn with_items(mode: Mode, dir: &str, items: Vec<Item>, then_start: bool, mod_mode: bool) -> Picker {
-		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, page: 0 }
+		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 }
 	}
 
 	pub fn open_ed7(mode: Mode, dir: &str, then_start: bool, ctx: &egui::Context) -> Picker {
-		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, page: 0 };
+		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 };
 		p.rescan(ctx);
 		p
 	}
 
 	pub fn with_items_ed7(mode: Mode, dir: &str, items: Vec<Item>, then_start: bool) -> Picker {
-		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, page: 0 }
+		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 }
 	}
 
 	pub fn rescan(&mut self, ctx: &egui::Context) {
@@ -479,11 +483,7 @@ impl Picker {
 			y += 30.0;
 			let n_all = self.items.len();
 			let headline = if fmt_page {
-				match self.fmt_kinds() {
-					(true, true) => tr("Отмечены текстуры и таблицы — в каком виде их разобрать для правки?", "Textures and tables are selected. In which format should they be decompiled for editing?").to_string(),
-					(false, true) => tr("Отмечены таблицы — в каком виде их разобрать для правки?", "Tables are selected. In which format should they be decompiled for editing?").to_string(),
-					_ => tr("Отмечены текстуры — в каком виде их разобрать для правки?", "Textures are ticked: in which format should they be unpacked for editing?").to_string(),
-				}
+				tr("В каком виде разобрать файлы для правки и что делать с остальными?", "In what form to unpack the files for editing, and what to do with the rest?").to_string()
 			} else if self.scanning() {
 				if decomp { tr("Сканирую папку…", "Scanning the folder…").to_string() } else { tr("Смотрю папку проекта…", "Reading the project folder…").to_string() }
 			} else if decomp {
@@ -547,51 +547,38 @@ impl Picker {
 			if fmt_page {
 				let ed7 = self.ed7;
 				let (has_tex, has_tab) = self.fmt_kinds();
-				let both = has_tex && has_tab;
-				let (card_h, line0, step) = if both { (78.0, 36.0, 18.0) } else { (92.0, 44.0, 20.0) };
-				let mut cy = list.min.y + if both { 6.0 } else { 16.0 };
-				if has_tex {
-					if both {
-						painter.text(Pos2::new(list.min.x + 12.0, cy + 8.0), Align2::LEFT_CENTER, tr("Текстуры", "Textures"), f_semi(13.0), p.muted);
-						cy += 22.0;
-					}
-					let opts: [(bool, &str, [&str; 2]); 2] = [
-						(false, tr(".png — обычные картинки", ".png: ordinary images"), [tr("Открываются в любом редакторе: Photoshop, GIMP, Paint.NET, Krita.", "They open in any editor: Photoshop, GIMP, Paint.NET, Krita."), tr("При сборке программа сожмёт их обратно в формат игры.", "When building, the program compresses them back into the game's format.")]),
-						(
-							true,
-							if ed7 { tr(".dds — данные игры без перекодирования", ".dds: game data without re-encoding") } else { tr(".dds — как в игре, без перевода в .png", ".dds: as in the game, no .png conversion") },
-							[
-								if ed7 { tr("Те же сжатые блоки BC7, что в .itp, со всеми уменьшенными копиями — без потерь.", "The same BC7 compressed blocks as in .itp, with all mipmaps: lossless.") } else { tr("Файлы игры копируются как есть — быстрее и без потерь качества.", "Game files are copied as they are: faster and with no quality loss.") },
-								tr("Нужен редактор с поддержкой DDS (Paint.NET, GIMP, плагин для Photoshop).", "You need an editor with DDS support (Paint.NET, GIMP, a Photoshop plugin)."),
-							],
-						),
-					];
-					for (i, (dds, title, lines)) in opts.iter().enumerate() {
-						if fmt_card(ui, &painter, p, Rect::from_min_size(Pos2::new(list.min.x + 12.0, cy), Vec2::new(list.width() - 30.0, card_h)), ("texfmt", i), self.tex_dds == *dds, title, lines, line0, step) {
-							self.tex_dds = *dds;
+				let gap = 10.0;
+				let cw = (list.width() - 30.0 - gap) / 2.0;
+				let (card_h, line0, step) = (70.0, 36.0, 17.0);
+				let mut cy = list.min.y + 6.0;
+				let row = |ui: &mut egui::Ui, cy: &mut f32, title: &str, id: &str, cur: bool, opts: [(bool, &str, [&str; 2]); 2]| -> Option<bool> {
+					painter.text(Pos2::new(list.min.x + 12.0, *cy + 8.0), Align2::LEFT_CENTER, title, f_semi(13.0), p.muted);
+					*cy += 22.0;
+					let mut pick = None;
+					for (i, (v, t, lines)) in opts.iter().enumerate() {
+						let r = Rect::from_min_size(Pos2::new(list.min.x + 12.0 + i as f32 * (cw + gap), *cy), Vec2::new(cw, card_h));
+						if fmt_card(ui, &painter, p, r, (id, i), cur == *v, t, lines, line0, step) {
+							pick = Some(*v);
 						}
-						cy += card_h + if both { 8.0 } else { 12.0 };
+					}
+					*cy += card_h + 10.0;
+					pick
+				};
+				if has_tex {
+					let dds = if ed7 { [tr("Те же блоки BC7, что в .itp, без потерь.", "The same BC7 blocks as in .itp, lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")] } else { [tr("Как в игре — быстрее и без потерь.", "As in the game: faster and lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")] };
+					if let Some(v) = row(ui, &mut cy, tr("Текстуры", "Textures"), "texfmt", self.tex_dds, [(false, tr(".png — обычные картинки", ".png: ordinary images"), [tr("Любой редактор: Photoshop, GIMP, Krita.", "Any editor: Photoshop, GIMP, Krita."), tr("При сборке сожмутся обратно.", "They are compressed back when building.")]), (true, tr(".dds — как в игре", ".dds: as in the game"), dds)]) {
+						self.tex_dds = v;
 					}
 				}
-				if has_tab {
-					if both {
-						painter.text(Pos2::new(list.min.x + 12.0, cy + 8.0), Align2::LEFT_CENTER, tr("Таблицы", "Tables"), f_semi(13.0), p.muted);
-						cy += 22.0;
+				if has_tab
+					&& let Some(v) = row(ui, &mut cy, tr("Таблицы", "Tables"), "tabfmt", self.tables_json, [(false, ".xlsx — Excel", [tr("Только текст для перевода.", "Only the text to translate."), tr("Рядом оригинал.", "The original is next to it.")]), (true, tr(".json — все поля", ".json: all fields"), [tr("Текст и числа с названиями полей.", "Text and numbers with field names."), tr("Записи добавлять и удалять нельзя.", "Records cannot be added or removed.")])]) {
+						self.tables_json = v;
 					}
-					let opts: [(bool, &str, [&str; 2]); 2] = [
-						(false, ".xlsx — Excel", [tr("Только текст для перевода, рядом оригинал.", "Only the text to translate, with the original next to it."), tr("Удобно переводить.", "Good for translating.")]),
-						(
-							true,
-							tr(".json — все поля таблицы", ".json: all table fields"),
-							[tr("Текст и числа с названиями полей, как в KuroTools.", "Text and numbers with field names, as in KuroTools."), tr("Удобно менять параметры и модели. Записи добавлять и удалять нельзя.", "Good for changing parameters and models. Records can't be added or removed.")],
-						),
-					];
-					for (i, (js, title, lines)) in opts.iter().enumerate() {
-						if fmt_card(ui, &painter, p, Rect::from_min_size(Pos2::new(list.min.x + 12.0, cy), Vec2::new(list.width() - 30.0, card_h)), ("tabfmt", i), self.tables_json == *js, title, lines, line0, step) {
-							self.tables_json = *js;
-						}
-						cy += card_h + if both { 8.0 } else { 12.0 };
-					}
+				if let Some(v) = row(ui, &mut cy, tr("Файлы без перевода (модели, сцены карт, звуки)", "Files without text (models, map scenes, sounds)"), "otherfmt", self.other_files, [(false, tr("Не класть в папку", "Leave them out"), [tr("Для перевода они не нужны.", "Not needed for translation."), tr("При сборке берутся из игры.", "The build takes them from the game.")]), (true, tr("Класть как есть", "Copy as they are"), [tr("Если хотите их менять.", "If you want to change them."), tr("Займут место на диске.", "They take disk space.")])]) {
+					self.other_files = v;
+				}
+				if let Some(v) = row(ui, &mut cy, tr("Если файл не получится разобрать", "If a file cannot be unpacked"), "failfmt", self.keep_failed, [(true, tr("Положить как есть", "Copy it as it is"), [tr("Файл игры без изменений,", "The game file unchanged,"), tr("в журнале — предупреждение.", "with a warning in the log.")]), (false, tr("Пропустить", "Skip it"), [tr("Файла в папке не будет,", "The file is not in the folder,"), tr("только запись в журнале.", "only a line in the log.")])]) {
+					self.keep_failed = v;
 				}
 			} else {
 			egui::ScrollArea::vertical().id_salt("pick_list").auto_shrink([false, false]).show(&mut lu, |ui| {
@@ -664,15 +651,19 @@ impl Picker {
 
 			let n_on = self.n_on();
 			let (has_tex, has_tab) = self.fmt_kinds();
-			let has_fmt = decomp && (has_tex || has_tab);
+			let has_fmt = decomp;
 			let (summary, hint) = if fmt_page {
 				let tex = lformat!("Текстуры — в {}", "Textures: as {}", if self.tex_dds { ".dds" } else { ".png" });
 				let tab = lformat!("Таблицы — в {}", "Tables to {}", if self.tables_json { ".json" } else { ".xlsx" });
-				let s = match (has_tex, has_tab) {
-					(true, true) => format!("{tex} · {tab}"),
-					(false, true) => tab,
-					_ => tex,
-				};
+				let mut parts = Vec::new();
+				if has_tex {
+					parts.push(tex);
+				}
+				if has_tab {
+					parts.push(tab);
+				}
+				parts.push(lformat!("без перевода — {}", "without text: {}", if self.other_files { tr("класть", "copy") } else { tr("не класть", "leave out") }));
+				let s = parts.join(" · ");
 				(s, tr("Выбор запоминается — в следующий раз будет отмечен он же", "The choice is remembered and will be ticked next time").to_string())
 			} else if self.scanning() {
 				(tr("Идёт сканирование…", "Scanning…").to_string(), String::new())
@@ -691,7 +682,7 @@ impl Picker {
 				(lformat!("Выбрано {n_on} из {n_all} · {}{after}", "Selected {n_on} of {n_all} · {}{after}", fmt_size(size)), h)
 			} else {
 				let ch: usize = self.items.iter().filter(|i| i.on).map(|i| i.changed).sum();
-				let h = if self.ed7 { tr("Неотмеченные папки не собираются", "Unticked folders are not built").to_string() } else if self.mod_mode { tr("Неотмеченные папки войдут в мод без ваших правок", "Unticked folders go into the mod without your edits").to_string() } else { tr("Неотмеченные папки не пересобираются", "Unticked folders are not rebuilt").to_string() };
+				let h = if self.ed7 { tr("Неотмеченные папки не собираются", "Unticked folders are not built").to_string() } else if self.mod_mode { tr("Неотмеченные папки в мод не войдут (файлы установленного мода — без ваших правок)", "Unticked folders are left out of the mod (files of the installed mod go in without your edits)").to_string() } else { tr("Неотмеченные папки не пересобираются", "Unticked folders are not rebuilt").to_string() };
 				let out = self.out_estimate();
 				let after = if out > 0 { lformat!(" → запишется ≈ {}", " → writes ≈ {}", fmt_size(out)) } else { String::new() };
 				let h = match (out > 0, build_speed()) {

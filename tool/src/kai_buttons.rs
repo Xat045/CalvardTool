@@ -18,7 +18,7 @@ fn ed7() -> Option<calvard_tool::scena::Title> {
 }
 
 pub fn is_atlas(n: u32) -> bool {
-	if ed7().is_some() { n < ED7_BTN_MIN || n >= ITEM_BASE } else { n < ATLAS_MAX }
+	if ed7().is_some() { !(ED7_BTN_MIN..ITEM_BASE).contains(&n) } else { n < ATLAS_MAX }
 }
 
 pub fn code_label(n: u32) -> String {
@@ -296,7 +296,7 @@ pub fn action_name(n: u32) -> Option<&'static str> {
 		1066 => tr("системное меню", "system menu"),
 		1072 => tr("сменить позу", "change pose"),
 		1159 => tr("термины к месту", "contextual glossary"),
-		1161 | 1162 | 1163 => tr("ускоренный режим", "high-speed mode"),
+		1161..=1163 => tr("ускоренный режим", "high-speed mode"),
 		_ => return None,
 	})
 }
@@ -442,8 +442,8 @@ impl Buttons {
 	fn load_ed7(&mut self, d: &Path, azure: bool, pack: Option<&str>) {
 		let rd = |name: &str| -> Option<Vec<u8>> {
 			match pack {
-				Some(g) => pack::get(&format!("{g}/{name}")).map(|b| b.to_vec()),
-				None => std::fs::read(d.join(name)).ok(),
+				Some(g) => pack::get(&format!("{g}/{name}")).or_else(|| pack::get(name)).map(|b| b.to_vec()),
+				None => std::fs::read(d.join(name)).or_else(|_| std::fs::read(d.parent().unwrap_or(d).join(name))).ok(),
 			}
 		};
 		let load = |name: &str| rd(name).and_then(|b| image::load_from_memory(&b).ok()).map(|i| i.to_rgba8());
@@ -782,13 +782,12 @@ pub fn mark_codes(s: &str) -> String {
 		out.push_str(&rest[..p]);
 		let after = &rest[p + 2..];
 		let digits: String = after.chars().take_while(|c| c.is_ascii_digit()).collect();
-		if !digits.is_empty() && after[digits.len()..].starts_with('>') {
-			if let Some(ch) = digits.parse::<u32>().ok().filter(|&n| n < 0xFFFF).and_then(|n| char::from_u32(SENT0 + n)) {
+		if !digits.is_empty() && after[digits.len()..].starts_with('>')
+			&& let Some(ch) = digits.parse::<u32>().ok().filter(|&n| n < 0xFFFF).and_then(|n| char::from_u32(SENT0 + n)) {
 				out.push(ch);
 				rest = &after[digits.len() + 1..];
 				continue;
 			}
-		}
 		out.push_str("<I");
 		rest = after;
 	}
@@ -823,13 +822,12 @@ fn mark_codes_ed7(s: &str) -> String {
 			if j > i + 1 && j < c.len() && (c[j] == 'I' || c[j] == 'M') {
 				let n: u32 = c[i + 1..j].iter().collect::<String>().parse().unwrap_or(0);
 				let code = if c[j] == 'M' { ITEM_BASE + n } else { n };
-				if n < ITEM_BASE {
-					if let Some(ch) = char::from_u32(SENT0 + code) {
+				if n < ITEM_BASE
+					&& let Some(ch) = char::from_u32(SENT0 + code) {
 						out.push(ch);
 						i = j + 1;
 						continue;
 					}
-				}
 			}
 		}
 		out.push(c[i]);
@@ -1014,11 +1012,10 @@ pub fn parse_kai_section_icon(d: &[u8], section: &str, at: usize) -> HashMap<u32
 		}
 		let (Some(off), Some(sz), Some(cnt)) = (u32at(h + 68), u32at(h + 72), u32at(h + 76)) else { break };
 		for k in 0..cnt {
-			if let Some(v) = d.get(off + k * sz + at..off + k * sz + at + 2).map(|x| u16::from_le_bytes([x[0], x[1]]) as u32) {
-				if v > 0 && v < ATLAS_MAX {
+			if let Some(v) = d.get(off + k * sz + at..off + k * sz + at + 2).map(|x| u16::from_le_bytes([x[0], x[1]]) as u32)
+				&& v > 0 && v < ATLAS_MAX {
 					m.insert(k as u32, v);
 				}
-			}
 		}
 	}
 	m
@@ -1051,18 +1048,16 @@ pub fn parse_kai_skill_rank(d: &[u8]) -> HashMap<u32, Vec<u32>> {
 			continue;
 		}
 		let mut v = Vec::new();
-		if let Some(e) = d.get(r + 142..r + 144).map(|x| u16::from_le_bytes([x[0], x[1]]) as u32) {
-			if e > 0 && e < ATLAS_MAX {
+		if let Some(e) = d.get(r + 142..r + 144).map(|x| u16::from_le_bytes([x[0], x[1]]) as u32)
+			&& e > 0 && e < ATLAS_MAX {
 				v.push(e);
 			}
-		}
 		let flags: Vec<u8> = d.get(r + 8..r + 16).map(|x| u64::from_le_bytes(x.try_into().unwrap()) as usize).and_then(|p| d.get(p..)).map(|x| x.iter().take_while(|&&c| c != 0).copied().collect()).unwrap_or_default();
 		v.extend(kai_range_icon(d.get(r + 32).copied().unwrap_or(0), &flags));
-		if let Some(p) = d.get(r + 52..r + 54).map(|x| u16::from_le_bytes([x[0], x[1]]) as usize).filter(|&p| p > 0) {
-			if let Some(&(_, icon)) = th.iter().rev().find(|(t, _)| *t <= p).or(th.first()) {
+		if let Some(p) = d.get(r + 52..r + 54).map(|x| u16::from_le_bytes([x[0], x[1]]) as usize).filter(|&p| p > 0)
+			&& let Some(&(_, icon)) = th.iter().rev().find(|(t, _)| *t <= p).or(th.first()) {
 				v.push(icon);
 			}
-		}
 		if !v.is_empty() {
 			m.insert(k as u32, v);
 		}
@@ -1125,7 +1120,7 @@ pub fn parse_t_magic(b: &[u8]) -> HashMap<String, u32> {
 	let mut m = HashMap::new();
 	let Some(first) = u16at(0) else { return m };
 	let offs: Vec<usize> = (0..first / 2).filter_map(|i| u16at(i * 2)).collect();
-	let Some(sz) = offs.get(1).zip(offs.first()).map(|(a, b)| a.saturating_sub(*b)).filter(|&s| s >= 24 && s <= 64) else { return m };
+	let Some(sz) = offs.get(1).zip(offs.first()).map(|(a, b)| a.saturating_sub(*b)).filter(|&s| (24..=64).contains(&s)) else { return m };
 	let text = |o: usize| -> Option<String> {
 		let e = b.get(o..)?.iter().position(|&c| c == 0)?;
 		std::str::from_utf8(&b[o..o + e]).ok().map(|s| s.to_string())
@@ -1206,8 +1201,8 @@ pub fn ui_icon(file: &str, id: &str) -> Option<u32> {
 	if f.starts_with("t_dlc.") && id.starts_with("DLCTableData#") && id.ends_with(".text1") {
 		return Some(6);
 	}
-	if f.starts_with("t_free_dungeon.") {
-		if let Some(r) = id.strip_prefix("FreeDungeonMassEffectText#") {
+	if f.starts_with("t_free_dungeon.")
+		&& let Some(r) = id.strip_prefix("FreeDungeonMassEffectText#") {
 			return match r.split('.').next()? {
 				"0" => Some(183),
 				"1" => Some(184),
@@ -1223,8 +1218,6 @@ pub fn ui_icon(file: &str, id: &str) -> Option<u32> {
 				_ => None,
 			};
 		}
-
-	}
 	None
 }
 
@@ -1242,11 +1235,10 @@ pub fn cond_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32> {
 	let fname = |p: &str| p.rsplit('/').next().unwrap_or(p).to_string();
 	let mut rows = 0usize;
 	for p in &d.pairs {
-		if fname(&p.file).starts_with("t_condition_info.") {
-			if let Some((k, _)) = idx(&p.id, "ConditionInfoTableData#") {
+		if fname(&p.file).starts_with("t_condition_info.")
+			&& let Some((k, _)) = idx(&p.id, "ConditionInfoTableData#") {
 				rows = rows.max(k + 1);
 			}
-		}
 	}
 	let table: &[u32] = match rows {
 		68 => &COND_HZ,
@@ -1276,11 +1268,10 @@ pub fn sibling_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32
 	let mut icon_of: HashMap<(String, String), u32> = HashMap::new();
 	for p in &d.pairs {
 		let Some(t) = p.en.as_ref().map(|s| s.text.trim().to_string()) else { continue };
-		if let Some(n) = t.strip_prefix("<I").and_then(|x| x.strip_suffix('>')).and_then(|x| x.parse::<u32>().ok()) {
-			if let Some((rec, _)) = p.id.rsplit_once('.') {
+		if let Some(n) = t.strip_prefix("<I").and_then(|x| x.strip_suffix('>')).and_then(|x| x.parse::<u32>().ok())
+			&& let Some((rec, _)) = p.id.rsplit_once('.') {
 				icon_of.insert((p.file.clone(), rec.to_string()), n);
 			}
-		}
 	}
 	let mut m = HashMap::new();
 	for (i, p) in d.pairs.iter().enumerate() {
@@ -1288,11 +1279,10 @@ pub fn sibling_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32
 			continue;
 		}
 		let Some((rec, field)) = p.id.rsplit_once('.') else { continue };
-		if field == "text" {
-			if let Some(&n) = icon_of.get(&(p.file.clone(), rec.to_string())) {
+		if field == "text"
+			&& let Some(&n) = icon_of.get(&(p.file.clone(), rec.to_string())) {
 				m.insert(i, n);
 			}
-		}
 	}
 	m
 }
