@@ -1,7 +1,7 @@
 # Trails through Daybreak II: characters and their models
 
-All records of this game's `t_name.tbl`, English. The name is exactly as in the
-table's name field, nothing added.
+All records of this game's `t_name.tbl`, English. The full name is exactly as in
+the table; if there is no full name, the name.
 
 - **ID:** the character's number in `t_name.tbl`, the one scripts use, for example
   `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that
@@ -11,50 +11,49 @@ table's name field, nothing added.
 - **Portrait:** the portrait CalvardCompare shows for this ID: `avfc` is a bust,
   `btlface` a head. Empty: no portrait.
 
-ID    | CHR             | Name in the game | Portrait
+ID    | CHR             | Full name in the game | Portrait
 ----: | --------------- | --------------------- | ----
-0     | chr0000         | Van | avfc0000
-1     | chr5001_c10     | Agnès | avfc5001_c10
-2     | chr5003         | Feri | avfc5003
-3     | chr0002         | Aaron | avfc0002
-4     | chr0004         | Quatre | avfc0004
-5     | chr0006         | Bergard | avfc0006
-6     | chr5005         | Risette | avfc5005
-6     | chr5005         | Risette's Double | avfc5005
-7     | chr0113         | Walter the Direwolf | avfc0113
-8     | chr0111         | Zin the Immovable | avfc0111
-9     | chr0112         | Kincaid | avfc0112
-9     | chr0112_c02     | Kincaid_Towel | avfc0112
-10    | chr5007         | Judith | avfc5007
-11    | chr5110_c10     | Elaine | avfc5110
+0     | chr0000         | Van Arkride | avfc0000
+1     | chr5001_c10     | Agnès Claudel | avfc5001_c10
+2     | chr5003         | Feri Al-Fayed | avfc5003
+3     | chr0002         | Aaron Wei | avfc0002
+4     | chr0004         | Quatre Salision | avfc0004
+5     | chr0006         | Bergard Zeman | avfc0006
+6     | chr5005         | Risette Twinings | avfc5005
+7     | chr0113         | Walter Kron | avfc0113
+8     | chr0111         | Zin Vathek | avfc0111
+9     | chr0112         | René Kincaid | avfc0112
+9     | chr0112_c02     | René Kincaid | avfc0112
+10    | chr5007         | Judith Lanster | avfc5007
+11    | chr5110_c10     | Elaine Auclair | avfc5110
 11    | chr5110         | Elaine (Bracer Outfit) | avfc5110
-12    | chr5117_c10     | Shizuna | avfc5117_c10
+12    | chr5117_c10     | Shizuna Rem Misurugi | avfc5117_c10
 13    | chr0304         | Kurogane | avfc0304
-14    | chr5118         | Lucrezia the Golden Butterfly | avfc5118
+14    | chr5118         | Lucrezia Isselee | avfc5118
 15    | chr0009         | Grendel Van | avfc0009
-17    | chr0120         | Swin | avfc0120
+17    | chr0120         | Swin Abel | avfc0120
 17    | chr0120_c02     | Swin_Towel | avfc0120
-18    | chr5119         | Nadia | avfc5119
+18    | chr5119         | Nadia Rayne | avfc5119
 18    | chr5119_c02     | Nadia_Towel | avfc5119
-19    | chr5114_c10     | Renne | avfc5114_c10
-62    | chr5113         | Rixia | avfc5113
-63    | chr5112         | Fie | avfc5112
+19    | chr5114_c10     | Renne Bright | avfc5114_c10
+62    | chr5113         | Rixia Mao | avfc5113
+63    | chr5112         | Fie Claussell | avfc5112
 64    | rob0000         | FIO
 64    | rob0000_c00     | FIO_Electric World
 64    | rob0000_c01     | FIO_Electric World (Yellow)
 65    | rob0001         | XEROS
 100   | chr0114         | Alexandre | btlface0_c0114
 101   | chr0115         | Melchior | btlface0_c0115
-102   | chr0116         | Dantès | btlface0_c0116
+102   | chr0116         | Gerard Dantès | btlface0_c0116
 103   | chr0117         | Arioch | btlface0_c0117
-104   | chr0118         | Harwood the Oathbreaker | btlface0_c0118
+104   | chr0118         | Ellroy Harwood | btlface0_c0118
 105   | chr0119         | President Gramheart
 106   | chr0300         | Alvis | btlface0_c0300
-107   | chr0301         | Cao | avfc0301
-108   | chr0302         | Prince Sherid | btlface0_c0302
+107   | chr0301         | Cao Lee | avfc0301
+108   | chr0302         | Sherid Asval | btlface0_c0302
 110   | chr5115         | Viola | btlface0_c5115
 111   | chr5116         | Olympia | btlface0_c5116
-112   | chr5300         | Naje | btlface0_c5300
+112   | chr5300         | Naje Berka | btlface0_c5300
 113   | chr5301         | Aida | btlface0_c5301
 114   | chr5310         | Paulette
 114   | chr5310_c00     | Paulette (Different Outfit)
@@ -104,13 +103,13 @@ ID    | CHR             | Name in the game | Portrait
 147   | chr0330         | Warrant Officer Cody | btlface0_c0330_c00
 147   | chr0330_c00     | Warrant Officer Cody_Special Ops Uniform | btlface0_c0330_c00
 148   | chr0327         | President Auclair
-149   | chr0303         | Security Chief Kasim | avfc0303
+149   | chr0303         | Kasim Al-Fayed | avfc0303
 150   | chr0332         | Mr. Thorndyke
-151   | chr5302         | Dominion Celis | avfc5302
-151   | chr5302_c02     | Celis_Towel | avfc5302
-152   | chr0306         | Dominion Leon | avfc0306
-152   | chr0306_c02     | Leon_Towel | avfc0306
-152   | chr0306_c03     | Leon (Injured) | avfc0306
+151   | chr5302         | Celis Ortesia | avfc5302
+151   | chr5302_c02     | Celis Ortesia | avfc5302
+152   | chr0306         | Leon Balthazar | avfc0306
+152   | chr0306_c02     | Leon Balthazar | avfc0306
+152   | chr0306_c03     | Leon Balthazar | avfc0306
 153   | chr0305_c01     | Vice Captain Ashladd | btlface0_c0305_c01
 154   | rob0010         | Ishtanti
 154   | rob0010_c00     | Ishtanti_Cracked Face
@@ -1927,15 +1926,15 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr5007_c56     | Judith (DLC Swimsuit/No Shirt)
 65535 | chr5007_c59     | Judith (Golden Costume DLC)
 65535 | chr5007_c64     | Judith (DLC Pit Girl/For Sale)
-65535 | chr5114_c01     | Renne (Swimsuit)
-65535 | chr5114         | Renne (Uniform)
-65535 | chr5114_c02     | Renne (Towel)
+65535 | chr5114_c01     | Renne Bright
+65535 | chr5114         | Renne Bright
+65535 | chr5114_c02     | Renne Bright
 65535 | chr5114_c64     | Renne (DLC Pit Girl/For Sale)
 65535 | chr5114_c65     | Renne (DLC Grimcat/Strategy Guide Bonus)
 65535 | chr5117_c01     | Shizuna (Swimsuit)
 65535 | chr5117_c10     | Shizuna (Personal Outfit)
 65535 | chr5117_c11     | Shizuna (Personal Outfit/No Coat)
-65535 | chr5117_c02     | Shizuna (Towel)
+65535 | chr5117_c02     | Shizuna Rem Misurugi
 65535 | chr5117_c61     | Shizuna (DLC Pit Girl/Store Bonus)
 65535 | chr5117_c64     | Shizuna (DLC Pit Girl/For Sale)
 65535 | chr5119_c01     | Nadia (Swimsuit)

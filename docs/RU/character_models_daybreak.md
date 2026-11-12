@@ -1,7 +1,7 @@
 # Trails through Daybreak: персонажи и их модели
 
-Все записи `t_name.tbl` этой игры, английский. Имя — ровно как в поле имени
-таблицы, без добавок.
+Все записи `t_name.tbl` этой игры, английский. Полное имя — как написано
+в таблице; если полного имени нет — имя.
 
 - **ID:** номер персонажа в `t_name.tbl`, его указывают скрипты, например
   `system[5,6](106, ...)`. Это не номер модели. `65535`, похоже, значит, что своего ID
@@ -11,93 +11,93 @@
 - **Портрет:** портрет, который CalvardCompare показывает у этого ID: `avfc` — по грудь,
   `btlface` — голова. Пусто — портрета нет.
 
-ID    | CHR             | Имя в игре | Портрет
+ID    | CHR             | Полное имя в игре | Портрет
 ----: | --------------- | --------------------- | ----
-0     | chr0000         | Van | avfc0000
-1     | chr5001         | Agnès | avfc5001
-2     | chr5003         | Feri | avfc5003
-3     | chr0002         | Aaron | avfc0002
-4     | chr0004         | Quatre | avfc0004
-5     | chr0006         | Bergard | avfc0006
-6     | chr5005         | Risette | avfc5005
-7     | chr0113         | Walter the Direwolf | avfc0113
-8     | chr0111         | Zin the Immovable | avfc0111
-9     | chr0112         | Kincaid | avfc0112
-10    | chr5007         | Judith | avfc5007
-11    | chr5110         | Elaine | avfc5110
-12    | chr5117         | Shizuna | avfc5117
+0     | chr0000         | Van Arkride | avfc0000
+1     | chr5001         | Agnès Claudel | avfc5001
+2     | chr5003         | Feri Al-Fayed | avfc5003
+3     | chr0002         | Aaron Wei | avfc0002
+4     | chr0004         | Quatre Salision | avfc0004
+5     | chr0006         | Bergard Zeman | avfc0006
+6     | chr5005         | Risette Twinings | avfc5005
+7     | chr0113         | Walter Kron | avfc0113
+8     | chr0111         | Zin Vathek | avfc0111
+9     | chr0112         | René Kincaid | avfc0112
+10    | chr5007         | Judith Lanster | avfc5007
+11    | chr5110         | Elaine Auclair | avfc5110
+12    | chr5117         | Shizuna Rem Misurugi | avfc5117
 13    | chr0304         | Kurogane | avfc0304
-14    | chr5118         | Lucrezia the Golden Butterfly | avfc5118
+14    | chr5118         | Lucrezia Isselee | avfc5118
 15    | chr0009         | Van/Grendel | btlface0_c0009
-62    | chr5113         | Rixia | avfc5113
-63    | chr5112         | Fie | avfc5112
+62    | chr5113         | Rixia Mao | avfc5113
+63    | chr5112         | Fie Claussell | avfc5112
 64    | rob0000         | FIO
 65    | rob0001         | XEROS
 100   | chr0114         | Alexandre | btlface0_c0114
 101   | chr0115         | Melchior | btlface0_c0115
-102   | chr0116         | Dantès | btlface0_c0116
+102   | chr0116         | Gerard Dantès | btlface0_c0116
 103   | chr0117         | Arioch | btlface0_c0117
-104   | chr0118         | Harwood | avfc0118
-105   | chr0119         | President Gramheart
-106   | chr0300         | Bracer Alvis
-107   | chr0301         | Cao | avfc0301
-108   | chr0302         | Prince Sherid | btlface0_c0302
-109   | chr5114         | Renne | avfc5114
+104   | chr0118         | Ellroy Harwood | avfc0118
+105   | chr0119         | Roy Gramheart
+106   | chr0300         | Alvis
+107   | chr0301         | Cao Lee | avfc0301
+108   | chr0302         | Sherid Asval | btlface0_c0302
+109   | chr5114         | Renne Bright | avfc5114
 110   | chr5115         | Viola | btlface0_c5115
 111   | chr5116         | Olympia | btlface0_c5116
-112   | chr5300         | Naje | btlface0_c5300
+112   | chr5300         | Naje Berka | btlface0_c5300
 113   | chr5301         | Aida | btlface0_c5301
 114   | chr5310         | Paulette
-114   | chr5310_c00     | Paulette (Different Outfit)
+114   | chr5310_c00     | Paulette
 114   | chr5503         | Paulette
 115   | chr0310         | Victor
 116   | chr5311         | Yumé | btlface0_c5311
 117   | chr0311         | Giacomo
-117   | chr0311_c00     | Giacomo (Corpse Version)
-118   | chr0315         | Detective Nate
-119   | chr0314         | Inspector Daswani
-120   | chr5320         | 2nd Lieutenant Kaela
-121   | chr5313         | Marielle | btlface0_c5313
-121   | chr5313_c00     | Marielle (No Hat) | btlface0_c5313
-121   | chr5313_c01     | Marielle (Clothes Half-Disintegrated) | btlface0_c5313
-121   | chr5313_c02     | Marielle (Clothes Half-Disintegrated/No Slime) | btlface0_c5313
-122   | chr0316         | Dingo | btlface0_c0316
+117   | chr0311_c00     | Giacomo
+118   | chr0315         | Nate
+119   | chr0314         | Daswani
+120   | chr5320         | Kaela McMillan
+121   | chr5313         | Marielle Aymé | btlface0_c5313
+121   | chr5313_c00     | Marielle Aymé | btlface0_c5313
+121   | chr5313_c01     | Marielle Aymé | btlface0_c5313
+121   | chr5313_c02     | Marielle Aymé | btlface0_c5313
+122   | chr0316         | Dingo Brad | btlface0_c0316
 123   | chr0313         | Bermotti
-124   | chr0329         | Commander Geraint | btlface0_c0329
-125   | chr0328         | Vice Chief Hasan | btlface0_c0328
-126   | chr5322         | Kilika
+124   | chr0329         | Geraint | btlface0_c0329
+125   | chr0328         | Hasan Al-Fayed | btlface0_c0328
+126   | chr5322         | Kilika Rouran
 127   | chr5312         | Odette
 128   | chr0312         | Albert
-129   | chr5315         | Nina
-130   | chr0318         | Maxim | btlface0_c0318
-130   | chr0318_c00     | Maxim (Muddy) | btlface0_c0318
-131   | chr5316         | Ashen
-132   | chr0320         | Fan
-133   | chr0319         | Elder Gien
-133   | chr0319_c00     | Elder Gien (Hawaiian Shirt)
-134   | chr0317         | Jack
-135   | chr5314         | Halle
+129   | chr5315         | Nina Fenly
+130   | chr0318         | Maxim Lugan | btlface0_c0318
+130   | chr0318_c00     | Maxim Lugan | btlface0_c0318
+131   | chr5316         | Ashen Lu
+132   | chr0320         | Fan Lu
+133   | chr0319         | Gien Lu
+133   | chr0319_c00     | Gien Lu
+134   | chr0317         | Jack Trevor
+135   | chr5314         | Halle Coleman
 136   | chr5317         | Saara
-136   | chr5317_c04     | Saara (Pole Dancer)
+136   | chr5317_c04     | Saara
 137   | chr5318         | Shaheena
-138   | chr0322         | Director Gotti
-139   | chr0321         | President Dillon
-139   | chr0321_c00     | President Dillon (Corpse Version)
-140   | chr5321         | Professor Hamilton
-141   | chr5319         | Associate Professor Esmeray | btlface0_c5319
-142   | chr0324         | Professor Cronkite
-143   | chr0325         | Chief Engineer Giscard
-144   | chr0326         | CEO Tausend
-145   | chr0323         | Professor Callaghan
-146   | chr0331         | Rocksmith
-147   | chr0330         | Warrant Officer Cody
-148   | chr0327         | President Auclair
-149   | chr0303         | Security Chief Kasim | avfc0303
-149   | chr0303_c00     | Security Chief Kasim (Regular Clothes) | avfc0303
-150   | chr0332         | General Manager Thorndyke
-151   | chr5302         | Dominion Celis | avfc5302
-152   | chr0306         | Dominion Leon | avfc0306
-152   | chr0306_c00     | Leon (Wearing Overcoat) | avfc0306
+138   | chr0322         | Salvatore Gotti
+139   | chr0321         | Gaspard Dillon
+139   | chr0321_c00     | Gaspard Dillon
+140   | chr5321         | Latoya Hamilton
+141   | chr5319         | Esmeray Archette | btlface0_c5319
+142   | chr0324         | Yang Cronkite
+143   | chr0325         | Giscard
+144   | chr0326         | Bill Tausend
+145   | chr0323         | David Callaghan
+146   | chr0331         | Samuel Rocksmith
+147   | chr0330         | Cody McMillan
+148   | chr0327         | Edmond Auclair
+149   | chr0303         | Kasim Al-Fayed | avfc0303
+149   | chr0303_c00     | Kasim Al-Fayed | avfc0303
+150   | chr0332         | Gilliam Thorndyke
+151   | chr5302         | Celis Ortesia | avfc5302
+152   | chr0306         | Leon Balthazar | avfc0306
+152   | chr0306_c00     | Leon Balthazar | avfc0306
 153   | chr0305         | Ashladd
 154   | rob0010         | Ishtanti
 154   | rob0010_c00     | Ishtanti_Cracked Face
@@ -822,11 +822,11 @@ ID    | CHR             | Имя в игре | Портрет
 11819 | chr0710a        | Reporter Ferdinand
 11820 | vcar026         | Officer Pascal's Patrol Car
 11821 | veh0003         | Lucio's Vehicle (Supercar)
-11850 | chr5501_c01     | Nate's Girlfriend
-11851 | chr5610a        | Latifa
-11852 | chr5408         | Gigi
-11853 | chr5550         | Eastern Young Woman
-11854 | chr0550a        | Eastern Young Adult
+11850 | chr5501_c01     | //仮
+11851 | chr5610a        | //◆ダスワニの妻
+11852 | chr5408         | //◆ダスワニの娘
+11853 | chr5550         | //アーロンの友人
+11854 | chr0550a        | //アーロンの友人
 15500 | chr0500         | Young Man 1 (City) | btlface0_c0500
 15501 | chr0500a        | Young Man 1 (City; Alt Color Version 1)
 15502 | chr0500b        | Young Man 1 (City; Alt Color Version 2)
@@ -1176,7 +1176,7 @@ ID    | CHR             | Имя в игре | Портрет
 15867 | etc0030         | Fox
 15868 | mon0047         | Archaism
 15869 | mon0009         | Monster (Wolf)
-15870 | mon0050         | Demon Sphere
+15870 | mon0050         | //仮
 15871 | chr0785a        | Young Man Gangster 1 (Alt Color)
 15872 | chr0786a        | Young Man Gangster 2 (Alt Color)
 15873 | chr0787a        | Young Man Gangster 3 (Alt Color)
@@ -1317,10 +1317,10 @@ ID    | CHR             | Имя в игре | Портрет
 65535 | veh5002         | Courier Bike
 65535 | veh5003         | Generic NPC Bike
 65535 | veh5004         | Van's Bike
-65535 | chr0326         | Bill Tausend test
-65535 | chr5302         | Celis
-65535 | chr5302_c00     | Celis (Wearing Overcoat)
-65535 | chr5311_c00     | Yumé (Different Outfit)
+65535 | chr0326         | Bill Tausend
+65535 | chr5302         | Celis Ortesia
+65535 | chr5302_c00     | Celis Ortesia
+65535 | chr5311_c00     | Yumé
 65535 | chr0000_c00     | Van (No Jacket)
 65535 | chr0000_c01     | Van
 65535 | chr0000_c07     | Van (Samue)
@@ -1350,7 +1350,7 @@ ID    | CHR             | Имя в игре | Портрет
 65535 | chr0006_c55     | Bergard (Swimsuit DLC/Jacket)
 65535 | chr0006_c56     | Bergard (Swimsuit DLC/No Jacket)
 65535 | chr0009_c00     | Van/Grendel Final Battle Spec
-65535 | chr0112_c00     | Kincaid (Sleeves Rolled Up)
+65535 | chr0112_c00     | René Kincaid
 65535 | chr0115_c00     | Kincaid (Shard Clone)
 65535 | chr0115_c01     | Melchior (Pupil Highlight and Soft Expression)
 65535 | chr0115_c02     | Melchior (Demon Version)

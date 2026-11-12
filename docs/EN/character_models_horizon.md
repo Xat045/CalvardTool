@@ -1,7 +1,7 @@
 # Trails beyond the Horizon: characters and their models
 
-All records of this game's `t_name.tbl`, English. The name is exactly as in the
-table's name field, nothing added.
+All records of this game's `t_name.tbl`, English. The full name is exactly as in
+the table; if there is no full name, the name.
 
 - **ID:** the character's number in `t_name.tbl`, the one scripts use, for example
   `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that
@@ -11,34 +11,34 @@ table's name field, nothing added.
 - **Portrait:** the portrait CalvardCompare shows for this ID: `avfc` is a bust,
   `btlface` a head. Empty: no portrait.
 
-ID    | CHR             | Name in the game | Portrait
+ID    | CHR             | Full name in the game | Portrait
 ----: | --------------- | --------------------- | ----
-0     | chr0000_c15     | Van | avfc0000_c15
-1     | chr5001_c15     | Agnès | avfc5001_c15
-2     | chr5003_c15     | Feri | avfc5003_c15
-3     | chr0002_c15     | Aaron | avfc0002_c15
-4     | chr0004_c15     | Quatre | avfc0004_c15
-5     | chr0006         | Bergard | avfc0006
-6     | chr5005_c15     | Risette | avfc5005_c15
-7     | chr0113         | Walter the Direwolf | avfc0113
-8     | chr0111         | Zin the Immovable | avfc0111
-9     | chr0112         | Presidential Aide Kincaid | avfc0112
-10    | chr5007_c15     | Judith | avfc5007_c15
-11    | chr5110_c15     | Elaine | avfc5110_c15
-12    | chr5117_c10     | Shizuna | avfc5117_c10
+0     | chr0000_c15     | Van Arkride | avfc0000_c15
+1     | chr5001_c15     | Agnès Claudel | avfc5001_c15
+2     | chr5003_c15     | Feri Al-Fayed | avfc5003_c15
+3     | chr0002_c15     | Aaron Wei | avfc0002_c15
+4     | chr0004_c15     | Quatre Salision | avfc0004_c15
+5     | chr0006         | Bergard Zeman | avfc0006
+6     | chr5005_c15     | Risette Twinings | avfc5005_c15
+7     | chr0113         | Walter Kron | avfc0113
+8     | chr0111         | Zin Vathek | avfc0111
+9     | chr0112         | René Kincaid | avfc0112
+10    | chr5007_c15     | Judith Lanster | avfc5007_c15
+11    | chr5110_c15     | Elaine Auclair | avfc5110_c15
+12    | chr5117_c10     | Shizuna Rem Misurugi | avfc5117_c10
 13    | chr0304         | Kurogane | avfc0304
-14    | chr5118         | Lucrezia the Golden Butterfly | avfc5118
+14    | chr5118         | Lucrezia Isselee | avfc5118
 15    | chr0009         | Grendel Van | avfc0009
-17    | chr0120         | Swin | avfc0120
-18    | chr5119         | Nadia | avfc5119
-19    | chr5114_c10     | Renne | avfc5114_c10
-20    | chr0123         | Rean | avfc0123
-21    | chr5121         | Altina | avfc5121
-22    | chr0124         | Crow | avfc0124
-23    | chr0126         | Kevin | avfc0126
-24    | chr0125         | Rufus | avfc0125
-62    | chr5113         | Rixia | avfc5113
-63    | chr5112_c00     | Fie | avfc5112_c00
+17    | chr0120         | Swin Abel | avfc0120
+18    | chr5119         | Nadia Rayne | avfc5119
+19    | chr5114_c10     | Renne Bright | avfc5114_c10
+20    | chr0123         | Rean Schwarzer | avfc0123
+21    | chr5121         | Altina Orion | avfc5121
+22    | chr0124         | Crow Armbrust | avfc0124
+23    | chr0126         | Kevin Graham | avfc0126
+24    | chr0125         | Rufus A. | avfc0125
+62    | chr5113         | Rixia Mao | avfc5113
+63    | chr5112_c00     | Fie Claussell | avfc5112_c00
 64    | rob0000         | FIO
 65    | rob0001         | XEROS
 95    | rob0004         | Excel Chaser
@@ -50,14 +50,14 @@ ID    | CHR             | Name in the game | Portrait
 101   | chr0115_c11     | Melchior
 102   | chr0116         | Gerard Dantès | btlface0_c0116
 103   | chr0117_c10     | Arioch
-104   | chr0118         | Harwood the Oathbreaker | avfc0118
+104   | chr0118         | Ellroy Harwood | avfc0118
 105   | chr0119         | President Gramheart
 106   | chr0300         | Alvis | btlface0_c0300
-107   | chr0301         | Cao | avfc0301
-108   | chr0302         | Prince Sherid | btlface0_c0302
+107   | chr0301         | Cao Lee | avfc0301
+108   | chr0302         | Sherid Asval | btlface0_c0302
 110   | chr5115_c10     | Viola | btlface0_c5115_c10
 111   | chr5116_c10     | Olympia
-112   | chr5300         | Naje | btlface0_c5300
+112   | chr5300         | Naje Berka | btlface0_c5300
 113   | chr5301         | Aida | btlface0_c5301
 114   | chr5310         | Paulette
 115   | chr0310         | Victor
@@ -94,15 +94,15 @@ ID    | CHR             | Name in the game | Portrait
 146   | chr0331         | Former President Rocksmith
 147   | chr0330         | Warrant Officer Cody
 148   | chr0327         | President Auclair
-149   | chr0303         | Security Chief Kasim | avfc0303
+149   | chr0303         | Kasim Al-Fayed | avfc0303
 150   | chr0332         | Thorndyke
-151   | chr5302         | Dominion Celis | avfc5302
-152   | chr0306         | Dominion Leon | avfc0306
+151   | chr5302         | Celis Ortesia | avfc5302
+152   | chr0306         | Leon Balthazar | avfc0306
 153   | chr0305_c01     | Ashladd | btlface0_c0305_c01
 154   | rob0010         | Ishtanti
 155   | chr0010         | Grendel Zolga | btlface0_c0010
 158   | chr0122_c10     | Ixs the Glinting Bullet
-159   | chr5120         | Jorda | avfc5120
+159   | chr5120         | Jorda Eldarion | avfc5120
 160   | chr0334         | Gaolang | btlface0_c0334
 161   | chr0121         | The Gardenmaster | btlface0_c0121
 162   | etc0300         | Jorda's Shadow Hand
@@ -111,12 +111,12 @@ ID    | CHR             | Name in the game | Portrait
 165   | chr5325_c15     | Mirabel | btlface0_c5325_c15
 167   | chr5326         | Dominique
 168   | chr5323         | Chief Developer Rosalie | btlface0_c5323
-169   | chr5327         | Towa | avfc5327
+169   | chr5327         | Towa Herschel | avfc5327
 172   | chr0122_c01     | Ixs (Disguised)
-173   | chr5122         | Lapis | avfc5122
+173   | chr5122         | Lapis Rosenberg | avfc5122
 175   | chr0011         | Grendel Shaddai | btlface0_c0011
 176   | chr0127         | Simeon | btlface0_c0127
-177   | chr0129         | Sword Hermit Yun | btlface0_c0129
+177   | chr0129         | Yun Ka-fai | btlface0_c0129
 178   | chr0130_c11     | Masked Martial Artist
 179   | chr0307         | Campanella the Fool | btlface0_c0307
 180   | chr5323_c03     | Fake Grimcat | btlface0_c5323_c03
@@ -133,7 +133,7 @@ ID    | CHR             | Name in the game | Portrait
 191   | rob0012         | Ulrika Drone
 192   | chr5301_c10     | Masked Soldier | btlface0_c5301_c10
 193   | etc3001         | Deputy Chief Jona
-194   | chr0304_c00     | Kuuga | btlface0_c0304_c00
+194   | chr0304_c00     | Kuuga Ka-fai | btlface0_c0304_c00
 199   | chr5322         | Kilika | btlface0_c5322
 200   | chr5008         | Mare | avfc5008
 201   | screen_aim      | Aim
@@ -143,7 +143,7 @@ ID    | CHR             | Name in the game | Portrait
 205   | screen_oze      | Oze
 206   | screen_nagi     | Nagi
 207   | screen_bathym   | Bathym
-208   | chr5009_c00     | Lapis | avfc5009_00
+208   | chr5009_c00     | Lapis Rosenberg | avfc5009_00
 209   | screen_flau     | Frau
 210   | screen_yakumo   | Yakumo
 211   | screen_ronwe    | Ronwe
@@ -2232,24 +2232,24 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr0111_c02     | Zin (Towel)
 65535 | chr0111_c73     | Zin (Alt. Color DLC)
 65535 | chr0112_c00     | Kincaid (Sleeves Rolled Up)
-65535 | chr0112_c02     | Kincaid (Towel)
+65535 | chr0112_c02     | René Kincaid
 65535 | chr0112_c63     | Kincaid (DLC Suit)
 65535 | chr0113_c02     | Walter (Towel)
 65535 | chr0114         | Alexandre (Daybreak Outfit)
-65535 | chr0114_c10     | Alexandre (Marduk Version)
+65535 | chr0114_c10     | Alexandre
 65535 | chr0115         | Melchior (Daybreak Outfit)
 65535 | chr0115_c00     | Kincaid (Shard Clone)
 65535 | chr0115_c01     | Melchior (Pupil Highlight and Soft Expression)
 65535 | chr0115_c02     | Demon Melchior
 65535 | chr0115_c03     | Melchior (Chest Wound/Normal Version)
-65535 | chr0115_c10     | Melchior (Vestige Costume, Masked)
-65535 | chr0115_c11     | Melchior (Vestige Costume, Unmasked)
+65535 | chr0115_c10     | Melchior
+65535 | chr0115_c11     | Melchior
 65535 | chr0116_c00     | Dantès (Dealer Outfit)
 65535 | chr0116_c01     | Dantès (Fatally Wounded)
 65535 | chr0116_c02     | Dantès (Immortal)
 65535 | chr0117         | Arioch (Daybreak Outfit)
 65535 | chr0117_c00     | Arioch (Living Armor State)
-65535 | chr0117_c10     | Arioch (Vestige Outfit, Masked)
+65535 | chr0117_c10     | Arioch
 65535 | chr0120_c01     | Swin (Swimsuit)
 65535 | chr0120_c02     | Swin (Towel)
 65535 | chr0120_c03     | Swin (Uniform)
@@ -2283,7 +2283,7 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr0126_c02     | Kevin (Towel)
 65535 | chr0126_c71     | Kevin (Suit Vest DLC)
 65535 | chr0126_c73     | Kevin (Alt. Color DLC)
-65535 | chr0129b        | Yun Ka-fai test
+65535 | chr0129b        | Yun Ka-fai
 65535 | chr0130_c10     | Lagun (Vestige Outift, Masked)
 65535 | chr0130_c11     | Lagun (Vestige Outift, Unmasked)
 65535 | chr0131_c10     | Ulgar Atkinson (Vestige Outift, Masked)
@@ -2292,9 +2292,9 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr0299_c00     | Overlord Dantès (Gorged Chest for Event)
 65535 | chr0303_c00     | Security Chief Kasim (Regular Clothes)
 65535 | chr0303_c02     | Kasim (Towel)
-65535 | chr0304_c00     | Kurogane (Natural Face)
+65535 | chr0304_c00     | Kurogane
 65535 | chr0306_c00     | Leon (Wearing Overcoat)
-65535 | chr0306_c02     | Leon_Towel
+65535 | chr0306_c02     | Leon Balthazar
 65535 | chr0306_c04     | Leon (Promoter Outfit)
 65535 | chr0306_c63     | Leon (DLC Suit)
 65535 | chr0306_c73     | Leon (Alt. Color DLC)
@@ -2323,7 +2323,7 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr0319_c00     | Gien Lu
 65535 | chr0305_c00     | Ashladd (Mouth Open)
 65535 | chr0305         | Ashladd (Hood)
-65535 | chr0306_c03     | Leon (Injured)
+65535 | chr0306_c03     | Leon Balthazar
 65535 | chr0312_c00     | Albert (Apron)
 65535 | chr0333_c00     | Man in a Black Coat (Identity Revealed)
 65535 | chr0424_c00     | Jimmy (Alternate Outfit)
@@ -2386,7 +2386,7 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr5005_c08     | Risette (Right Arm Swapped Version)
 65535 | chr5005_c09     | Risette (Home Outfit/Seamless Skin)
 65535 | chr5005_c15     | Risette (Horizon Costume)
-65535 | chr5005_c15     | Risette's Double
+65535 | chr5005_c15     | Risette Twinings
 65535 | chr5005_c48     | Risette (Swimsuit/No Sandals)
 65535 | chr5005_c50     | Risette (DLC/Store Bonus)
 65535 | chr5005_c55     | Risette (Swimsuit DLC/Shirt)
@@ -2436,14 +2436,14 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr5113_c02     | Rixia (Towel)
 65535 | chr5113_c04     | Rixia (Personal Outfit)
 65535 | chr5113_c73     | Rixia (Alt. Color DLC)
-65535 | chr5114_c01     | Renne (Swimsuit)
-65535 | chr5114         | Renne (Uniform)
-65535 | chr5114_c02     | Renne (Towel)
-65535 | chr5114_c11     | Renne (Personal Outfit, No Jacket)
+65535 | chr5114_c01     | Renne Bright
+65535 | chr5114         | Renne Bright
+65535 | chr5114_c02     | Renne Bright
+65535 | chr5114_c11     | Renne Bright
 65535 | chr5114_c64     | Renne (DLC Pit Girl/For Sale)
 65535 | chr5114_c65     | Renne (DLC Grimcat/Strategy Guide Bonus)
 65535 | chr5114_c72     | Renne (DLC Bunny/For Sale)
-65535 | chr5114_c73     | Renne (Alt. Color DLC)
+65535 | chr5114_c73     | Renne Bright
 65535 | chr5115         | Viola (Horizon Outfit)
 65535 | chr5115_c10     | Viola (Marduk Version)
 65535 | chr5116         | Olympia (Daybreak Outfit)
@@ -2494,7 +2494,7 @@ ID    | CHR             | Name in the game | Portrait
 65535 | chr5301_c99     | Fake Remnant (Female/Hollow Face) Use Aida Number
 65535 | chr5302_c00     | Celis (Wearing Overcoat)
 65535 | chr5302_c04     | Celis (Energy Drink Collab)
-65535 | chr5302_c02     | Celis_Towel
+65535 | chr5302_c02     | Celis Ortesia
 65535 | chr5302_c64     | Celis (DLC Pit Girl/For Sale)
 65535 | chr5302_c73     | Celis (Alt. Color DLC)
 65535 | chr5311_c00     | Yumé (Different Outfit)
