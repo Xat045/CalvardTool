@@ -49,7 +49,7 @@ ID    | CHR          | Full name in the game | Portrait
 106   | chr0300      | Alvis (Bracer) | btlface0_c0300
 107   | chr0301      | Cao Lee | avfc0301
 108   | chr0302      | Sherid Asval (Prince) | btlface0_c0302
-110   | chr5115_c10  | Viola
+110   | chr5115_c10  | Viola | btlface0_c5115_c10
 111   | chr5116_c10  | Olympia
 112   | chr5300      | Naje Berka | btlface0_c5300
 113   | chr5301      | Aida | btlface0_c5301
@@ -100,7 +100,7 @@ ID    | CHR          | Full name in the game | Portrait
 161   | chr0121      | The Gardenmaster | btlface0_c0121
 163   | chr0333      | Man in Black Coat
 164   | chr5324      | Princess Zita | btlface0_c5324
-165   | chr5325_c15  | Mirabel
+165   | chr5325_c15  | Mirabel | btlface0_c5325_c15
 167   | chr5326      | Dominique
 168   | chr5323      | Chief Developer Rosalie | btlface0_c5323
 169   | chr5327      | Towa Herschel | avfc5327
@@ -144,7 +144,7 @@ ID    | CHR          | Full name in the game | Portrait
 884   | chr5685      | Royche
 885   | chr5426      | Raytarossa
 886   | chr0712b     | Farouk
-900   | chr5325_c15  | Mirabel
+900   | chr5325_c15  | Mirabel | btlface0_c5325_c15
 901   | chr5121      | Altina Orion | avfc5121
 902   | chr5327      | Towa Herschel | avfc5327
 5000  | chr0785      | Gangster A | btlface0_c0785
