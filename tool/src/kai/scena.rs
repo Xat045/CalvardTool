@@ -218,7 +218,52 @@ const SINGLE_FUNCS: &[&str] = &[
 	"chr_set_shop_function",
 	"ui_set_alignment_select_item",
 	"ui_open_alignment_select",
+	"btl_show_rule_dialog",
+	"time_chart_override_node_navi_text",
 ];
+
+fn assigned_text(s: &str) -> bool {
+	if !has_letters(s) || tag_only(s) || s.starts_with('#') {
+		return false;
+	}
+	if s.contains(' ') || !s.is_ascii() {
+		return !s.contains('/') && !s.starts_with("this.");
+	}
+	let b = s.as_bytes();
+	let word = b[0].is_ascii_uppercase() && b[1..].iter().all(|c| c.is_ascii_lowercase()) && !matches!(s, "Head" | "Root");
+	let ord = s.trim_start_matches(|c: char| c.is_ascii_digit()).len() < s.len() && matches!(s.trim_start_matches(|c: char| c.is_ascii_digit()), "st" | "nd" | "rd" | "th");
+	let sound = s.contains('-') && s.bytes().all(|c| c.is_ascii_lowercase() || c == b'-');
+	word || ord || sound
+}
+
+fn assign_run(line: &str, toks: &[Tok]) -> Option<Run> {
+	let txt = |t: &Tok| &line[t.a..t.b];
+	let mut i = 0;
+	if toks.len() > 2 && toks[0].t == T::Word && toks[1].t == T::At && txt(&toks[0]).bytes().all(|c| c.is_ascii_digit()) {
+		i = 2;
+	}
+	if toks.get(i).map(|t| t.t == T::Word && txt(t) == "var").unwrap_or(false) {
+		i += 1;
+	}
+	let name = toks.get(i)?;
+	let v = txt(name);
+	if name.t != T::Word || !v.starts_with("var") || v.len() == 3 || !v[3..].bytes().all(|c| c.is_ascii_digit()) {
+		return None;
+	}
+	let eq = toks.get(i + 1)?;
+	if eq.t != T::Other || txt(eq) != "=" {
+		return None;
+	}
+	let last = toks.len() - 1;
+	if toks[last].t != T::Other || txt(&toks[last]) != ";" || last <= i + 2 {
+		return None;
+	}
+	let val = &toks[i + 2..last];
+	match classify(line, val) {
+		ArgKind::S { prefix, lit } if assigned_text(&unescape(&lit)) => Some(Run { a: val[0].a, b: val[val.len() - 1].b, pieces: vec![Piece::S(unescape(&lit))], prefixes: vec![prefix] }),
+		_ => None,
+	}
+}
 
 struct Run {
 	a: usize,
@@ -229,6 +274,9 @@ struct Run {
 
 fn find_runs(line: &str) -> Vec<Run> {
 	let toks = lex(line);
+	if let Some(r) = assign_run(line, &toks) {
+		return vec![r];
+	}
 	let mut runs = Vec::new();
 	let mut i = 0;
 	while i < toks.len() {
@@ -409,6 +457,28 @@ fn ln_encode(p: &[Option<String>]) -> String {
 }
 fn ln_decode(s: &str) -> Vec<Option<String>> {
 	s.split(',').map(|x| if x.is_empty() { None } else { Some(x.to_string()) }).collect()
+}
+
+pub fn line_texts(line: &str) -> Option<(String, Vec<String>)> {
+	let line = line.trim_start_matches('\t');
+	if line.contains('$') {
+		return None;
+	}
+	let runs = find_runs(line);
+	if runs.is_empty() {
+		return None;
+	}
+	let mut code = String::new();
+	let mut pos = 0;
+	let mut texts = Vec::new();
+	for (n, r) in runs.iter().enumerate() {
+		code.push_str(&line[pos..r.a]);
+		code.push_str(&format!("${}", n + 1));
+		pos = r.b;
+		texts.push(pieces_to_text(&r.pieces));
+	}
+	code.push_str(&line[pos..]);
+	Some((code, texts))
 }
 
 fn ing_to_json(ing: &str) -> (String, usize) {

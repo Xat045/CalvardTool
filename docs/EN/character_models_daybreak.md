@@ -9,7 +9,7 @@ the table; if there is no full name, the name.
 - **CHR:** the model file. Mask for extracting from archives: the model number
   and an asterisk, for example `chr0000*`.
 - **Portrait:** the portrait CalvardCompare shows for this ID: `avfc` is a bust,
-  `btlface` a head. Empty: no portrait.
+  `btlface` a head, `screen_` a face on a screen. Empty: no portrait.
 
 ID    | CHR          | Full name in the game | Portrait
 ----: | ------------ | --------------------- | ----
@@ -1620,13 +1620,15 @@ ID    | CHR          | Full name in the game | Portrait
 
 ## Model files without an entry in t_name.tbl
 
-Selected by file name.
+Selected by file name. Portrait: the one CalvardCompare shows for an actor a scene creates with this model.
 
-- chr0000_c60
-- chr0002_c60
-- chr5001_c60
-- chr5003_c58
-- chr5003_c60
-- chr8500
-- chr8998
-- chr8999
+CHR         | Portrait
+----------- | ----
+chr0000_c60 | avfc0000
+chr0002_c60 | avfc0002
+chr5001_c60 | avfc5001
+chr5003_c58 | avfc5003
+chr5003_c60 | avfc5003
+chr8500     |
+chr8998     |
+chr8999     |

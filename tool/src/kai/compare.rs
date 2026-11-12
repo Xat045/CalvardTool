@@ -43,6 +43,7 @@ pub struct Pair {
 	pub who: Option<u32>,
 	pub skin: String,
 	pub shown: String,
+	pub func: String,
 }
 
 #[derive(Default)]
@@ -256,8 +257,10 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 	let mut skin_fn: HashMap<u32, String> = HashMap::new();
 	let mut skin_file: HashMap<u32, String> = HashMap::new();
 	let mut shown_fn: HashMap<u32, String> = HashMap::new();
+	let mut cursor = 0usize;
 	for it in v.get("script").and_then(|s| s.as_array()).map(|a| a.as_slice()).unwrap_or(&[]) {
-		if let Some(line) = it.as_str() {
+		let plain = it.as_str().and_then(|l| super::scena::line_texts(l.trim()).map(|x| (l, x)));
+		if let Some(line) = it.as_str().filter(|_| plain.is_none()) {
 			let t = line.trim();
 			let before = depth;
 			depth += braces(t);
@@ -296,11 +299,27 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 			}
 			continue;
 		}
-		let Some(obj) = it.as_object() else { continue };
-		let code = obj.get("code").and_then(|c| c.as_str()).unwrap_or("");
+		let (code, texts, plain_at): (String, Vec<serde_json::Value>, Option<usize>) = match (&plain, it.as_object()) {
+			(Some((raw, (code, texts))), _) => {
+				let pat = serde_json::to_string(raw).unwrap_or_default();
+				let at = src[cursor..].find(&pat).map(|p| cursor + p);
+				if let Some(p) = at {
+					cursor = p + pat.len();
+				}
+				let ln = at.map(|p| src[..p].matches('\n').count() + 1).unwrap_or(0);
+				(code.clone(), texts.iter().map(|t| serde_json::Value::String(t.clone())).collect(), Some(ln))
+			}
+			(None, Some(obj)) => (
+				obj.get("code").and_then(|c| c.as_str()).unwrap_or("").to_string(),
+				obj.get("text").and_then(|t| t.as_array()).cloned().unwrap_or_default(),
+				None,
+			),
+			_ => continue,
+		};
+		let code = code.as_str();
 		let key = plain_strings(&strip_ln(code).replace(", \"\");", ");"));
 		n_line += 1;
-		let texts = obj.get("text").and_then(|t| t.as_array()).map(|a| a.as_slice()).unwrap_or(&[]);
+		let texts = texts.as_slice();
 		if let Some(n) = strip_ln(code).strip_prefix("chr_set_display_name(").and_then(|r| r.split(',').next()).and_then(|x| x.trim().parse::<u32>().ok()) {
 			shown_fn.insert(n, texts.first().and_then(|t| t.as_str()).unwrap_or("").to_string());
 		}
@@ -309,8 +328,13 @@ fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 		let shown = who.and_then(|n| shown_fn.get(&n).cloned()).unwrap_or_default();
 		for (i, t) in texts.iter().enumerate() {
 			let text = t.as_str().unwrap_or("").to_string();
-			let line = lines_of_texts.get(k).copied().unwrap_or(0);
-			k += 1;
+			let line = match plain_at {
+				Some(l) => l,
+				None => {
+					k += 1;
+					lines_of_texts.get(k - 1).copied().unwrap_or(0)
+				}
+			};
 			out.push(Item { key: format!("{func}|{key}#{i}"), id: lformat!("реплика {n_line}", "line {n_line}"), text, line, skin: skin.clone(), shown: shown.clone() });
 		}
 	}
@@ -914,6 +938,7 @@ fn pair_files(key: &str, ep: &Option<PathBuf>, rp: &Option<PathBuf>, by_id: bool
 				who: r.or(e).and_then(|x| speaker_of(&x.key)),
 				skin: r.filter(|x| !x.skin.is_empty()).or(e).map(|x| x.skin.clone()).unwrap_or_default(),
 				shown: r.filter(|x| !x.shown.is_empty()).or(e).map(|x| x.shown.clone()).unwrap_or_default(),
+				func: r.or(e).filter(|x| speaker_of(&x.key) == Some(65534)).and_then(|x| x.key.split_once('|')).map(|x| x.0.to_string()).unwrap_or_default(),
 				service,
 			});
 		}
@@ -1032,10 +1057,10 @@ mod cache {
 				let (en, ru) = (r.side()?, r.side()?);
 				let service = r.n()? == 1;
 				let who = u32::try_from(r.n()?).ok();
-				let (skin, shown) = (r.s()?, r.s()?);
+				let (skin, shown, func) = (r.s()?, r.s()?, r.s()?);
 				let en_key = en.as_ref().map(|x| search_key(&x.text)).unwrap_or_default();
 				let ru_key = ru.as_ref().map(|x| search_key(&x.text)).unwrap_or_default();
-				pairs.push(Pair { file, id, en, ru, en_key, ru_key, service, who, skin, shown });
+				pairs.push(Pair { file, id, en, ru, en_key, ru_key, service, who, skin, shown, func });
 			}
 			let mut warn = Vec::new();
 			for _ in 0..r.n()? {
@@ -1067,6 +1092,7 @@ mod cache {
 				w.n(p.who.map_or(u64::MAX, u64::from));
 				w.s(&p.skin);
 				w.s(&p.shown);
+				w.s(&p.func);
 			}
 			w.n(e.warn.len() as u64);
 			for x in &e.warn {

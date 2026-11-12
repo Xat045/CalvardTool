@@ -9,7 +9,7 @@ the table; if there is no full name, the name.
 - **CHR:** the model file. Mask for extracting from archives: the model number
   and an asterisk, for example `chr0000*`.
 - **Portrait:** the portrait CalvardCompare shows for this ID: `avfc` is a bust,
-  `btlface` a head. Empty: no portrait.
+  `btlface` a head, `screen_` a face on a screen. Empty: no portrait.
 
 ID    | CHR          | Full name in the game | Portrait
 ----: | ------------ | --------------------- | ----
@@ -2771,29 +2771,31 @@ ID    | CHR          | Full name in the game | Portrait
 
 ## Model files without an entry in t_name.tbl
 
-Selected by file name.
+Selected by file name. Portrait: the one CalvardCompare shows for an actor a scene creates with this model.
 
-- chr0000_c62
-- chr0002_c60
-- chr0004_c17b
-- chr0123_c02_c
-- chr0123_c70
-- chr0127a
-- chr0127b
-- chr0130
-- chr0311
-- chr0428_c01_a
-- chr0492a
-- chr0792_c03
-- chr0915
-- chr5003_c58
-- chr5003_c60
-- chr5325
-- chr5500_l1
-- chr5501_l1
-- chr5503_l1
-- chr5850
-- chr8500
-- chr8997
-- chr8998
-- chr8999
+CHR           | Portrait
+------------- | ----
+chr0000_c62   | avfc0000
+chr0002_c60   | avfc0002
+chr0004_c17b  | avfc0004
+chr0123_c02_c |
+chr0123_c70   | avfc0123
+chr0127a      | btlface0_c0127
+chr0127b      | btlface0_c0127
+chr0130       | btlface0_c0130
+chr0311       |
+chr0428_c01_a |
+chr0492a      |
+chr0792_c03   | btlface0_c0792
+chr0915       |
+chr5003_c58   | avfc5003
+chr5003_c60   | avfc5003
+chr5325       | btlface0_c5325
+chr5500_l1    |
+chr5501_l1    |
+chr5503_l1    |
+chr5850       |
+chr8500       |
+chr8997       |
+chr8998       |
+chr8999       |

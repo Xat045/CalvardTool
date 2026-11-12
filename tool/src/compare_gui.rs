@@ -69,6 +69,7 @@ struct CalTables {
 	names: HashMap<u32, (String, String)>,
 	model_id: HashMap<String, u32>,
 	models: HashMap<String, (Option<u32>, String)>,
+	talk: HashMap<String, u32>,
 }
 
 fn cal_tables(dir: &'static str) -> &'static CalTables {
@@ -92,7 +93,24 @@ fn cal_tables(dir: &'static str) -> &'static CalTables {
 				models.insert(c[0].to_string(), (c[1].parse().ok(), c[3].to_string()));
 			}
 		}
-		Box::leak(Box::new(CalTables { cells: compare::number_pairs(&text("portraits.tsv")), voice: compare::number_pairs(&text("active_voice.tsv")), names, model_id, models }))
+		let mut talk = HashMap::new();
+		let mut by_func: HashMap<String, Option<u32>> = HashMap::new();
+		for l in text("talk.tsv").lines() {
+			let c: Vec<&str> = l.split('\t').collect();
+			if let (3, Ok(id)) = (c.len(), c[2].parse::<u32>()) {
+				talk.entry(format!("{}|{}", c[0], c[1])).or_insert(id);
+				let e = by_func.entry(c[1].to_string()).or_insert(Some(id));
+				if *e != Some(id) {
+					*e = None;
+				}
+			}
+		}
+		for (f, id) in by_func {
+			if let Some(id) = id {
+				talk.insert(format!("|{f}"), id);
+			}
+		}
+		Box::leak(Box::new(CalTables { cells: compare::number_pairs(&text("portraits.tsv")), voice: compare::number_pairs(&text("active_voice.tsv")), names, model_id, models, talk }))
 	})
 }
 
@@ -606,7 +624,8 @@ impl App {
 		let (mut all, mut total) = compare::search(d, &q, 0, self.whole, usize::MAX);
 		let who_name = who.and_then(|id| self.chars.list.iter().find(|r| r.id == id)).map(|r| format!("{}: ", r.name)).unwrap_or_default();
 		if let Some(id) = who {
-			all.retain(|&i| Self::row_who(&d.pairs[i]) == Some(id));
+			let ids = self.char_ids(id);
+			all.retain(|&i| Self::row_who(&d.pairs[i]).is_some_and(|w| ids.contains(&w)));
 			total = all.len();
 		} else if compare::ed7().is_some() && q.chars().count() >= 3 {
 			let ql = q.to_lowercase();
@@ -884,6 +903,14 @@ impl App {
 		}
 		if let Some(id) = pair.who {
 			let t = cal_tables(Self::face_pack());
+			if id == 65534 && !pair.func.is_empty() {
+				let f = pair.func.to_lowercase();
+				let stem = pair.file.rsplit('/').next().unwrap_or("").trim_end_matches(".json").to_lowercase();
+				let map = stem.split('_').next().unwrap_or("");
+				if let Some(&npc) = t.talk.get(&format!("{stem}|{f}")).or_else(|| t.talk.get(&format!("{map}|{f}"))).or_else(|| t.talk.get(&format!("|{f}"))) {
+					return Some(npc);
+				}
+			}
 			if !t.names.contains_key(&id)
 				&& let Some(&real) = row_skin(t, pair).and_then(|m| t.model_id.get(m)) {
 					return Some(real);
@@ -1909,6 +1936,7 @@ struct Chars {
 
 struct CharRow {
 	id: u32,
+	ids: Vec<u32>,
 	lines: usize,
 	model: String,
 	name: String,
@@ -1965,7 +1993,7 @@ impl App {
 				.into_iter()
 				.filter_map(|(id, lines)| {
 					let (a, _, name) = names.iter().find(|x| x.0 == id)?;
-					Some(CharRow { id, lines, model: ed7_ranges(id).iter().map(|(a, b)| format!("ka{a:05}–ka{b:05}")).collect::<Vec<_>>().join(", "), name: name.clone(), face: Some((*a, format!("ka{a:05}"))), range: ed7_ranges(id) })
+					Some(CharRow { id, ids: vec![id], lines, model: ed7_ranges(id).iter().map(|(a, b)| format!("ka{a:05}–ka{b:05}")).collect::<Vec<_>>().join(", "), name: name.clone(), face: Some((*a, format!("ka{a:05}"))), range: ed7_ranges(id) })
 				})
 				.collect();
 			list.sort_by(|a, b| b.lines.cmp(&a.lines).then(a.id.cmp(&b.id)));
@@ -2012,7 +2040,7 @@ impl App {
 			.into_iter()
 			.map(|(id, lines)| {
 				if let Some((model, name)) = names.get(&id).cloned() {
-					return CharRow { id, lines, model, name, face: faces.get(&id).cloned(), range: Vec::new() };
+					return CharRow { id, ids: vec![id], lines, model, name, face: faces.get(&id).cloned(), range: Vec::new() };
 				}
 				let (model, shown) = actor.get(&id).cloned().unwrap_or_default();
 				let m = t.models.get(&model);
@@ -2021,18 +2049,45 @@ impl App {
 				} else if let Some((_, mn)) = m {
 					lformat!("{mn} (сцена)", "{mn} (scene)")
 				} else if id == 65535 {
-					tr("(без ID)", "(no ID)").into()
+					tr("Система", "System").into()
 				} else {
 					tr("(нет в character_models)", "(not in character_models)").into()
 				};
 				let face = m.and_then(|x| x.0).map(|c| (c, model.clone()));
-				CharRow { id, lines, model, name, face, range: Vec::new() }
+				CharRow { id, ids: vec![id], lines, model, name, face, range: Vec::new() }
 			})
 			.collect();
 		list.sort_by(|a, b| b.lines.cmp(&a.lines).then(a.id.cmp(&b.id)));
-		self.chars.list = list;
+		let merge: std::collections::HashSet<String> = text("merge.tsv").lines().map(|l| l.trim().to_string()).filter(|l| !l.is_empty()).collect();
+		let mut merged: Vec<CharRow> = Vec::new();
+		let mut at: HashMap<String, usize> = HashMap::new();
+		for r in list {
+			let key = r.name.clone();
+			match at.get(&key) {
+				Some(&k) if merge.contains(&key) => {
+					let m = &mut merged[k];
+					m.ids.push(r.id);
+					m.lines += r.lines;
+					if !r.model.is_empty() && !m.model.split(", ").any(|x| x == r.model) {
+						m.model = if m.model.is_empty() { r.model } else { format!("{}, {}", m.model, r.model) };
+					}
+					if m.face.is_none() {
+						m.face = r.face;
+					}
+				}
+				_ => {
+					at.insert(key, merged.len());
+					merged.push(r);
+				}
+			}
+		}
+		self.chars.list = merged;
 		self.chars.list_for = (d.pairs.len(), dir);
 		self.chars.sel = None;
+	}
+
+	fn char_ids(&self, id: u32) -> Vec<u32> {
+		self.chars.list.iter().find(|r| r.id == id).map(|r| r.ids.clone()).unwrap_or_else(|| vec![id])
 	}
 
 	fn chars_select(&mut self, id: Option<u32>) {
@@ -2044,9 +2099,10 @@ impl App {
 		let Some(d) = self.data.as_ref() else { return };
 		match id {
 			Some(id) => {
-				let all: Vec<usize> = (0..d.pairs.len()).filter(|&i| Self::row_who(&d.pairs[i]) == Some(id)).collect();
+				let ids = self.char_ids(id);
+				let all: Vec<usize> = (0..d.pairs.len()).filter(|&i| Self::row_who(&d.pairs[i]).is_some_and(|w| ids.contains(&w))).collect();
 				let name = self.chars.list.iter().find(|r| r.id == id).map(|r| r.name.clone()).unwrap_or_default();
-				let tag = if compare::ed7().is_some() { self.chars.list.iter().find(|r| r.id == id).map(|r| r.model.clone()).unwrap_or_default() } else { format!("ID {id}") };
+				let tag = if compare::ed7().is_some() { self.chars.list.iter().find(|r| r.id == id).map(|r| r.model.clone()).unwrap_or_default() } else { format!("ID {}", ids.iter().map(|i| i.to_string()).collect::<Vec<_>>().join(", ")) };
 				self.found = format!("{name} ({tag}): {}", plural(all.len(), tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines")));
 				self.total = all.len();
 				self.rows = all;
@@ -2085,7 +2141,7 @@ impl App {
 				q.is_empty()
 					|| r.name.to_lowercase().contains(&q)
 					|| r.model.to_lowercase().contains(&q)
-					|| r.id.to_string() == q
+					|| r.ids.iter().any(|i| i.to_string() == q)
 					|| r.face.as_ref().is_some_and(|f| f.1.to_lowercase().contains(&q))
 					|| code.is_some_and(|c| r.range.iter().any(|&(a, b)| a <= c && c <= b))
 			})
@@ -2114,13 +2170,12 @@ impl App {
 				}
 				let tx = fr.max.x + 8.0;
 				let tw = row.max.x - tx - 4.0;
-				paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 5.0), Vec2::new(tw, 17.0)), &r.name, f_body(13.0), p.text, Align2::LEFT_TOP);
 				if !r.range.is_empty() {
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 5.0), Vec2::new(tw, 17.0)), &r.name, f_body(13.0), p.text, Align2::LEFT_TOP);
 					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 26.0), Vec2::new(tw, 15.0)), &format!("{} · {}", r.model, plural(r.lines, tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines"))), f_mono(11.0), p.muted, Align2::LEFT_TOP);
 				} else {
-					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 22.0), Vec2::new(tw, 15.0)), &format!("ID {} · {} · {}", r.id, if r.model.is_empty() { "—" } else { &r.model }, plural(r.lines, tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines"))), f_mono(11.0), p.muted, Align2::LEFT_TOP);
-					let f = r.face.as_ref().map_or(tr("портрета нет", "no portrait").to_string(), |f| f.1.clone());
-					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx, row.min.y + 38.0), Vec2::new(tw, 15.0)), &f, f_mono(11.0), if r.face.is_some() { p.accent } else { p.muted }, Align2::LEFT_TOP);
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx + 4.0, row.min.y + 7.0), Vec2::new(tw - 4.0, 22.0)), &r.name, f_body(17.0), p.text, Align2::LEFT_TOP);
+					paint_text_clipped(ui, Rect::from_min_size(Pos2::new(tx + 4.0, row.min.y + 32.0), Vec2::new(tw - 4.0, 18.0)), &plural(r.lines, tr("реплика", "line"), tr("реплики", "lines"), tr("реплик", "lines")), f_body(14.0), p.muted, Align2::LEFT_TOP);
 				}
 				if resp.clicked() {
 					pick = Some(r.id);
