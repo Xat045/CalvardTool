@@ -39,6 +39,13 @@ ID    | CHR          | Full name in the game | Portrait
 24    | chr0125      | Rufus A. | avfc0125
 62    | chr5113      | Rixia Mao | avfc5113
 63    | chr5112_c00  | Fie Claussell | avfc5112_c00
+64    | rob0000      | FIO
+65    | rob0001      | XEROS
+95    | rob0004      | Excel Chaser
+96    | rob0004      | Excel Chaser
+97    | rob0003_c00  | AF Excalibur
+98    | rob0020      | Tyrfing S
+99    | rob0021      | Tyrfing X
 100   | chr0114_c10  | Alexandre | btlface0_c0114_c10
 101   | chr0115_c11  | Melchior
 102   | chr0116      | Gerard Dantès | btlface0_c0116
@@ -92,6 +99,7 @@ ID    | CHR          | Full name in the game | Portrait
 151   | chr5302      | Celis Ortesia | avfc5302
 152   | chr0306      | Leon Balthazar | avfc0306
 153   | chr0305_c01  | Ashladd | btlface0_c0305_c01
+154   | rob0010      | Ishtanti
 155   | chr0010      | Grendel Zolga | btlface0_c0010
 158   | chr0122_c10  | Ixs the Glinting Bullet
 159   | chr5120      | Jorda Eldarion | avfc5120
@@ -117,16 +125,21 @@ ID    | CHR          | Full name in the game | Portrait
 184   | chr0335      | Air Force General Harring
 185   | chr5401_c00  | Major Emilia
 186   | chr5328      | Chloe
+187   | rob0015      | Claiomh Solais
 188   | chr0428      | Leroy
+189   | rob0019      | ZFC Drone
 190   | chr5330      | The Grandmaster
+191   | rob0012      | Ulrika Drone
 192   | chr5301_c10  | Masked Soldier | btlface0_c5301_c10
 194   | chr0304_c00  | Kuuga Ka-fai | btlface0_c0304_c00
 199   | chr5322      | Kilika | btlface0_c5322
 200   | chr5008      | Mare | avfc5008
 208   | chr5009_c00  | Lapis Rosenberg | avfc5009_00
+212   | rob0014      | Pater-Mater
 213   | chr5009      | Carmine Altera | avfc5009
 550   | chr0805_c08  | Male Student
 551   | chr5700_c09  | Female Student
+570   | rob0015_c00  | Claiomh Solais
 820   | chr8400      | ◆3D Avatar_Van
 821   | chr8401      | ◆3D Avatar_Altina
 822   | chr8402      | ◆3D Avatar_Lapis
@@ -179,6 +192,7 @@ ID    | CHR          | Full name in the game | Portrait
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling | btlface0_c5751
 5351  | chr0833      | Bracer Lahad
+5352  | rob0010      | Ishtanti
 5353  | chr5116      | Olympia (Battle Gaya)
 5400  | chr5401      | Hermes
 5450  | chr0712_c01  | Ethan
@@ -604,6 +618,8 @@ ID    | CHR          | Full name in the game | Portrait
 11315 | chr5513a     | Nadiya
 11316 | chr5541      | Amia
 11321 | chr5402_c02  | Ms. Sonia
+11325 | rob0002      | Assault Frame
+11326 | rob0002      | Assault Frame
 11329 | chr0755      | Soldier | btlface0_c0755
 11330 | chr0755_c01  | Soldier | btlface0_c0755
 11331 | chr0755      | Soldier | btlface0_c0755
@@ -1714,6 +1730,25 @@ ID    | CHR          | Full name in the game | Portrait
 49994 | chr5001_c49  | Test Character 4 (Agnès, Goddess_test)
 65535 | chr0298      | Overlord Auguste
 65535 | chr0299      | Overlord Dantès
+65535 | rob0000_c00  | FIO_Electric World
+65535 | rob0000_c01  | FIO_Electric World (Yellow)
+65535 | rob0000_c02  | FIO_Cat Ears
+65535 | rob0002      | Assault Frame Xycres
+65535 | rob0002_c00  | Assault Frame Xycres
+65535 | rob0002_c01  | Assault Frame Xycres
+65535 | rob0002_c02  | Assault Frame Xycres
+65535 | rob0002_c90  | Assault Frame Xycres
+65535 | rob0002_c03  | Assault Frame Xycres
+65535 | rob0002_c04  | Assault Frame Xycres
+65535 | rob0003      | AF Excalibur
+65535 | rob0010_c00  | Ishtanti_Cracked Face
+65535 | rob0010_c01  | Ishtanti_Damaged Version
+65535 | rob0010_c02  | Ishtanti_Berserk Version
+65535 | rob0011_c00  | Drone
+65535 | rob0011_c01  | Drone
+65535 | rob0015_c00  | Claiomh Solais Chibi Form
+65535 | rob0016      | Calendula Claiomh Solais
+65535 | rob0030      | Fake Zoa Gilstein
 65535 | chr0326      | Tausend
 65535 | chr5124      | Sheena Dirke
 65535 | chr0000_c00  | Van (No Jacket)
@@ -2704,6 +2739,7 @@ ID    | CHR          | Full name in the game | Portrait
 65535 | chr5876      | Nurse (Middle-Aged Woman) 1
 65535 | chr5880      | Escort (Young Woman) 1
 65535 | chr5881      | Escort (Young Woman) 2
+65535 | rob0010      | Ishtanti
 65535 | chr5433      | Candace (Female Sniper)
 65535 | chr5433_c00  | Candace (Female Sniper, No Hat)
 65535 | chr5112      | NPC Fie 0

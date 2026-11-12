@@ -38,6 +38,10 @@ ID    | CHR          | Full name in the game | Portrait
 19    | chr5114_c10  | Renne Bright | avfc5114_c10
 62    | chr5113      | Rixia Mao | avfc5113
 63    | chr5112      | Fie Claussell | avfc5112
+64    | rob0000      | FIO
+64    | rob0000_c00  | FIO_Electric World
+64    | rob0000_c01  | FIO_Electric World (Yellow)
+65    | rob0001      | XEROS
 100   | chr0114      | Alexandre | btlface0_c0114
 101   | chr0115      | Melchior | btlface0_c0115
 102   | chr0116      | Gerard Dantès | btlface0_c0116
@@ -107,6 +111,10 @@ ID    | CHR          | Full name in the game | Portrait
 152   | chr0306_c02  | Leon Balthazar | avfc0306
 152   | chr0306_c03  | Leon Balthazar | avfc0306
 153   | chr0305_c01  | Vice Captain Ashladd | btlface0_c0305_c01
+154   | rob0010      | Ishtanti
+154   | rob0010_c00  | Ishtanti_Cracked Face
+154   | rob0010_c01  | Ishtanti_Damaged Version
+154   | rob0010_c02  | Ishtanti_Berserk Version
 155   | chr0010      | Grendel Zolga | btlface0_c0010
 158   | chr0122      | Ixs | btlface0_c0122
 158   | chr0122_c00  | Ixs (Twin Enforcer - Brother/Hooded) | btlface0_c0122
@@ -161,6 +169,7 @@ ID    | CHR          | Full name in the game | Portrait
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling | btlface0_c5751
 5351  | chr0833      | Bracer Lahad
+5352  | rob0010      | Ishtanti
 5353  | chr5116      | Olympia (Combat Walla)
 5400  | chr5401      | Hermès
 5450  | chr0712_c01  | Ethan
@@ -497,6 +506,8 @@ ID    | CHR          | Full name in the game | Portrait
 11315 | chr5513a     | Nadiya
 11316 | chr5541      | Amia
 11321 | chr5402_c02  | Ms. Sonia
+11325 | rob0002      | Assault Frame
+11326 | rob0002      | Assault Frame
 11329 | chr0755      | Soldier | btlface0_c0755
 11330 | chr0755_c01  | Soldier | btlface0_c0755
 11331 | chr0755      | Soldier | btlface0_c0755
@@ -1424,6 +1435,12 @@ ID    | CHR          | Full name in the game | Portrait
 49999 | chr0000      | Test Character (Combat Use)
 65535 | chr0298      | Overlord Auguste
 65535 | chr0299      | Overlord Dantès
+65535 | rob0002      | Assault Frame Xycres
+65535 | rob0002_c00  | Assault Frame Xycres_Silver
+65535 | rob0002_c01  | Assault Frame Xycres_Armed Red Eyes
+65535 | rob0002_c02  | Assault Frame Xycres_President Machine
+65535 | rob0002_c90  | Assault Frame Xycres_Major Damage
+65535 | rob0002_c03  | Assault Frame Xycres_Military Armament
 65535 | chr0318_c03  | Maxim (Racing Suit: Helmet Off)
 65535 | chr0318_c04  | Maxim (Racing Suit: Helmet On)
 65535 | chr0326      | Tausend

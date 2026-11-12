@@ -31,6 +31,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 15    | chr0009      | Van/Grendel | btlface0_c0009
 62    | chr5113      | Rixia Mao | avfc5113
 63    | chr5112      | Fie Claussell | avfc5112
+64    | rob0000      | FIO
+65    | rob0001      | XEROS
 100   | chr0114      | Alexandre | btlface0_c0114
 101   | chr0115      | Melchior | btlface0_c0115
 102   | chr0116      | Gerard Dantès | btlface0_c0116
@@ -97,6 +99,10 @@ ID    | CHR          | Полное имя в игре | Портрет
 152   | chr0306      | Leon Balthazar | avfc0306
 152   | chr0306_c00  | Leon Balthazar | avfc0306
 153   | chr0305      | Ashladd
+154   | rob0010      | Ishtanti
+154   | rob0010_c00  | Ishtanti_Cracked Face
+154   | rob0010_c01  | Ishtanti_Damaged Version
+154   | rob0010_c02  | Ishtanti_Berserk Version
 200   | chr5008      | Mare | avfc5008
 5000  | chr0785      | Gangster A | btlface0_c0785
 5001  | chr0786      | Gangster B | btlface0_c0786
@@ -131,6 +137,7 @@ ID    | CHR          | Полное имя в игре | Портрет
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling
 5351  | chr0833      | Bracer Lahad
+5352  | rob0010      | Ishtanti
 5353  | chr5116      | Olympia (Combat Walla)
 5400  | chr5401      | Hermès
 8000  | chr0500      | Lott | btlface0_c0500
@@ -383,6 +390,8 @@ ID    | CHR          | Полное имя в игре | Портрет
 11315 | chr5513a     | Nadiya
 11316 | chr5541      | Amia
 11321 | chr5402_c02  | Ms. Sonia
+11325 | rob0002      | Assault Frame
+11326 | rob0002      | Assault Frame
 11329 | chr0755      | Soldier
 11330 | chr0755_c01  | Soldier
 11331 | chr0755      | Soldier
@@ -1048,6 +1057,11 @@ ID    | CHR          | Полное имя в игре | Портрет
 49993 | chr5007_c59  | Test Character 3 (DLC/Judith)
 49999 | chr0000      | Test Character (Combat Use)
 65535 | chr0299      | Overlord Dantès
+65535 | rob0002      | Assault Frame Xycres
+65535 | rob0002_c00  | Assault Frame Xycres_Silver
+65535 | rob0002_c01  | Assault Frame Xycres_Armed Red Eyes
+65535 | rob0002_c02  | Assault Frame Xycres_President Machine
+65535 | rob0002_c90  | Assault Frame Xycres_Major Damage
 65535 | chr0326      | Bill Tausend
 65535 | chr5302      | Celis Ortesia
 65535 | chr5302_c00  | Celis Ortesia
