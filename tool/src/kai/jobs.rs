@@ -231,7 +231,7 @@ fn source_files(o: &Options) -> Vec<(PathBuf, String)> {
 			.filter(|(_, r)| match &o.include {
 				Some(inc) => {
 					let l = r.to_lowercase();
-					inc.iter().any(|i| l == *i || l.starts_with(&format!("{i}/")))
+					inc.iter().map(|i| i.split('#').next().unwrap_or(i)).any(|i| l == i || l.starts_with(&format!("{i}/")))
 				}
 				None => true,
 			})
@@ -286,6 +286,9 @@ fn index_game3(o: &Options, sink: &dyn Sink) -> (BTreeMap<String, Src>, BTreeMap
 					let target = if in_mods { &mut mods } else { &mut base };
 					for (i, e) in a.entries.iter().enumerate() {
 						let v = e.name.to_lowercase();
+						if !in_mods && o.sources.is_empty() && o.include.as_ref().is_some_and(|inc| !included(inc, &lrel, &v)) {
+							continue;
+						}
 						if in_mods {
 							extra.insert(v.clone(), Src::Packed(a.clone(), i));
 						}
@@ -1352,6 +1355,59 @@ pub struct ScanItem {
 	pub error: Option<String>,
 }
 
+pub const SUB_ITEMS: &[(&str, &str, &[&str])] = &[
+	("misc.p3a", "bgm", &["bgm/"]),
+	("misc.p3a", "icons", &["system/", "system_en/", "system_eng/", "system_pc/"]),
+];
+
+pub fn sub_part(archive: &str, entry: &str) -> Option<&'static str> {
+	SUB_ITEMS.iter().find(|(a, _, pre)| *a == archive && pre.iter().any(|p| entry.starts_with(p))).map(|(_, s, _)| *s)
+}
+
+pub fn included(inc: &[String], archive: &str, entry: &str) -> bool {
+	match sub_part(archive, entry) {
+		Some(s) => inc.iter().any(|i| *i == format!("{archive}#{s}")),
+		None => inc.iter().any(|i| i == archive),
+	}
+}
+
+fn scan_parts(p: &Path, key: String, name: String) -> Vec<ScanItem> {
+	let mut main = scan_p3a(p, key.clone(), name.clone(), false);
+	if !SUB_ITEMS.iter().any(|(a, _, _)| *a == key) || main.error.is_some() {
+		return vec![main];
+	}
+	let Ok(a) = p3a::Archive::open(p) else { return vec![main] };
+	let mut parts: Vec<ScanItem> = Vec::new();
+	main.counts = Counts::default();
+	main.unpacked = 0;
+	for e in &a.entries {
+		let v = e.name.to_lowercase();
+		let sz = if v.ends_with(".dds") { e.unc_size * 3 } else { e.unc_size };
+		let it = match sub_part(&key, &v) {
+			Some(s) => {
+				let k = format!("{key}#{s}");
+				match parts.iter().position(|x| x.key == k) {
+					Some(i) => &mut parts[i],
+					None => {
+						parts.push(ScanItem { key: k, name: format!("{name} · {s}"), size: 0, unpacked: 0, counts: Counts::default(), in_mods: false, files: Vec::new(), error: None });
+						parts.last_mut().unwrap()
+					}
+				}
+			}
+			None => &mut main,
+		};
+		it.counts.add(&e.name);
+		it.unpacked += sz;
+		if it.key.contains('#') {
+			it.size += e.unc_size;
+		}
+	}
+	main.size = main.size.saturating_sub(parts.iter().map(|x| x.size).sum());
+	let mut out = vec![main];
+	out.extend(parts);
+	out
+}
+
 fn scan_p3a(p: &Path, key: String, name: String, in_mods: bool) -> ScanItem {
 	let size = std::fs::metadata(p).map(|m| m.len()).unwrap_or(0);
 	let mut counts = Counts::default();
@@ -1378,7 +1434,7 @@ pub fn scan_game(dir: &Path) -> Vec<ScanItem> {
 		let n = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
 		let low = n.to_lowercase();
 		if p.is_file() && low.ends_with(".p3a") {
-			out.push(scan_p3a(p, low.clone(), n.clone(), false));
+			out.extend(scan_parts(p, low.clone(), n.clone()));
 		} else if p.is_dir() && low == "mods" {
 			let mut m: Vec<PathBuf> = std::fs::read_dir(p).map(|rd| rd.flatten().map(|e| e.path()).collect()).unwrap_or_default();
 			m.sort();
@@ -1492,6 +1548,20 @@ pub fn scan_project(proj: &Path) -> Vec<ProjItem> {
 #[cfg(test)]
 mod tests {
 	use super::*;
+
+	#[test]
+	fn misc_parts() {
+		let inc = |v: &[&str]| v.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+		assert_eq!(sub_part("misc.p3a", "bgm/bgm_info.json"), Some("bgm"));
+		assert_eq!(sub_part("misc.p3a", "system_pc/en/autoicon.png"), Some("icons"));
+		assert_eq!(sub_part("misc.p3a", "layout/camp.lay"), None);
+		assert_eq!(sub_part("mods/ru_mod.p3a", "bgm/bgm_info.json"), None);
+		assert!(!included(&inc(&["misc.p3a"]), "misc.p3a", "bgm/bgm_info.json"));
+		assert!(included(&inc(&["misc.p3a"]), "misc.p3a", "layout/camp.lay"));
+		assert!(included(&inc(&["misc.p3a#bgm"]), "misc.p3a", "bgm/bgm_info.json"));
+		assert!(!included(&inc(&["misc.p3a#bgm"]), "misc.p3a", "system_en/autoicon.png"));
+		assert!(included(&inc(&["script.p3a"]), "script.p3a", "scena/a0000.dat"));
+	}
 
 	#[test]
 	fn mod_names() {

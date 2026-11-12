@@ -175,6 +175,14 @@ fn sound_name(s: &str) -> bool {
 }
 
 fn game_item(s: kjobs::ScanItem) -> Item {
+	if let Some((_, part)) = s.key.split_once('#') {
+		let n = s.counts.total();
+		let (group, desc) = match part {
+			"bgm" => (G_TEXT, tr("Названия музыки (bgm_info.json, поле «en») — .json как в игре", "Music titles (bgm_info.json, field «en»): .json as in the game").to_string()),
+			_ => (G_TEX, lformat!("Иконки сохранений с надписями · {} → .png как в игре", "Save icons with captions · {} → .png as in the game", plural(n, tr("картинка", "image"), tr("картинки", "images"), tr("картинок", "images")))),
+		};
+		return Item { key: s.key, name: s.name, lang: tr("Английские и японские файлы", "English and Japanese files").into(), desc, right: fmt_size(s.size), right_ok: false, group, on: true, size: s.size, unpacked: s.unpacked, changed: 0, out_key: String::new(), out_size: 0, mod_size: 0 };
+	}
 	let stem = s.key.trim_end_matches(".p3a").to_string();
 	let base = stem.rsplit('/').next().unwrap_or(&stem).to_string();
 	let c = &s.counts;
@@ -239,7 +247,7 @@ fn game_item(s: kjobs::ScanItem) -> Item {
 fn proj_item(s: kjobs::ProjItem) -> Item {
 	let low = s.name.to_lowercase().replace('\\', "/");
 	let kind = s.kind.as_str();
-	let group = if kind.starts_with("script") || kind.starts_with("table") || kind == "multilanguage" {
+	let group = if kind.starts_with("script") || kind.starts_with("table") || kind == "multilanguage" || (kind == "bgm" && low.starts_with("misc/")) {
 		G_TEXT
 	} else if low.contains("voice") {
 		G_VOICE
@@ -258,6 +266,8 @@ fn proj_item(s: kjobs::ProjItem) -> Item {
 		tr("Русский перевод (мод)", "Russian translation (mod)").to_string()
 	} else if kind == "multilanguage" {
 		String::new()
+	} else if kind == "bgm" && group == G_TEXT {
+		tr("Английские и японские файлы", "English and Japanese files").to_string()
 	} else if eng_suffix(&low) {
 		tr("Английские файлы", "English files").to_string()
 	} else if group == G_TEXT || group == G_VOICE {
