@@ -1,8 +1,7 @@
 # Trails through Daybreak II: characters and their models
 
-From the game's `t_name.tbl`, English. A full name missing there is taken from
-another game of the series for the same model number. One character (same ID and
-model) has the same name in all three lists: full name, title in parentheses.
+From this game's `t_name.tbl`, English: the official full name, or the short name
+if there is no full one. Names are exactly as in the game.
 
 - **ID:** the character's number in `t_name.tbl`, the one scripts use, for example
   `system[5,6](106, ...)`. It is not the model number. `65535` appears to mean that
@@ -21,22 +20,22 @@ ID    | CHR          | Full name in the game | Portrait
 4     | chr0004      | Quatre Salision | avfc0004
 5     | chr0006      | Bergard Zeman | avfc0006
 6     | chr5005      | Risette Twinings | avfc5005
-6     | chr5005      | Risette Twinings (Risette's Double) | avfc5005
-7     | chr0113      | Walter Kron (the Direwolf) | avfc0113
-8     | chr0111      | Zin Vathek (the Immovable) | avfc0111
-9     | chr0112      | René Kincaid (Presidential Aide) | avfc0112
-9     | chr0112_c02  | René Kincaid (Towel) | avfc0112
+6     | chr5005      | Risette Twinings | avfc5005
+7     | chr0113      | Walter Kron | avfc0113
+8     | chr0111      | Zin Vathek | avfc0111
+9     | chr0112      | René Kincaid | avfc0112
+9     | chr0112_c02  | René Kincaid | avfc0112
 10    | chr5007      | Judith Lanster | avfc5007
-11    | chr5110      | Elaine Auclair (Bracer Outfit) | avfc5110
+11    | chr5110      | Elaine (Bracer Outfit) | avfc5110
 11    | chr5110_c10  | Elaine Auclair | avfc5110
 12    | chr5117_c10  | Shizuna Rem Misurugi | avfc5117_c10
 13    | chr0304      | Kurogane | avfc0304
-14    | chr5118      | Lucrezia Isselee (the Golden Butterfly) | avfc5118
+14    | chr5118      | Lucrezia Isselee | avfc5118
 15    | chr0009      | Grendel Van | avfc0009
 17    | chr0120      | Swin Abel | avfc0120
-17    | chr0120_c02  | Swin Abel (Towel) | avfc0120
+17    | chr0120_c02  | Swin_Towel | avfc0120
 18    | chr5119      | Nadia Rayne | avfc5119
-18    | chr5119_c02  | Nadia Rayne (Towel) | avfc5119
+18    | chr5119_c02  | Nadia_Towel | avfc5119
 19    | chr5114_c10  | Renne Bright | avfc5114_c10
 62    | chr5113      | Rixia Mao | avfc5113
 63    | chr5112      | Fie Claussell | avfc5112
@@ -44,11 +43,11 @@ ID    | CHR          | Full name in the game | Portrait
 101   | chr0115      | Melchior | btlface0_c0115
 102   | chr0116      | Gerard Dantès | btlface0_c0116
 103   | chr0117      | Arioch | btlface0_c0117
-104   | chr0118      | Ellroy Harwood (the Oathbreaker) | btlface0_c0118
-105   | chr0119      | Roy Gramheart (President)
-106   | chr0300      | Alvis (Bracer) | btlface0_c0300
+104   | chr0118      | Ellroy Harwood | btlface0_c0118
+105   | chr0119      | President Gramheart
+106   | chr0300      | Alvis | btlface0_c0300
 107   | chr0301      | Cao Lee | avfc0301
-108   | chr0302      | Sherid Asval (Prince) | btlface0_c0302
+108   | chr0302      | Sherid Asval | btlface0_c0302
 110   | chr5115      | Viola | btlface0_c5115
 111   | chr5116      | Olympia | btlface0_c5116
 112   | chr5300      | Naje Berka | btlface0_c5300
@@ -60,73 +59,73 @@ ID    | CHR          | Full name in the game | Portrait
 116   | chr5311      | Yumé | btlface0_c5311
 117   | chr0311      | Giacomo
 117   | chr0311_c00  | Giacomo (Corpse Version)
-118   | chr0315      | Nate (Detective)
-119   | chr0314      | Daswani (Inspector)
-120   | chr5320      | Kaela McMillan (Second Lieutenant) | btlface0_c5320
-121   | chr5313      | Marielle Aymé | btlface0_c5313
-121   | chr5313_c00  | Marielle Aymé (No Hat) | btlface0_c5313
-121   | chr5313_c01  | Marielle Aymé (Clothes Half-Disintegrated) | btlface0_c5313
-121   | chr5313_c02  | Marielle Aymé (Clothes Half-Disintegrated/No Slime) | btlface0_c5313
-122   | chr0316      | Dingo Brad | btlface0_c0316
+118   | chr0315      | Detective Nate
+119   | chr0314      | Inspector Daswani
+120   | chr5320      | Second Lieutenant Kaela | btlface0_c5320
+121   | chr5313      | Marielle | btlface0_c5313
+121   | chr5313_c00  | Marielle (No Hat) | btlface0_c5313
+121   | chr5313_c01  | Marielle (Clothes Half-Disintegrated) | btlface0_c5313
+121   | chr5313_c02  | Marielle (Clothes Half-Disintegrated/No Slime) | btlface0_c5313
+122   | chr0316      | Dingo | btlface0_c0316
 123   | chr0313      | Bermotti
-124   | chr0329      | Geraint (Commander) | btlface0_c0329
-125   | chr0328      | Hasan Al-Fayed (Vice Chief) | btlface0_c0328
-126   | chr5322      | Kilika Rouran | btlface0_c5322
+124   | chr0329      | Commander Geraint | btlface0_c0329
+125   | chr0328      | Vice Chief Hasan | btlface0_c0328
+126   | chr5322      | Kilika | btlface0_c5322
 127   | chr5312      | Odette
 127   | chr5312_c12  | Odette (Jersey)
 128   | chr0312      | Albert
-129   | chr5315      | Nina Fenly | btlface0_c5315
-130   | chr0318      | Maxim Lugan | btlface0_c0318
-130   | chr0318_c00  | Maxim Lugan (Muddy) | btlface0_c0318
-131   | chr5316      | Ashen Lu
-132   | chr0320      | Fan Lu (Dàrén)
-133   | chr0319      | Gien Lu (Elder)
-133   | chr0319_c00  | Gien Lu (Elder, Hawaiian Shirt)
-134   | chr0317      | Jack Trevor | btlface0_c0317
-135   | chr5314      | Halle Coleman | btlface0_c5314
+129   | chr5315      | Nina | btlface0_c5315
+130   | chr0318      | Maxim | btlface0_c0318
+130   | chr0318_c00  | Maxim (Muddy) | btlface0_c0318
+131   | chr5316      | Ashen
+132   | chr0320      | Fan
+133   | chr0319      | Gien
+133   | chr0319_c00  | Gien (Hawaiian Shirt)
+134   | chr0317      | Jack | btlface0_c0317
+135   | chr5314      | Halle | btlface0_c5314
 136   | chr5317      | Saara
 136   | chr5317_c04  | Saara (Pole Dancer)
 137   | chr5318      | Shaheena
-138   | chr0322      | Salvatore Gotti (Director)
-139   | chr0321      | Gaspard Dillon (President)
-139   | chr0321_c00  | Gaspard Dillon (President, Corpse Version)
-140   | chr5321      | Latoya Hamilton (Professor)
-141   | chr5319      | Esmeray Archette (Associate Professor) | btlface0_c5319
+138   | chr0322      | Director Gotti
+139   | chr0321      | President Dillon
+139   | chr0321_c00  | President Dillon (Corpse Version)
+140   | chr5321      | Professor Hamilton
+141   | chr5319      | Associate Professor Esmeray | btlface0_c5319
 141   | chr5319_c00  | Esmeray Archette (Resort Clothes) | btlface0_c5319
-142   | chr0324      | Yang Cronkite (Professor)
-143   | chr0325      | Giscard (Chief Engineer)
-144   | chr0326_c00  | Bill Tausend
-145   | chr0323      | David Callaghan (Professor)
-146   | chr0331      | Samuel Rocksmith (Former President)
-147   | chr0330      | Cody McMillan (Warrant Officer) | btlface0_c0330_c00
-147   | chr0330_c00  | Cody McMillan (Warrant Officer, Special Ops Uniform) | btlface0_c0330_c00
-148   | chr0327      | Edmond Auclair (President)
-149   | chr0303      | Kasim Al-Fayed (Security Chief) | avfc0303
-150   | chr0332      | Gilliam Thorndyke (General Manager)
-151   | chr5302      | Celis Ortesia (Dominion) | avfc5302
-151   | chr5302_c02  | Celis Ortesia (Towel) | avfc5302
-152   | chr0306      | Leon Balthazar (Dominion) | avfc0306
-152   | chr0306_c02  | Leon Balthazar (Towel) | avfc0306
-152   | chr0306_c03  | Leon Balthazar (Injured) | avfc0306
-153   | chr0305_c01  | Ashladd (Vice Captain) | btlface0_c0305_c01
+142   | chr0324      | Professor Cronkite
+143   | chr0325      | Chief Engineer Giscard
+144   | chr0326_c00  | Tausend
+145   | chr0323      | Professor Callaghan
+146   | chr0331      | Rocksmith
+147   | chr0330      | Warrant Officer Cody | btlface0_c0330_c00
+147   | chr0330_c00  | Warrant Officer Cody_Special Ops Uniform | btlface0_c0330_c00
+148   | chr0327      | President Auclair
+149   | chr0303      | Kasim Al-Fayed | avfc0303
+150   | chr0332      | Mr. Thorndyke
+151   | chr5302      | Celis Ortesia | avfc5302
+151   | chr5302_c02  | Celis Ortesia | avfc5302
+152   | chr0306      | Leon Balthazar | avfc0306
+152   | chr0306_c02  | Leon Balthazar | avfc0306
+152   | chr0306_c03  | Leon Balthazar | avfc0306
+153   | chr0305_c01  | Vice Captain Ashladd | btlface0_c0305_c01
 155   | chr0010      | Grendel Zolga | btlface0_c0010
 158   | chr0122      | Ixs | btlface0_c0122
 158   | chr0122_c00  | Ixs (Twin Enforcer - Brother/Hooded) | btlface0_c0122
-159   | chr5120      | Jorda Eldarion | btlface0_c5120
-159   | chr5120_c00  | Jorda Eldarion (Twin Enforcer - Sister/Hooded) | btlface0_c5120
+159   | chr5120      | Jorda | btlface0_c5120
+159   | chr5120_c00  | Jorda (Twin Enforcer - Sister/Hooded) | btlface0_c5120
 160   | chr0334      | Gaolang | btlface0_c0334
-161   | chr0121      | The Gardenmaster | btlface0_c0121
-163   | chr0333      | Man in Black Coat
+161   | chr0121      | Gardenmaster | btlface0_c0121
+163   | chr0333      | Man in a Black Coat
 164   | chr5324      | Princess Zita | btlface0_c5324
 165   | chr5325      | Mirabel
 165   | chr5325_c00  | Mirabel (No Headset)
 166   | chr5325      | Mirabel
 167   | chr5326      | Dominique
 168   | chr5323      | Chief Developer Rosalie
-169   | chr5327      | Towa Herschel | btlface0_c5327
+169   | chr5327      | Towa | btlface0_c5327
 172   | chr0122_c01  | Ixs (Disguised)
 200   | chr5008      | Mare | avfc5008
-215   | chr5009_c00  | Lapis Rosenberg | avfc5009_00
+215   | chr5009_c00  | Lapis | avfc5009_00
 220   | chr5009      | Carmine Altera | avfc5009
 550   | chr0805_c08  | Male Student
 551   | chr5700_c09  | Female Student
@@ -163,13 +162,13 @@ ID    | CHR          | Full name in the game | Portrait
 5301  | chr0580a     | Guide Senri
 5350  | chr5751      | Bracer Xiaoling | btlface0_c5751
 5351  | chr0833      | Bracer Lahad
-5353  | chr5116      | Olympia (Battle Gaya)
-5400  | chr5401      | Hermes
+5353  | chr5116      | Olympia (Combat Walla)
+5400  | chr5401      | Hermès
 5450  | chr0712_c01  | Ethan
 5451  | chr0427      | Glasgow
 5550  | chr0413      | Ronald
-5551  | chr0668      | Man Dressed Like a Construction Worker
-5700  | chr0510b     | Remnant Terrorist
+5551  | chr0668      | Man Dressed As Construction Worker
+5700  | chr0510b     | Terrorist Remnant
 5800  | chr0790      | Jaeger Dropout | btlface0_c0790
 5801  | chr0790      | Jaeger Dropout | btlface0_c0790
 5802  | chr0790      | Jaeger Dropout | btlface0_c0790
@@ -189,7 +188,7 @@ ID    | CHR          | Full name in the game | Portrait
 8011  | chr0511a     | Richie
 8012  | chr5500b     | Amy
 8013  | chr0745      | Percy
-8014  | chr0730      | Station Attendant
+8014  | chr0730      | Station Worker
 8015  | chr0521a     | Bruno
 8016  | chr0710      | Roderick
 8017  | chr5541      | Lyla
@@ -214,7 +213,7 @@ ID    | CHR          | Full name in the game | Portrait
 8036  | chr0712a     | Roger | btlface0_c0712a
 8037  | chr0786      | Damian | btlface0_c0786
 8038  | chr0731      | Security Guard A
-8039  | chr0731      | Guard
+8039  | chr0731      | Security Guard
 8040  | chr0740      | Harrison
 8041  | chr5720_c01  | Female Researcher?
 8042  | chr0717a     | Clément
@@ -274,15 +273,15 @@ ID    | CHR          | Full name in the game | Portrait
 8098  | chr5560a     | Judge
 8099  | chr0716      | Minhou
 8100  | chr0710b     | Shipping Worker
-8101  | chr0757      | Eldest Devancy Brother | btlface0_c0757
+8101  | chr0757      | Devancy Eldest Son | btlface0_c0757
 8102  | chr0731_c01  | Devancy Middle Son | btlface0_c0731_c01
 8103  | chr0665_c01  | Devancy Youngest Son | btlface0_c0665_c01
 8105  | chr5675a     | Teresa
-8106  | chr0711_c01  | Staff | btlface0_c0711_c01
-8107  | chr0665      | Young Man Handing Out Balloons
-8108  | chr5511b     | Suspicious Middle-Aged Woman | btlface0_c5511b
+8106  | chr0711_c01  | Staff Member | btlface0_c0711_c01
+8107  | chr0665      | Man Handing Out Balloons
+8108  | chr5511b     | Suspicious Woman | btlface0_c5511b
 8109  | chr0511b     | Conrad
-8110  | chr0710_c01  | Event Planner
+8110  | chr0710_c01  | Party Planner
 8111  | chr0419      | Dunne
 8112  | chr0412      | Hubert
 8113  | chr0724      | Kenny
@@ -290,7 +289,7 @@ ID    | CHR          | Full name in the game | Portrait
 8115  | chr0512a     | Suspicious Man
 8116  | chr5504b     | Dorothea
 8117  | chr0806      | Boys' Basketball Team Captain
-8118  | chr0805_c10  | Manager of the Boys' Basketball Team
+8118  | chr0805_c10  | Boys' Basketball Team Manager
 8119  | chr5700_c03  | Girls' Basketball Team Manager
 11000 | chr0661_c01  | Sr. Officer Walley
 11001 | chr0666      | Boss Goddard
@@ -318,8 +317,8 @@ ID    | CHR          | Full name in the game | Portrait
 11026 | chr5795_c02  | Kaina
 11027 | chr0570_c01  | Mayor Weng
 11028 | chr5520b     | Annha
-11029 | chr0655_c01  | Johan (Father)
-11033 | chr0115_c01  | Melchior (Traveler)
+11029 | chr0655_c01  | Vicar Johan
+11033 | chr0115_c01  | Melchior
 11050 | chr0532      | Harry
 11051 | chr0540      | Mark
 11052 | chr5531      | Sheena
@@ -357,7 +356,7 @@ ID    | CHR          | Full name in the game | Portrait
 11087 | chr0500b     | Clutch
 11088 | chr5501b     | Gretta
 11089 | chr5502a     | Kopeyka
-11090 | chr0834      | Gray (Bracer)
+11090 | chr0834      | Bracer Gray
 11091 | chr0520_c01  | Hazel
 11092 | chr0712b     | Ilhan
 11093 | chr0711      | Manager Carlo
@@ -374,7 +373,7 @@ ID    | CHR          | Full name in the game | Portrait
 11116 | chr0405      | Jacobin
 11117 | chr0831      | Bracer Ewan
 11118 | chr5670      | Milty
-11120 | chr0570a     | Yimai (Secondhand Dealer)
+11120 | chr0570a     | Secondhand Dealer Yimai
 11121 | chr0666      | Morgan
 11122 | chr5600a     | Maja
 11123 | chr5503a     | Lindsey
@@ -656,7 +655,7 @@ ID    | CHR          | Full name in the game | Portrait
 11576 | chr0716_c02  | Chamberlain
 11577 | chr5675a     | Petra
 11578 | chr0530a     | Dick
-11579 | chr5676      | Valeria (Section Chief)
+11579 | chr5676      | Chief Valeria
 11580 | chr0720      | President Rooster
 11581 | chr0724_c02  | Receptionist Freyd
 11582 | chr0711b     | Lanmei
@@ -667,12 +666,12 @@ ID    | CHR          | Full name in the game | Portrait
 11587 | chr0500a     | De Niro
 11588 | chr0740      | Coolidge
 11589 | chr0660      | Police Officer
-11590 | chr0716_c01  | Oluger (Clerk)
+11590 | chr0716_c01  | Office Worker Oluger
 11591 | chr5503b     | Meryl
 11592 | chr0716a     | Librarian Venter
 11593 | chr5725      | Professor Aurelie
 11594 | chr0740_c01  | Associate Professor Tain
-11595 | chr5720_c01a | Athena (Associate Professor)
+11595 | chr5720_c01a | Researcher Athena
 11596 | chr0410      | Researcher Lionel
 11597 | chr0735_c01  | Moritz
 11598 | chr0735a     | Gimbat
@@ -682,7 +681,7 @@ ID    | CHR          | Full name in the game | Portrait
 11602 | chr0735      | Researcher Aster
 11603 | chr0735_c01a | Researcher Nadir
 11604 | chr5521      | Elderly Woman
-11608 | chr5005_c06  | Risette Twinings
+11608 | chr5005_c06  | Risette
 11650 | chr5570b     | Receptionist Drusilla
 11651 | chr0832      | Bracer Kazan | btlface0_c0832
 11652 | chr0656      | Vicar Murase
@@ -828,7 +827,7 @@ ID    | CHR          | Full name in the game | Portrait
 11938 | chr0806_c01  | ◆Courtyard Stall NPC Student
 11939 | chr5701      | ◆Courtyard Stall NPC Student
 11940 | chr5540b     | Lost Child
-11941 | chr5510      | Visitor's Mother
+11941 | chr5510      | Visitor
 11942 | chr5531_c01  | Visitor's Daughter
 12000 | chr5411      | Meixin
 12001 | chr5580      | Tiantian
@@ -1404,9 +1403,9 @@ ID    | CHR          | Full name in the game | Portrait
 19403 | chr0510      | Middle-Aged Man
 19404 | chr5710      | Hostess | btlface0_c5710
 19405 | chr5520      | Old Woman A
-19406 | chr0510      | Middle-aged Man A
+19406 | chr0510      | Middle-Aged Man A
 19407 | chr5007_c03  | Grimcat | avfc5007_c03
-19408 | chr0520      | Older Man A
+19408 | chr0520      | Old Man A
 19410 | chr0500      | Young Man A | btlface0_c0500
 19411 | chr0501      | Young Man B | btlface0_c0501
 19412 | chr0502      | Young Man C
@@ -1417,92 +1416,92 @@ ID    | CHR          | Full name in the game | Portrait
 19417 | chr5561_c01  | Middle-Aged Woman
 19418 | chr5551a     | Young Woman
 19419 | chr0561_c01  | Middle-Aged Man
-19420 | chr0670      | Man Dressed Like a Construction Worker
+19420 | chr0670      | Man Dressed As Construction Worker
 19797 | chr9990      | Dummy
 49990 | chr0120_c03  | Test Character 0 (Mare)
 49991 | chr0000_c62  | Test Character 1 (Costume Van Test)
 49992 | chr0122      | Test Character 2 (Ixs Hair Wave Adjustment)
 49993 | chr5120      | Test Character 3 (Jorda Hair Wave Adjustment)
 49999 | chr0000      | Test Character (Combat Use)
-65535 | chr0000_c00  | Van Arkride (No Jacket)
-65535 | chr0000_c01  | Van Arkride
-65535 | chr0000_c02  | Van Arkride (Bath Getup)
-65535 | chr0000_c07  | Van Arkride (Samue)
-65535 | chr0000_c08  | Van Arkride (Shirtless)
-65535 | chr0000_c09  | Van Arkride (Shirtless and Bandaged)
-65535 | chr0000_c10  | Van Arkride (Racing Suit & Helmet)
-65535 | chr0000_c48  | Van Arkride (Swimsuit/No Sandals)
-65535 | chr0000_c55  | Van Arkride (Swimsuit DLC/Jacket)
-65535 | chr0000_c56  | Van Arkride (Swimsuit DLC/No Jacket)
-65535 | chr0000_c63  | Van Arkride (DLC Suit)
-65535 | chr0002_c02  | Aaron Wei
+65535 | chr0000_c00  | Van (No Jacket)
+65535 | chr0000_c01  | Van
+65535 | chr0000_c02  | Van (Bath Getup)
+65535 | chr0000_c07  | Van (Samue)
+65535 | chr0000_c08  | Van (Shirtless)
+65535 | chr0000_c09  | Van (Shirtless and Bandaged)
+65535 | chr0000_c10  | Van (Racing Suit & Helmet)
+65535 | chr0000_c48  | Van (Swimsuit/No Sandals)
+65535 | chr0000_c55  | Van (Swimsuit DLC/Jacket)
+65535 | chr0000_c56  | Van (Swimsuit DLC/No Jacket)
+65535 | chr0000_c63  | Van (DLC Suit)
+65535 | chr0002_c02  | Aaron
 65535 | chr0002_c04  | Aaron Home Outfit
 65535 | chr0002_c05  | Aaron Theater Costume
 65535 | chr0002_c06  | Aaron Theater Costume_No Wig
-65535 | chr0002_c07  | Aaron Wei (Samue)
-65535 | chr0002_c08  | Aaron Wei (Shirtless)
-65535 | chr0002_c09  | Aaron Wei (Shirtless and Bandaged)
-65535 | chr0002_c55  | Aaron Wei (Swimsuit DLC/Jacket)
-65535 | chr0002_c56  | Aaron Wei (Swimsuit DLC/No Jacket)
-65535 | chr0002_c63  | Aaron Wei (DLC Suit)
-65535 | chr0004_c00  | Quatre Salision (No Jacket)
-65535 | chr0004_c02  | Quatre Salision (Bath Getup)
-65535 | chr0004_c07  | Quatre Salision (Samue)
-65535 | chr0004_c08  | Quatre Salision (For Event No Headphones)
-65535 | chr0004_c09  | Quatre Salision (Female Avatar Version)
-65535 | chr0004_c48  | Quatre Salision (Swimsuit/No Sandals)
-65535 | chr0004_c49  | Quatre Salision (Angel)
-65535 | chr0004_c55  | Quatre Salision (Swimsuit DLC/Jacket)
-65535 | chr0004_c56  | Quatre Salision (Swimsuit DLC/No Jacket)
-65535 | chr0004_c58  | Quatre Salision (DLC/Aramis Middle School Uniform)
-65535 | chr0004_c63  | Quatre Salision (DLC Suit)
+65535 | chr0002_c07  | Aaron (Samue)
+65535 | chr0002_c08  | Aaron (Shirtless)
+65535 | chr0002_c09  | Aaron (Shirtless and Bandaged)
+65535 | chr0002_c55  | Aaron (Swimsuit DLC/Jacket)
+65535 | chr0002_c56  | Aaron (Swimsuit DLC/No Jacket)
+65535 | chr0002_c63  | Aaron (DLC Suit)
+65535 | chr0004_c00  | Quatre (No Jacket)
+65535 | chr0004_c02  | Quatre (Bath Getup)
+65535 | chr0004_c07  | Quatre (Samue)
+65535 | chr0004_c08  | Quatre (For Event No Headphones)
+65535 | chr0004_c09  | Quatre (Female Avatar Version)
+65535 | chr0004_c48  | Quatre (Swimsuit/No Sandals)
+65535 | chr0004_c49  | Quatre (Angel)
+65535 | chr0004_c55  | Quatre (Swimsuit DLC/Jacket)
+65535 | chr0004_c56  | Quatre (Swimsuit DLC/No Jacket)
+65535 | chr0004_c58  | Quatre (DLC/Aramis Middle School Uniform)
+65535 | chr0004_c63  | Quatre (DLC Suit)
 65535 | chr0006      | Bergard Test
-65535 | chr0006_c00  | Bergard Zeman (No Jacket)
-65535 | chr0006_c02  | Bergard Zeman (Bath Getup)
-65535 | chr0006_c05  | Bergard Zeman (Goggles)
-65535 | chr0006_c55  | Bergard Zeman (Swimsuit DLC/Jacket)
-65535 | chr0006_c56  | Bergard Zeman (Swimsuit DLC/No Jacket)
+65535 | chr0006_c00  | Bergard (No Jacket)
+65535 | chr0006_c02  | Bergard (Bath Getup)
+65535 | chr0006_c05  | Bergard (Goggles)
+65535 | chr0006_c55  | Bergard (Swimsuit DLC/Jacket)
+65535 | chr0006_c56  | Bergard (Swimsuit DLC/No Jacket)
 65535 | chr0009_c00  | Van/Grendel Final Battle Spec
-65535 | chr0111_c02  | Zin Vathek (Towel)
-65535 | chr0112_c00  | René Kincaid (Sleeves Rolled Up)
-65535 | chr0112_c63  | René Kincaid (DLC Suit)
+65535 | chr0111_c02  | Zin (Towel)
+65535 | chr0112_c00  | Kincaid (Sleeves Rolled Up)
+65535 | chr0112_c63  | Kincaid (DLC Suit)
 65535 | chr0113      | Walter Test
 65535 | chr0113_c01  | Walter Test
 65535 | chr0115_c00  | Melchior (Shard Clone)
 65535 | chr0115_c01  | Melchior (Pupil Highlight and Soft Expression)
 65535 | chr0115_c02  | Demon Melchior
 65535 | chr0115_c03  | Melchior (Chest Wound/Normal Version)
-65535 | chr0116_c00  | Gerard Dantès (Dealer Outfit)
-65535 | chr0116_c01  | Gerard Dantès (Fatally Wounded)
-65535 | chr0116_c02  | Gerard Dantès (Immortal)
+65535 | chr0116_c00  | Dantès (Dealer Outfit)
+65535 | chr0116_c01  | Dantès (Fatally Wounded)
+65535 | chr0116_c02  | Dantès (Immortal)
 65535 | chr0117_c00  | Arioch (Living Armor State)
-65535 | chr0120_c01  | Swin Abel (Swimsuit)
-65535 | chr0120_c03  | Swin Abel (Uniform)
-65535 | chr0120_c12  | Swin Abel (Jersey)
-65535 | chr0120_c63  | Swin Abel (DLC Suit)
+65535 | chr0120_c01  | Swin (Swimsuit)
+65535 | chr0120_c03  | Swin (Uniform)
+65535 | chr0120_c12  | Swin (Jersey)
+65535 | chr0120_c63  | Swin (DLC Suit)
 65535 | chr0121_c00  | Gardenmaster (Hood & Mask)
 65535 | chr0298      | Overlord Auguste
 65535 | chr0299      | Overlord Dantès
 65535 | chr0299_c00  | Overlord Dantès (Gorged Chest for Event)
-65535 | chr0302_c02  | Sherid Asval (Prince, Bath Getup)
-65535 | chr0303_c00  | Kasim Al-Fayed (Security Chief, Regular Clothes)
+65535 | chr0302_c02  | Prince Sherid (Bath Getup)
+65535 | chr0303_c00  | Security Chief Kasim (Regular Clothes)
 65535 | chr0305      | Ashladd (Hood)
 65535 | chr0305_c00  | Ashladd (Mouth Open)
-65535 | chr0306_c00  | Leon Balthazar (Wearing Overcoat)
-65535 | chr0306_c63  | Leon Balthazar (DLC Suit)
+65535 | chr0306_c00  | Leon (Wearing Overcoat)
+65535 | chr0306_c63  | Leon (DLC Suit)
 65535 | chr0312_c00  | Albert (Apron)
 65535 | chr0312_c12  | Albert (Jersey)
-65535 | chr0314_c00  | Daswani (Inspector, Shot)
-65535 | chr0318_c03  | Maxim Lugan (Racing Suit: Helmet Off)
-65535 | chr0318_c04  | Maxim Lugan (Racing Suit: Helmet On)
+65535 | chr0314_c00  | Inspector Daswani (Shot)
+65535 | chr0318_c03  | Maxim (Racing Suit: Helmet Off)
+65535 | chr0318_c04  | Maxim (Racing Suit: Helmet On)
 65535 | chr0319_c00  | Gien Lu
-65535 | chr0326      | Bill Tausend
-65535 | chr0326_c00  | Bill Tausend (Button-up Shirt)
+65535 | chr0326      | Tausend
+65535 | chr0326_c00  | Tausend (Button-up Shirt)
 65535 | chr0327      | Edmond Auclair Test
-65535 | chr0328_c00  | Hasan Al-Fayed (Vice Chief, For Event, Injured)
+65535 | chr0328_c00  | Vice Chief Hasan (For Event, Injured)
 65535 | chr0329      | Colonel Gerald Test
-65535 | chr0331_c00  | Samuel Rocksmith (No Hat)
-65535 | chr0331_c01  | Samuel Rocksmith (Suit)
+65535 | chr0331_c00  | Rocksmith (No Hat)
+65535 | chr0331_c01  | Rocksmith (Suit)
 65535 | chr0333_c00  | Man in a Black Coat (Identity Revealed)
 65535 | chr0403      | President Daltie
 65535 | chr0404      | Lucio
@@ -1819,102 +1818,102 @@ ID    | CHR          | Full name in the game | Portrait
 65535 | chr0871      | Academy Festival Dancer (Western Outfit Dancer)
 65535 | chr0872      | Academy Festival Dancer (Eastern Outfit Dancer)
 65535 | chr0873      | Academy Festival Dancer (Central Eastern Outfit Dancer)
-65535 | chr5001      | Agnès Claudel (Previous Game's Outfit)
-65535 | chr5001_c00  | Agnès Claudel (No Coat)
-65535 | chr5001_c02  | Agnès Claudel (Bath Getup)
-65535 | chr5001_c03  | Agnès Claudel (Uniform)
-65535 | chr5001_c04  | Agnès Claudel (Home Outfit)
-65535 | chr5001_c07  | Agnès Claudel (Samue)
-65535 | chr5001_c11  | Agnès Claudel (Second Game Outfit No Coat)
-65535 | chr5001_c12  | Agnès Claudel (Jersey)
-65535 | chr5001_c50  | Agnès Claudel (DLC/Store Bonus)
-65535 | chr5001_c55  | Agnès Claudel (Swimsuit DLC/Shirt)
-65535 | chr5001_c56  | Agnès Claudel (Swimsuit DLC/No Shirt)
-65535 | chr5001_c60  | Agnès Claudel (Color Swap DLC)
-65535 | chr5001_c61  | Agnès Claudel (DLC Pit Girl/Store Bonus)
-65535 | chr5001_c64  | Agnès Claudel (DLC Pit Girl/For Sale)
-65535 | chr5003_c00  | Feri Al-Fayed (Hood)
-65535 | chr5003_c02  | Feri Al-Fayed (Bath Getup)
-65535 | chr5003_c04  | Feri Al-Fayed (Light Home Outfit)
-65535 | chr5003_c07  | Feri Al-Fayed (Samue)
-65535 | chr5003_c50  | Feri Al-Fayed (DLC/Store Bonus Sleeves)
-65535 | chr5003_c51  | Feri Al-Fayed (DLC/Store Bonus Sleeves)
-65535 | chr5003_c55  | Feri Al-Fayed (Swimsuit DLC/Jacket)
-65535 | chr5003_c56  | Feri Al-Fayed (Swimsuit DLC/No Jacket)
-65535 | chr5003_c64  | Feri Al-Fayed (DLC Pit Girl/For Sale)
-65535 | chr5005_c02  | Risette Twinings (Bath Getup)
-65535 | chr5005_c04  | Risette Twinings (Home Outfit/Pants)
-65535 | chr5005_c05  | Risette Twinings (Left Arm and Right Foot Damaged)
-65535 | chr5005_c06  | Risette Twinings (Undergoing Treatment)
-65535 | chr5005_c07  | Risette Twinings (Samue)
-65535 | chr5005_c08  | Risette Twinings (Right Arm Swapped Version)
-65535 | chr5005_c09  | Risette Twinings (Home Outfit/Seamless Skin)
-65535 | chr5005_c48  | Risette Twinings (Swimsuit/No Sandals)
-65535 | chr5005_c50  | Risette Twinings (DLC/Store Bonus)
-65535 | chr5005_c55  | Risette Twinings (Swimsuit DLC/Shirt)
-65535 | chr5005_c56  | Risette Twinings (Swimsuit DLC/No Shirt)
-65535 | chr5005_c64  | Risette Twinings (DLC Pit Girl/For Sale)
-65535 | chr5007_c01  | Judith Lanster (Swimsuit)
-65535 | chr5007_c02  | Judith Lanster (Bath Getup)
-65535 | chr5007_c03  | Judith Lanster (Grimcat)
-65535 | chr5007_c04  | Judith Lanster (Water Fall Ritual Outfit_Normal)
-65535 | chr5007_c05  | Judith Lanster (Waterfall Ritual Outfit_Event Start and End)
-65535 | chr5007_c06  | Judith Lanster (Long Hair)
-65535 | chr5007_c07  | Judith Lanster (Samue)
-65535 | chr5007_c08  | Judith Lanster (Transformation Craft Model)
-65535 | chr5007_c09  | Judith Lanster (Home Outfit Gown)
-65535 | chr5007_c10  | Judith Lanster (Gown+Grimcat)
-65535 | chr5007_c11  | Judith Lanster (Gown+Grimcat+Cap)
-65535 | chr5007_c55  | Judith Lanster (DLC Swimsuit/Shirt)
-65535 | chr5007_c56  | Judith Lanster (DLC Swimsuit/No Shirt)
-65535 | chr5007_c59  | Judith Lanster (Golden Costume DLC)
-65535 | chr5007_c64  | Judith Lanster (DLC Pit Girl/For Sale)
-65535 | chr5110_c01  | Elaine Auclair (Swimsuit)
-65535 | chr5110_c02  | Elaine Auclair (Towel)
-65535 | chr5110_c11  | Elaine Auclair (Personal Outfit No Coat)
-65535 | chr5110_c12  | Elaine Auclair (Wedding Dress)
-65535 | chr5110_c61  | Elaine Auclair (DLC Pit Girl/Store Bonus)
-65535 | chr5110_c64  | Elaine Auclair (DLC Pit Girl/For Sale)
-65535 | chr5112      | Fie Claussell
-65535 | chr5112      | Fie Test
+65535 | chr5001      | Agnès (Previous Game's Outfit)
+65535 | chr5001_c00  | Agnès (No Coat)
+65535 | chr5001_c02  | Agnès (Bath Getup)
+65535 | chr5001_c03  | Agnès (Uniform)
+65535 | chr5001_c04  | Agnès (Home Outfit)
+65535 | chr5001_c07  | Agnès (Samue)
+65535 | chr5001_c11  | Agnès (Second Game Outfit No Coat)
+65535 | chr5001_c12  | Agnès (Jersey)
+65535 | chr5001_c50  | Agnès (DLC/Store Bonus)
+65535 | chr5001_c55  | Agnès (Swimsuit DLC/Shirt)
+65535 | chr5001_c56  | Agnès (Swimsuit DLC/No Shirt)
+65535 | chr5001_c60  | Agnès (Color Swap DLC)
+65535 | chr5001_c61  | Agnès (DLC Pit Girl/Store Bonus)
+65535 | chr5001_c64  | Agnès (DLC Pit Girl/For Sale)
+65535 | chr5003_c00  | Feri (Hood)
+65535 | chr5003_c02  | Feri (Bath Getup)
+65535 | chr5003_c04  | Feri (Light Home Outfit)
+65535 | chr5003_c07  | Feri (Samue)
+65535 | chr5003_c50  | Feri (DLC/Store Bonus Sleeves)
+65535 | chr5003_c51  | Feri (DLC/Store Bonus Sleeves)
+65535 | chr5003_c55  | Feri (Swimsuit DLC/Jacket)
+65535 | chr5003_c56  | Feri (Swimsuit DLC/No Jacket)
+65535 | chr5003_c64  | Feri (DLC Pit Girl/For Sale)
+65535 | chr5005_c02  | Risette (Bath Getup)
+65535 | chr5005_c04  | Risette (Home Outfit/Pants)
+65535 | chr5005_c05  | Risette (Left Arm and Right Foot Damaged)
+65535 | chr5005_c06  | Risette (Undergoing Treatment)
+65535 | chr5005_c07  | Risette (Samue)
+65535 | chr5005_c08  | Risette (Right Arm Swapped Version)
+65535 | chr5005_c09  | Risette (Home Outfit/Seamless Skin)
+65535 | chr5005_c48  | Risette (Swimsuit/No Sandals)
+65535 | chr5005_c50  | Risette (DLC/Store Bonus)
+65535 | chr5005_c55  | Risette (Swimsuit DLC/Shirt)
+65535 | chr5005_c56  | Risette (Swimsuit DLC/No Shirt)
+65535 | chr5005_c64  | Risette (DLC Pit Girl/For Sale)
+65535 | chr5007_c01  | Judith (Swimsuit)
+65535 | chr5007_c02  | Judith (Bath Getup)
+65535 | chr5007_c03  | Judith (Grimcat)
+65535 | chr5007_c04  | Judith (Water Fall Ritual Outfit_Normal)
+65535 | chr5007_c05  | Judith (Waterfall Ritual Outfit_Event Start and End)
+65535 | chr5007_c06  | Judith (Long Hair)
+65535 | chr5007_c07  | Judith (Samue)
+65535 | chr5007_c08  | Judith (Transformation Craft Model)
+65535 | chr5007_c09  | Judith (Home Outfit Gown)
+65535 | chr5007_c10  | Judith (Gown+Grimcat)
+65535 | chr5007_c11  | Judith (Gown+Grimcat+Cap)
+65535 | chr5007_c55  | Judith (DLC Swimsuit/Shirt)
+65535 | chr5007_c56  | Judith (DLC Swimsuit/No Shirt)
+65535 | chr5007_c59  | Judith (Golden Costume DLC)
+65535 | chr5007_c64  | Judith (DLC Pit Girl/For Sale)
+65535 | chr5110_c01  | Elaine (Swimsuit)
+65535 | chr5110_c02  | Elaine (Towel)
+65535 | chr5110_c11  | Elaine (Personal Outfit No Coat)
+65535 | chr5110_c12  | Elaine (Wedding Dress)
+65535 | chr5110_c61  | Elaine (DLC Pit Girl/Store Bonus)
+65535 | chr5110_c64  | Elaine (DLC Pit Girl/For Sale)
 65535 | chr5112      | NPC Fie 0
+65535 | chr5112      | Fie
 65535 | chr5112      | NPC Fie 2
-65535 | chr5112_c02  | Fie Claussell (Bath Getup)
-65535 | chr5113_c00  | Rixia Mao (Lightweight Stage Outfit)
-65535 | chr5113_c04  | Rixia Mao (Personal Outfit)
-65535 | chr5114      | Renne Bright (Uniform)
-65535 | chr5114_c01  | Renne Bright (Swimsuit)
-65535 | chr5114_c02  | Renne Bright (Towel)
-65535 | chr5114_c64  | Renne Bright (DLC Pit Girl/For Sale)
-65535 | chr5114_c65  | Renne Bright (DLC Grimcat/Strategy Guide Bonus)
+65535 | chr5112      | Fie Test
+65535 | chr5112_c02  | Fie (Bath Getup)
+65535 | chr5113_c00  | Rixia (Lightweight Stage Outfit)
+65535 | chr5113_c04  | Rixia (Personal Outfit)
+65535 | chr5114      | Renne Bright
+65535 | chr5114_c01  | Renne Bright
+65535 | chr5114_c02  | Renne Bright
+65535 | chr5114_c64  | Renne (DLC Pit Girl/For Sale)
+65535 | chr5114_c65  | Renne (DLC Grimcat/Strategy Guide Bonus)
 65535 | chr5116_c00  | Olympia Test
-65535 | chr5117_c01  | Shizuna Rem Misurugi (Swimsuit)
-65535 | chr5117_c02  | Shizuna Rem Misurugi (Towel)
-65535 | chr5117_c10  | Shizuna Rem Misurugi (Personal Outfit)
-65535 | chr5117_c11  | Shizuna Rem Misurugi (Personal Outfit/No Coat)
-65535 | chr5117_c61  | Shizuna Rem Misurugi (DLC Pit Girl/Store Bonus)
-65535 | chr5117_c64  | Shizuna Rem Misurugi (DLC Pit Girl/For Sale)
-65535 | chr5118_c01  | Lucrezia Isselee (the Golden Butterfly, Kimono)
-65535 | chr5118_c02  | Lucrezia Isselee (the Golden Butterfly, Swimsuit)
-65535 | chr5119_c01  | Nadia Rayne (Swimsuit)
-65535 | chr5119_c03  | Nadia Rayne (Uniform)
-65535 | chr5119_c12  | Nadia Rayne (Jersey)
-65535 | chr5119_c64  | Nadia Rayne (DLC Pit Girl/For Sale)
+65535 | chr5117_c01  | Shizuna (Swimsuit)
+65535 | chr5117_c02  | Shizuna Rem Misurugi
+65535 | chr5117_c10  | Shizuna (Personal Outfit)
+65535 | chr5117_c11  | Shizuna (Personal Outfit/No Coat)
+65535 | chr5117_c61  | Shizuna (DLC Pit Girl/Store Bonus)
+65535 | chr5117_c64  | Shizuna (DLC Pit Girl/For Sale)
+65535 | chr5118_c01  | Lucrezia the Golden Butterfly (Kimono)
+65535 | chr5118_c02  | Lucrezia the Golden Butterfly (Swimsuit)
+65535 | chr5119_c01  | Nadia (Swimsuit)
+65535 | chr5119_c03  | Nadia (Uniform)
+65535 | chr5119_c12  | Nadia (Jersey)
+65535 | chr5119_c64  | Nadia (DLC Pit Girl/For Sale)
 65535 | chr5300      | Naje Test
-65535 | chr5300_c02  | Naje Berka (Bath Outfit)
+65535 | chr5300_c02  | Naje (Bath Outfit)
 65535 | chr5301      | Aida Test
 65535 | chr5301_c00  | Aida
 65535 | chr5301_c01  | Aida
-65535 | chr5302_c00  | Celis Ortesia (Wearing Overcoat)
-65535 | chr5302_c64  | Celis Ortesia (DLC Pit Girl/For Sale)
+65535 | chr5302_c00  | Celis (Wearing Overcoat)
+65535 | chr5302_c64  | Celis (DLC Pit Girl/For Sale)
 65535 | chr5311_c00  | Yumé (Different Outfit)
 65535 | chr5311_c02  | Yumé (Bath Outfit)
 65535 | chr5311_c07  | Yumé (Samue)
-65535 | chr5315_c01  | Nina Fenly (Swimsuit)
-65535 | chr5315_c02  | Nina Fenly (Bath Outfit)
-65535 | chr5315_c03  | Nina Fenly (Disguise/Aniras Girls Academy Uniform)
-65535 | chr5315_c04  | Nina Fenly (Disguise/Street Musician)
-65535 | chr5315_c05  | Nina Fenly (Michelle Costume)
+65535 | chr5315_c01  | Nina (Swimsuit)
+65535 | chr5315_c02  | Nina (Bath Outfit)
+65535 | chr5315_c03  | Nina (Disguise/Aniras Girls Academy Uniform)
+65535 | chr5315_c04  | Nina (Disguise/Street Musician)
+65535 | chr5315_c05  | Nina (Michelle Costume)
 65535 | chr5316      | Ashen Lu Test
 65535 | chr5317      | Saara
 65535 | chr5317_c00  | Saara (Personal Outfit)
@@ -1924,7 +1923,7 @@ ID    | CHR          | Full name in the game | Portrait
 65535 | chr5318_c02  | Shaheena (Bath Getup)
 65535 | chr5320      | Kaela McMillan
 65535 | chr5321      | Professor Latoya Hamilton
-65535 | chr5322      | Kilika Rouran
+65535 | chr5322      | Kilika
 65535 | chr5400      | Shopkeeper Woman
 65535 | chr5401      | Courier (Helmet On)
 65535 | chr5402      | Women's Fitness Instructor (Ms. Sonia)
@@ -2037,8 +2036,8 @@ ID    | CHR          | Full name in the game | Portrait
 65535 | chr5660      | Young Policewoman 1
 65535 | chr5660_c01  | Young Policewoman 2
 65535 | chr5660a     | Young Policewoman 1 Alt Color 1 (Central Eastern)
-65535 | chr5660a_c01 | Republic Police Officer 1 (Young Woman; Central Eastern; Dirty Clothes Version)
 65535 | chr5660a_c01 | Young Policewoman 1 Alt Color 1 (Central Eastern, Dirty Clothing)
+65535 | chr5660a_c01 | Republic Police Officer 1 (Young Woman; Central Eastern; Dirty Clothes Version)
 65535 | chr5670      | Young Woman Suit 1
 65535 | chr5670a     | Young Woman Suit 1 Alt Color 1
 65535 | chr5670b     | Young Woman Suit 1 Alt Color 2 (Eastern)
