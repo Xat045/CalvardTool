@@ -106,6 +106,7 @@ pub struct Picker {
 	pub keep_failed: bool,
 	page: u8,
 	pub sections: bool,
+	pub proj: String,
 }
 
 pub fn plural(n: usize, one: &str, few: &str, many: &str) -> String {
@@ -287,6 +288,54 @@ fn proj_item(s: kjobs::ProjItem) -> Item {
 }
 
 impl Picker {
+	fn tree_lines(&self) -> Vec<TreeLine> {
+		let proj = std::path::Path::new(self.proj.trim());
+		let root = proj.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| tr("Проект", "Project").to_string());
+		let has = |d: &std::path::Path| !proj.as_os_str().is_empty() && d.is_dir();
+		let note = |d: &std::path::Path| if has(d) { tr("уже есть", "already there").to_string() } else { String::new() };
+		let mut out = vec![TreeLine { depth: 0, name: root, section: false, note: tr("папка проекта", "project folder").to_string() }];
+		let on: Vec<&Item> = self.items.iter().filter(|i| i.on).collect();
+		if self.sections {
+			let mut by: Vec<Vec<String>> = vec![Vec::new(); kjobs::SECTIONS.len()];
+			for it in on {
+				let d = kjobs::section_project_for(proj, &it.key);
+				let sec = d.parent().and_then(|x| x.file_name()).map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+				let name = d.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+				if let Some(i) = kjobs::SECTIONS.iter().position(|s| *s == sec)
+					&& !by[i].contains(&name) {
+						by[i].push(name);
+					}
+			}
+			for (i, names) in by.iter_mut().enumerate() {
+				if names.is_empty() {
+					continue;
+				}
+				names.sort();
+				let sd = proj.join(kjobs::SECTIONS[i]);
+				out.push(TreeLine { depth: 1, name: kjobs::SECTIONS[i].to_string(), section: true, note: note(&sd) });
+				for n in names.iter() {
+					out.push(TreeLine { depth: 2, name: n.clone(), section: false, note: note(&sd.join(n)) });
+				}
+			}
+		} else {
+			let mut names: Vec<String> = on
+				.iter()
+				.map(|it| {
+					let k = it.key.split('#').next().unwrap_or(&it.key).trim_end_matches('/');
+					let k = k.strip_suffix(".p3a").or_else(|| k.strip_suffix(".pac")).unwrap_or(k);
+					k.replace('/', "\\")
+				})
+				.collect();
+			names.sort();
+			names.dedup();
+			for n in names {
+				let d = proj.join(&n);
+				out.push(TreeLine { depth: 1, name: n, section: false, note: note(&d) });
+			}
+		}
+		out
+	}
+
 	fn fmt_kinds(&self) -> (bool, bool) {
 		(self.items.iter().any(|i| i.on && i.group == G_TEX), self.items.iter().any(|i| i.on && (i.group == G_TEXT || i.group == G_MODS)))
 	}
@@ -296,13 +345,13 @@ impl Picker {
 	}
 
 	pub fn open(mode: Mode, dir: &str, then_start: bool, mod_mode: bool, ctx: &egui::Context) -> Picker {
-		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false };
+		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false, proj: String::new() };
 		p.rescan(ctx);
 		p
 	}
 
 	pub fn with_items(mode: Mode, dir: &str, items: Vec<Item>, then_start: bool, mod_mode: bool) -> Picker {
-		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false }
+		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false, proj: String::new() }
 	}
 
 	pub fn rescan(&mut self, ctx: &egui::Context) {
@@ -502,6 +551,9 @@ impl Picker {
 					if let Some(v) = row(ui, &mut cy, tr("Папки проекта", "Project folders"), "structfmt", self.sections, sections) {
 						self.sections = v;
 					}
+					painter.text(Pos2::new(list.min.x + 12.0, cy + 8.0), Align2::LEFT_CENTER, tr("Так будет выглядеть папка проекта", "This is how the project folder will look"), f_semi(13.0), p.muted);
+					let tr = Rect::from_min_max(Pos2::new(list.min.x + 12.0, cy + 22.0), Pos2::new(list.min.x + 12.0 + 2.0 * cw + gap, list.max.y - 10.0));
+					paint_tree(ui, p, tr, &self.tree_lines());
 				} else {
 				if has_tex {
 					let dds = [tr("Как в игре — быстрее и без потерь.", "As in the game: faster and lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")];

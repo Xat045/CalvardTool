@@ -288,7 +288,7 @@ fn item_name(key: &str) -> String {
 	last.split('.').next().unwrap_or(last).to_string()
 }
 
-fn section_project_for(proj: &Path, key: &str) -> PathBuf {
+pub fn section_project_for(proj: &Path, key: &str) -> PathBuf {
 	let name = item_name(key);
 	if let Some(s) = SECTIONS.iter().find(|s| proj.join(s).join(&name).is_dir()) {
 		return proj.join(s).join(&name);

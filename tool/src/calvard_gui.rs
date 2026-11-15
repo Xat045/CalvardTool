@@ -356,6 +356,7 @@ impl App {
 		pk.keep_failed = self.keep_failed;
 		pk.tables_json = self.tables_json;
 		pk.sections = calvard_tool::calvard::jobs::uses_sections(std::path::Path::new(self.proj.trim()));
+		pk.proj = self.proj.clone();
 		self.pick = Some(pk);
 	}
 
