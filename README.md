@@ -130,6 +130,8 @@ Safety checks:
 
 Click **Load**, or drop the folders on the window. On the next start, the program reopens where you stopped.
 
+If a folder has both English and Japanese text, the column header has **JP | EN** buttons: a click reloads that column in the chosen language. English is the default on the left. The selected character, file and line stay after switching.
+
 Lines are matched by script structure, not by number, so an extra line doesn't shift the others. If the two sides come from different games, lines aren't shown and a warning appears instead. Text marked `-DO NOT TOUCH-` is a service name: editing it breaks the game.
 
 ### Search

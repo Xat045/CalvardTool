@@ -38,6 +38,12 @@ WHAT IT DOES
     '- none -' means this language has no such line. '-DO NOT TOUCH-' means there is text, but it's a service name
     (TXT_SAVE_NIGHTMARE, chr0000_c15), and editing it breaks the game; the name itself is next to it in gray.
   • In the Daybreak translation, where a function's text is written twice ("calls { … } { … }"), the Russian copy is shown.
+  • Column language. If a folder has both English and Japanese text (the game folder, or a project with
+    script and script_en / script_eng), the column header shows JP | EN buttons instead of a label: a click
+    reloads that column in the chosen language (the second time from the cache, quickly). English is the
+    default on the left; if both fields point to the same folder, Japanese is on the right. The choice is
+    remembered for each folder. A folder with one language has no buttons, the header shows that language;
+    before loading it reads 'JP, EN, RU'. The selected character, file and line stay after switching.
 
 ──────────────────────────────── SEARCH AND THE TABLE
 
