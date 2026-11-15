@@ -511,14 +511,15 @@ fn english_from_game(dir: &Path) -> Option<PathBuf> {
 	Some(out)
 }
 
-static PREFER_JP: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+static PREFER_JP_LEFT: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+static PREFER_JP_RIGHT: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
-pub fn set_prefer_jp(on: bool) {
-	PREFER_JP.store(on, std::sync::atomic::Ordering::Relaxed);
+pub fn set_prefer_jp(right: bool, on: bool) {
+	(if right { &PREFER_JP_RIGHT } else { &PREFER_JP_LEFT }).store(on, std::sync::atomic::Ordering::Relaxed);
 }
 
-fn prefer_jp() -> bool {
-	PREFER_JP.load(std::sync::atomic::Ordering::Relaxed)
+fn prefer_jp(right: bool) -> bool {
+	(if right { &PREFER_JP_RIGHT } else { &PREFER_JP_LEFT }).load(std::sync::atomic::Ordering::Relaxed)
 }
 
 fn is_jp_path(l: &str) -> bool {
@@ -567,7 +568,7 @@ fn collect(dir: &Path, russian: bool) -> HashMap<String, Vec<PathBuf>> {
 			let l = p.to_string_lossy().replace('\\', "/").to_lowercase();
 			let in_mods = l.contains("/mods/");
 			let eng = l.contains("/_english/");
-			let other = is_jp_path(&l) != prefer_jp();
+			let other = is_jp_path(&l) != prefer_jp(russian);
 			if russian { ((!in_mods) as u8, other as u8) } else if eng { (0, 0) } else if in_mods { (2, other as u8) } else { (1, other as u8) }
 		});
 	}
@@ -707,7 +708,7 @@ pub fn load(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Syn
 }
 
 pub fn load_cached(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Sync), cache: Option<&Path>) -> Data {
-	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}|{}", en_dir.display(), ru_dir.display(), if prefer_jp() { "jp" } else { "en" }).as_bytes()))));
+	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}|{}{}", en_dir.display(), ru_dir.display(), prefer_jp(false) as u8, prefer_jp(true) as u8).as_bytes()))));
 	let old: HashMap<String, cache::Entry> = cache_file.as_deref().and_then(cache::read).unwrap_or_default();
 	if let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
 		super::game::set(g);
