@@ -8,18 +8,70 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 
 use super::{dds, p3a, scena, tbl, tbl_json};
-use crate::jobs::{mask_match, Sink};
 
-pub const MANIFEST: &str = ".kai_manifest.tsv";
-pub const PATHS: &str = ".kai_paths.tsv";
-pub const STATE: &str = ".kai_state.tsv";
-pub const ARCHIVES: &str = ".kai_archives.tsv";
-pub const MODFILES: &str = ".kai_modfiles.tsv";
+pub trait Sink: Sync {
+	fn log(&self, s: &str);
+	fn progress(&self, done: usize, total: usize);
+	fn cancelled(&self) -> bool { false }
+	fn current(&self, _name: &str) {}
+}
+
+fn wildcard(pat: &[char], s: &[char]) -> bool {
+	match (pat.first(), s.first()) {
+		(None, None) => true,
+		(Some('*'), _) => wildcard(&pat[1..], s) || (!s.is_empty() && wildcard(pat, &s[1..])),
+		(Some('?'), Some(_)) => wildcard(&pat[1..], &s[1..]),
+		(Some(a), Some(b)) if a == b => wildcard(&pat[1..], &s[1..]),
+		_ => false,
+	}
+}
+
+pub fn mask_match(mask: &str, stem: &str) -> bool {
+	let pats: Vec<&str> = mask.split(|c: char| c == ',' || c == ';' || c.is_whitespace()).filter(|p| !p.is_empty()).collect();
+	if pats.is_empty() {
+		return true;
+	}
+	let s: Vec<char> = stem.to_lowercase().chars().collect();
+	pats.iter().any(|p| {
+		let p = p.to_lowercase();
+		let full: Vec<char> = p.chars().collect();
+		let base = p.split('.').next().unwrap_or(&p).to_string();
+		let bc: Vec<char> = base.chars().collect();
+		wildcard(&full, &s) || (p.contains('.') && bc.iter().any(|&c| c != '*' && c != '?') && wildcard(&bc, &s))
+	})
+}
+pub const MANIFEST: &str = ".kiseki_manifest.tsv";
+pub const PATHS: &str = ".kiseki_paths.tsv";
+pub const STATE: &str = ".kiseki_state.tsv";
+pub const ARCHIVES: &str = ".kiseki_archives.tsv";
+pub const MODFILES: &str = ".kiseki_modfiles.tsv";
 pub const ORIG_DIR: &str = "_original";
 pub const EXTRACT_DIR: &str = "_extracted";
 pub const LIST_FILE: &str = "game_file_list.txt";
 pub const ENGLISH_DIR: &str = "_english";
-const ENGLISH_STATE: &str = ".kai_english.tsv";
+const ENGLISH_STATE: &str = ".kiseki_english.tsv";
+
+pub fn migrate_service_names(dir: &Path) {
+	fn walk(d: &Path, depth: usize) {
+		for n in ["manifest.tsv", "paths.tsv", "state.tsv", "archives.tsv", "modfiles.tsv", "english.tsv", "game.txt"] {
+			let (old, new) = (d.join(format!(".kai_{n}")), d.join(format!(".kiseki_{n}")));
+			if old.is_file() && !new.exists() {
+				let _ = std::fs::rename(&old, &new);
+			}
+		}
+		if depth < 3 {
+			for e in std::fs::read_dir(d).into_iter().flatten().flatten() {
+				let n = e.file_name().to_string_lossy().to_string();
+				if e.file_type().map(|t| t.is_dir()).unwrap_or(false) && !n.starts_with('.') && n != ORIG_DIR && n != EXTRACT_DIR {
+					walk(&e.path(), depth + 1);
+				}
+			}
+		}
+	}
+	if dir.is_dir() {
+		walk(dir, 0);
+	}
+}
 
 #[derive(Clone, Debug)]
 pub struct Options {
@@ -59,7 +111,7 @@ pub fn pick_game(o: &Options) -> super::game::Game {
 
 fn project_mismatch(o: &Options, g: super::game::Game) -> Option<String> {
 	use super::game::Game;
-	let pg = match std::fs::read_to_string(o.proj_dir.join(".kai_game.txt")).ok().and_then(|s| Game::from_key(&s)) {
+	let pg = match std::fs::read_to_string(super::game::marker(&o.proj_dir)).ok().and_then(|s| Game::from_key(&s)) {
 		Some(pg) => pg,
 		None => {
 			let orig = o.proj_dir.join(ORIG_DIR);
@@ -176,7 +228,7 @@ fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
 	for p in v {
 		let n = p.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
 		if p.is_dir() {
-			if n == ORIG_DIR || n == EXTRACT_DIR || n == ENGLISH_DIR || n.starts_with("_backup") || n.starts_with('.') { continue }
+			if n == ORIG_DIR || n == EXTRACT_DIR || n == ENGLISH_DIR || n.starts_with("_backup") || n.starts_with('.') || SECTIONS.contains(&n.as_str()) { continue }
 			walk(&p, out);
 		} else {
 			out.push(p);
@@ -186,6 +238,72 @@ fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
 
 fn rel_str(p: &Path, base: &Path) -> String {
 	p.strip_prefix(base).unwrap_or(p).components().map(|c| c.as_os_str().to_string_lossy().into_owned()).collect::<Vec<_>>().join("/")
+}
+
+pub const SECTIONS: [&str; 8] = ["Text for translation", "Mods", "Textures", "Voices", "Music and sounds", "Models", "Video", "Other"];
+
+pub fn section_of(folder: &str) -> &'static str {
+	let b = folder.to_lowercase();
+	let sound = |s: &str| s == "se" || s.starts_with("se_") || s.starts_with("vfx") || s.starts_with("bgm") || s.starts_with("sound") || s.starts_with("music");
+	if b == "mods" {
+		SECTIONS[1]
+	} else if b == "multilanguage" || b.starts_with("script") || b.starts_with("table") {
+		SECTIONS[0]
+	} else if b.contains("image") {
+		SECTIONS[2]
+	} else if b.starts_with("voice") {
+		SECTIONS[3]
+	} else if sound(&b) {
+		SECTIONS[4]
+	} else if b.contains("model") || b.contains("cubemap") {
+		SECTIONS[5]
+	} else if b.starts_with("movie") {
+		SECTIONS[6]
+	} else {
+		SECTIONS[7]
+	}
+}
+
+pub fn uses_sections(proj: &Path) -> bool {
+	SECTIONS.iter().any(|s| proj.join(s).is_dir())
+}
+
+pub fn section_projects(proj: &Path) -> Vec<(String, PathBuf)> {
+	let mut v = Vec::new();
+	for s in SECTIONS {
+		for e in std::fs::read_dir(proj.join(s)).into_iter().flatten().flatten() {
+			let n = e.file_name().to_string_lossy().to_string();
+			if e.path().is_dir() && !n.starts_with('.') && !n.starts_with('_') {
+				v.push((format!("{s}/{n}"), e.path()));
+			}
+		}
+	}
+	v.sort();
+	v
+}
+
+fn item_name(key: &str) -> String {
+	let k = key.split('#').next().unwrap_or(key).trim_end_matches('/');
+	let last = k.rsplit('/').next().unwrap_or(k);
+	last.split('.').next().unwrap_or(last).to_string()
+}
+
+fn section_project_for(proj: &Path, key: &str) -> PathBuf {
+	let name = item_name(key);
+	if let Some(s) = SECTIONS.iter().find(|s| proj.join(s).join(&name).is_dir()) {
+		return proj.join(s).join(&name);
+	}
+	let sec = if key.starts_with("mods/") { SECTIONS[1] } else { section_of(&name) };
+	proj.join(sec).join(name)
+}
+
+fn add_summary(a: &mut Summary, b: Summary) {
+	a.ok += b.ok;
+	a.skipped += b.skipped;
+	a.failed += b.failed;
+	a.warnings += b.warnings;
+	a.same += b.same;
+	a.check.extend(b.check);
 }
 
 #[derive(Clone)]
@@ -514,6 +632,34 @@ pub fn log_check(sink: &dyn Sink, found: &[String]) {
 }
 
 pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
+	if !o.sources.is_empty() || !uses_sections(&o.proj_dir) {
+		return decompile_one(o, sink);
+	}
+	let keys: Vec<String> = match &o.include {
+		Some(v) => v.clone(),
+		None => scan_game(&o.game_dir).into_iter().filter(|s| o.use_mods || !s.in_mods).map(|s| s.key).collect(),
+	};
+	let mut by: BTreeMap<PathBuf, Vec<String>> = BTreeMap::new();
+	for k in keys {
+		by.entry(section_project_for(&o.proj_dir, &k)).or_default().push(k);
+	}
+	sink.log(&lformat!("В папке проекта есть папки разделов — каждый архив разбирается в свою папку раздела ({}).", "The project folder has section folders: each archive is decompiled into its own section folder ({}).", by.len()));
+	let mut total = Summary::default();
+	for (dir, inc) in by {
+		if sink.cancelled() {
+			break;
+		}
+		sink.log(&format!("— {}", rel_str(&dir, &o.proj_dir).replace('/', "\\")));
+		let mut o2 = o.clone();
+		o2.proj_dir = dir;
+		o2.include = Some(inc);
+		add_summary(&mut total, decompile_one(&o2, sink));
+	}
+	total
+}
+
+fn decompile_one(o: &Options, sink: &dyn Sink) -> Summary {
+	migrate_service_names(&o.proj_dir);
 	if !(o.scena || o.tables || o.textures || o.other) {
 		sink.log(tr("Не выбран ни один тип файлов.", "No file type selected."));
 		return Summary::default();
@@ -603,6 +749,7 @@ pub fn decompile(o: &Options, sink: &dyn Sink) -> Summary {
 	let manifest = Mutex::new(Manifest::load(&o.proj_dir));
 	let paths = Mutex::new(load_paths(&o.proj_dir));
 	let state = Mutex::new(load_state(&o.proj_dir));
+
 	if let Some(free) = free_space(&o.proj_dir) {
 		let need: u64 = tasks.iter().map(|t| if t.1 == Kind::Texture { t.2.size() * 3 } else { t.2.size() }).sum();
 		if need > free {
@@ -806,6 +953,52 @@ fn english_originals(o: &Options, shadow: &BTreeMap<String, Src>, sink: &dyn Sin
 }
 
 pub fn compile(o: &Options, sink: &dyn Sink) -> Summary {
+	if !uses_sections(&o.proj_dir) {
+		return compile_one(o, sink);
+	}
+	let mut subs: Vec<(String, PathBuf)> = section_projects(&o.proj_dir).into_iter().filter(|(_, d)| d.join(ARCHIVES).is_file() || d.join(MANIFEST).is_file()).collect();
+	if o.proj_dir.join(ARCHIVES).is_file() || o.proj_dir.join(MANIFEST).is_file() {
+		subs.insert(0, (String::new(), o.proj_dir.clone()));
+	}
+	if subs.is_empty() {
+		sink.log(tr("В папках разделов нет разобранных архивов — сначала сделайте декомпиляцию в эту папку.", "The section folders have no decompiled archives: decompile into this folder first."));
+		return Summary::default();
+	}
+	let several = subs.len() > 1;
+	let mut total = Summary::default();
+	for (rel, dir) in subs {
+		let pre = if rel.is_empty() { String::new() } else { format!("{}/", rel.to_lowercase()) };
+		let only = match &o.build_only {
+			None => None,
+			Some(v) => {
+				let w: Vec<String> = v.iter().filter(|k| !pre.is_empty() || !SECTIONS.iter().any(|s| k.starts_with(&format!("{}/", s.to_lowercase())))).filter_map(|k| k.strip_prefix(&pre).map(str::to_string)).collect();
+				if w.is_empty() {
+					continue;
+				}
+				Some(w)
+			}
+		};
+		sink.log(&format!("— {}", if rel.is_empty() { tr("папка проекта", "project folder").to_string() } else { rel.replace('/', "\\") }));
+		let mut o2 = o.clone();
+		o2.proj_dir = dir;
+		o2.build_only = only;
+		if !o.rebuild && several {
+			if !rel.is_empty() {
+				o2.mod_name = format!("{} {}", o.mod_name, item_name(&rel));
+			}
+		}
+		let s = compile_one(&o2, sink);
+		let stop = !s.check.is_empty();
+		add_summary(&mut total, s);
+		if stop || sink.cancelled() {
+			break;
+		}
+	}
+	total
+}
+
+fn compile_one(o: &Options, sink: &dyn Sink) -> Summary {
+	migrate_service_names(&o.proj_dir);
 	if !o.proj_dir.is_dir() {
 		sink.log(&lformat!("Папка проекта не найдена: {}", "Project folder not found: {}", o.proj_dir.display()));
 		return Summary::default();
@@ -1192,6 +1385,7 @@ fn walk_all(dir: &Path, out: &mut Vec<PathBuf>) {
 }
 
 pub fn extract(o: &Options, sink: &dyn Sink) -> Summary {
+	migrate_service_names(&o.proj_dir);
 	if !o.game_dir.is_dir() {
 		sink.log(&lformat!("Папка игры не найдена: {}", "Game folder not found: {}", o.game_dir.display()));
 		return Summary::default();
@@ -1480,6 +1674,22 @@ pub struct ProjItem {
 }
 
 pub fn scan_project(proj: &Path) -> Vec<ProjItem> {
+	if !uses_sections(proj) {
+		return scan_project_one(proj);
+	}
+	let mut out = if proj.join(ARCHIVES).is_file() || proj.join(MANIFEST).is_file() { scan_project_one(proj).into_iter().filter(|it| !SECTIONS.iter().any(|s| it.key.starts_with(&format!("{}/", s.to_lowercase())))).collect() } else { Vec::new() };
+	for (rel, dir) in section_projects(proj) {
+		let sub = item_name(&rel);
+		for mut it in scan_project_one(&dir) {
+			it.key = format!("{}/{}", rel.to_lowercase(), it.key);
+			it.name = format!("{sub}\\{}", it.name);
+			out.push(it);
+		}
+	}
+	out
+}
+
+fn scan_project_one(proj: &Path) -> Vec<ProjItem> {
 	let arch = load_kv(&proj.join(ARCHIVES));
 	let labels: Vec<String> = arch.keys().cloned().collect();
 	let mod_size: u64 = {
@@ -1549,6 +1759,29 @@ pub fn scan_project(proj: &Path) -> Vec<ProjItem> {
 mod tests {
 	use super::*;
 
+	#[test]
+	fn section_projects_layout() {
+		let d = std::env::temp_dir().join(format!("sections_{}", std::process::id()));
+		let _ = std::fs::remove_dir_all(&d);
+		std::fs::create_dir_all(&d).unwrap();
+		assert!(!uses_sections(&d));
+		std::fs::create_dir_all(d.join("Text for translation")).unwrap();
+		std::fs::create_dir_all(d.join("Other").join("image_en")).unwrap();
+		assert!(uses_sections(&d));
+		assert_eq!(section_project_for(&d, "pac/steam/script_en.pac"), d.join("Text for translation").join("script_en"));
+		assert_eq!(section_project_for(&d, "pac/steam/image_en.pac"), d.join("Other").join("image_en"));
+		assert_eq!(section_project_for(&d, "voice.p3a"), d.join("Voices").join("voice"));
+		assert_eq!(section_project_for(&d, "misc.p3a#bgm"), d.join("Other").join("misc"));
+		assert_eq!(section_project_for(&d, "mods/ru_mod.p3a"), d.join("Mods").join("ru_mod"));
+		let names: Vec<String> = section_projects(&d).into_iter().map(|x| x.0).collect();
+		assert_eq!(names, ["Other/image_en"]);
+		std::fs::write(d.join("Other").join("image_en").join("x.png"), b"x").unwrap();
+		std::fs::write(d.join("root.txt"), b"x").unwrap();
+		let mut v = Vec::new();
+		walk(&d, &mut v);
+		assert_eq!(v, [d.join("root.txt")]);
+		let _ = std::fs::remove_dir_all(&d);
+	}
 	#[test]
 	fn misc_parts() {
 		let inc = |v: &[&str]| v.iter().map(|s| s.to_string()).collect::<Vec<_>>();

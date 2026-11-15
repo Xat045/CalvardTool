@@ -5,13 +5,13 @@ use calvard_tool::{leprintln, lformat, lprintln};
 use calvard_tool::lang::tr;
 
 mod gui_common;
-mod compare_gui;
-mod kai_buttons;
+mod calvard_compare_gui;
+mod calvard_buttons;
 
 fn main() {
 	let args: Vec<String> = std::env::args().skip(1).collect();
 	if args.is_empty() && (cfg!(windows) || std::env::var("KISEKI_GUI").is_ok()) {
-		compare_gui::run_main();
+		calvard_compare_gui::run_main();
 		return;
 	}
 	#[cfg(windows)]
@@ -24,10 +24,7 @@ fn main() {
 		lprintln!("CalvardCompare <английская папка> <русская папка> <поиск>", "CalvardCompare <English folder> <Russian folder> <search>");
 		return;
 	}
-	use calvard_tool::kai::compare;
-	if let Some(g) = std::env::var("ED7").ok().filter(|g| !g.is_empty()) {
-		compare::set_ed7(Some(if g == "azure" { calvard_tool::scena::Title::Azure } else { calvard_tool::scena::Title::Zero }));
-	}
+	use calvard_tool::calvard::compare;
 	compare::EXACT.store(std::env::var("WHOLE").is_ok(), std::sync::atomic::Ordering::Relaxed);
 	let t = std::time::Instant::now();
 	let cache = std::env::var("KC_CACHE").ok().map(std::path::PathBuf::from);
@@ -50,11 +47,11 @@ fn main() {
 		return;
 	}
 	if std::env::var("CHECKS").is_ok() {
-		let r = calvard_tool::kai::checks::run(&d);
+		let r = calvard_tool::calvard::checks::run(&d);
 		let mut by: std::collections::BTreeMap<(usize, String), usize> = Default::default();
 		for f in &r.findings { *by.entry((f.cat, f.what.clone())).or_default() += 1; }
 		lprintln!("проверено {}, находок {}", "checked {}, findings {}", r.checked, r.findings.len());
-		for (c, (t, _, _)) in calvard_tool::kai::checks::cats().iter().enumerate() {
+		for (c, (t, _, _)) in calvard_tool::calvard::checks::cats().iter().enumerate() {
 			lprintln!("  раздел {c} «{t}»: {}", "  section {c} '{t}': {}", r.findings.iter().filter(|f| f.cat == c).count());
 		}
 		let mut v: Vec<_> = by.into_iter().collect();
@@ -77,7 +74,7 @@ fn main() {
 	}
 	let (hits, total) = compare::search(&d, &args[2], 0, std::env::var("WHOLE").is_ok(), 20);
 	lprintln!("найдено {total}", "found {total}");
-	let dict_all = std::env::var("DICT").ok().map(|p| compare_gui::read_dict(p.as_ref()).unwrap_or_else(|e| { eprintln!("{e}"); std::process::exit(1) })).unwrap_or_default();
+	let dict_all = std::env::var("DICT").ok().map(|p| calvard_compare_gui::read_dict(p.as_ref()).unwrap_or_else(|e| { eprintln!("{e}"); std::process::exit(1) })).unwrap_or_default();
 	let (all, _) = compare::search(&d, &args[2], 0, std::env::var("WHOLE").is_ok(), usize::MAX);
 	for w in compare::ru_words_for_query(&dict_all, &args[2]) {
 		let (t, l) = compare::count_ru(&d, &all, &w);

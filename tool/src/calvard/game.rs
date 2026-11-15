@@ -70,7 +70,7 @@ pub fn detect(dir: &Path) -> Option<Game> {
 }
 
 fn detect_here(p: &Path) -> Option<Game> {
-	if let Ok(s) = std::fs::read_to_string(p.join(".kai_game.txt"))
+	if let Ok(s) = std::fs::read_to_string(marker(p))
 		&& let Some(g) = Game::from_key(&s) {
 			return Some(g);
 		}
@@ -133,8 +133,14 @@ fn find_dir(p: &Path, name: &str, depth: usize) -> bool {
 	false
 }
 
+pub fn marker(dir: &Path) -> std::path::PathBuf {
+	let new = dir.join(".kiseki_game.txt");
+	if new.is_file() { new } else { dir.join(".kai_game.txt") }
+}
+
 pub fn remember(proj: &Path, g: Game) {
-	let _ = std::fs::write(proj.join(".kai_game.txt"), g.key());
+	let _ = std::fs::write(proj.join(".kiseki_game.txt"), g.key());
+	let _ = std::fs::remove_file(proj.join(".kai_game.txt"));
 }
 
 #[cfg(test)]

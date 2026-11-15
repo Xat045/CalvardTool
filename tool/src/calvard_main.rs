@@ -4,15 +4,15 @@ use calvard_tool::{leprintln, lformat, lprintln};
 #[allow(unused_imports)]
 use calvard_tool::lang::tr;
 
-use calvard_tool::kai::jobs::{self, Options};
+use calvard_tool::calvard::jobs::{self, Options};
 use std::path::PathBuf;
 
 mod gui_common;
-mod kai_gui;
-mod kai_pick;
+mod calvard_gui;
+mod calvard_pick;
 
 struct Console;
-impl calvard_tool::jobs::Sink for Console {
+impl calvard_tool::calvard::jobs::Sink for Console {
 	fn log(&self, s: &str) { println!("{s}") }
 	fn progress(&self, _d: usize, _t: usize) {}
 }
@@ -20,7 +20,7 @@ impl calvard_tool::jobs::Sink for Console {
 fn main() {
 	let args: Vec<String> = std::env::args().skip(1).collect();
 	if args.is_empty() && (cfg!(windows) || std::env::var("KISEKI_GUI").is_ok()) {
-		kai_gui::run();
+		calvard_gui::run();
 		return;
 	}
 	#[cfg(windows)]
@@ -57,14 +57,14 @@ fn main() {
 			let r = (|| -> Result<(), String> {
 				let png = std::fs::read(&args[1]).map_err(|e| e.to_string())?;
 				let orig = std::fs::read(&args[2]).map_err(|e| e.to_string())?;
-				let (d, _) = calvard_tool::kai::dds::compile(&png, &orig)?;
+				let (d, _) = calvard_tool::calvard::dds::compile(&png, &orig)?;
 				std::fs::write(&args[3], d).map_err(|e| e.to_string())
 			})();
 			if let Err(e) = r { eprintln!("{e}"); std::process::exit(1) }
 			return;
 		}
 		Some("roundtrip") if args.len() >= 2 => {
-			if let Some(g) = args.get(2).and_then(|s| calvard_tool::kai::game::Game::from_key(s)) { calvard_tool::kai::game::set(g) }
+			if let Some(g) = args.get(2).and_then(|s| calvard_tool::calvard::game::Game::from_key(s)) { calvard_tool::calvard::game::set(g) }
 			fn walk(d: &std::path::Path, out: &mut Vec<PathBuf>) {
 				if let Ok(rd) = std::fs::read_dir(d) { for e in rd.flatten() { let p = e.path(); if p.is_dir() { walk(&p, out) } else { out.push(p) } } }
 			}
@@ -79,8 +79,8 @@ fn main() {
 				};
 				let ext = f.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
 				let r: Result<Option<Vec<u8>>, String> = match ext.as_str() {
-					"dat" => calvard_tool::kai::scena::decompile(&d).and_then(|(j, _)| calvard_tool::kai::scena::compile(&j).map(Some)),
-					"tbl" => calvard_tool::kai::tbl::decompile(&d, &f.file_name().unwrap().to_string_lossy()).and_then(|(b, n, _)| if n == 0 { Ok(None) } else { calvard_tool::kai::tbl::compile(&b, &d).map(Some) }),
+					"dat" => calvard_tool::calvard::scena::decompile(&d).and_then(|(j, _)| calvard_tool::calvard::scena::compile(&j).map(Some)),
+					"tbl" => calvard_tool::calvard::tbl::decompile(&d, &f.file_name().unwrap().to_string_lossy()).and_then(|(b, n, _)| if n == 0 { Ok(None) } else { calvard_tool::calvard::tbl::compile(&b, &d).map(Some) }),
 					_ => continue,
 				};
 				match r {
@@ -94,8 +94,8 @@ fn main() {
 			return;
 		}
 		Some("file") if args.len() >= 2 => {
-			if let Some(g) = args.get(2).and_then(|s| calvard_tool::kai::game::Game::from_key(s)) {
-				calvard_tool::kai::game::set(g)
+			if let Some(g) = args.get(2).and_then(|s| calvard_tool::calvard::game::Game::from_key(s)) {
+				calvard_tool::calvard::game::set(g)
 			}
 			let f = PathBuf::from(&args[1]);
 			let name = f.file_name().map(|n| n.to_string_lossy().to_lowercase()).unwrap_or_default();
@@ -103,17 +103,17 @@ fn main() {
 			let r = (|| -> Result<(PathBuf, Vec<u8>), String> {
 				let d = std::fs::read(&f).map_err(|e| e.to_string())?;
 				if name.ends_with(".dat") {
-					Ok((f.with_extension("json"), calvard_tool::kai::scena::decompile(&d)?.0.into_bytes()))
+					Ok((f.with_extension("json"), calvard_tool::calvard::scena::decompile(&d)?.0.into_bytes()))
 				} else if name.ends_with(".tbl") {
-					Ok((f.with_extension("xlsx"), calvard_tool::kai::tbl::decompile(&d, &name)?.0))
+					Ok((f.with_extension("xlsx"), calvard_tool::calvard::tbl::decompile(&d, &name)?.0))
 				} else if name.ends_with(".dds") {
-					Ok((f.with_extension("png"), calvard_tool::kai::dds::decompile(&d)?.png))
+					Ok((f.with_extension("png"), calvard_tool::calvard::dds::decompile(&d)?.png))
 				} else if name.ends_with(".json") {
-					Ok((f.with_extension("dat"), calvard_tool::kai::scena::compile(&String::from_utf8_lossy(&d))?))
+					Ok((f.with_extension("dat"), calvard_tool::calvard::scena::compile(&String::from_utf8_lossy(&d))?))
 				} else if name.ends_with(".xlsx") {
-					Ok((f.with_extension("tbl"), calvard_tool::kai::tbl::compile_checked(&d, &orig("tbl")?)?.0))
+					Ok((f.with_extension("tbl"), calvard_tool::calvard::tbl::compile_checked(&d, &orig("tbl")?)?.0))
 				} else if name.ends_with(".png") {
-					Ok((f.with_extension("dds"), calvard_tool::kai::dds::compile(&d, &orig("dds")?)?.0))
+					Ok((f.with_extension("dds"), calvard_tool::calvard::dds::compile(&d, &orig("dds")?)?.0))
 				} else {
 					Err(tr("неизвестный тип файла: нужен .dat, .tbl, .dds, .json, .xlsx или .png", "unknown file type: expected .dat, .tbl, .dds, .json, .xlsx or .png").into())
 				}
@@ -149,7 +149,7 @@ fn main() {
 				}
 			}
 			files.sort_by(|a, b| a.0.cmp(&b.0));
-			if let Err(e) = std::fs::write(&args[2], calvard_tool::kai::p3a::write(&files)) {
+			if let Err(e) = std::fs::write(&args[2], calvard_tool::calvard::p3a::write(&files)) {
 				eprintln!("{}: {e}", args[2]);
 				std::process::exit(1);
 			}
@@ -183,7 +183,7 @@ fn main() {
 			"--dds" => o.tex_dds = true,
 			"--tables-json" => o.tables_json = true,
 			"--no-check" => o.check = false,
-			"--title" => { let v = val(); o.game = calvard_tool::kai::game::Game::from_key(&v); if o.game.is_none() { leprintln!("неизвестная игра {v}: daybreak, daybreak2, horizon", "unknown game {v}: daybreak, daybreak2, horizon"); std::process::exit(2) } }
+			"--title" => { let v = val(); o.game = calvard_tool::calvard::game::Game::from_key(&v); if o.game.is_none() { leprintln!("неизвестная игра {v}: daybreak, daybreak2, horizon", "unknown game {v}: daybreak, daybreak2, horizon"); std::process::exit(2) } }
 			x => { leprintln!("неизвестный параметр {x}", "unknown parameter {x}"); std::process::exit(2) }
 		}
 		i += 1;

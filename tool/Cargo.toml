@@ -9,11 +9,11 @@ path = "src/lib.rs"
 
 [[bin]]
 name = "CalvardTool"
-path = "src/kai_main.rs"
+path = "src/calvard_main.rs"
 
 [[bin]]
 name = "CalvardCompare"
-path = "src/compare_main.rs"
+path = "src/calvard_compare_main.rs"
 
 [dependencies]
 calmare.path = "../libs/calmare"

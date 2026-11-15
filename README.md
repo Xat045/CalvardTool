@@ -86,6 +86,7 @@ Which model and character ID belong to which character is listed for each game: 
 The **What to decompile** window lists the archives by section: text for translation, mods, textures, voices, music and sounds, models, video and other. For each one it shows what's inside, the language and the size. At the bottom you see how much is selected, how much the unpacked files will take and roughly how long it will take.
 
 - **Quick choices:** **Text only**, **Text+textures**, **All**, **Clear all**.
+- **Folder structure:** the last step chooses the project layout. **As in the game** makes a folder per archive, as before. **By section** creates the section folders and decompiles each archive into its own folder inside its section; the build finds them by itself.
 - **File mask:** decompile only specific files, for example `c0100, t_item, c01*`.
 - **Your edits are safe:** files you have already edited are not overwritten when you decompile again.
 - **Disk space:** above 1 GB the program asks first, and it warns you if the disk is short of space.

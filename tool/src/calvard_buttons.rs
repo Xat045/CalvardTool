@@ -4,33 +4,21 @@ use calvard_tool::{leprintln, lformat, lprintln};
 use calvard_tool::lang::tr;
 use eframe::egui::{self, ColorImage, TextureHandle, TextureOptions};
 use std::collections::{BTreeMap, HashMap};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 pub const SENT0: u32 = 0xF0000;
 pub const ATLAS_MAX: u32 = 441;
 
-pub const ITEM_BASE: u32 = 0x4000;
-pub const RECORD_BASE: u32 = 0x6000;
-const ED7_BTN_MIN: u32 = 160;
-
-fn ed7() -> Option<calvard_tool::scena::Title> {
-	calvard_tool::kai::compare::ed7()
-}
-
 pub fn is_atlas(n: u32) -> bool {
-	if ed7().is_some() { !(ED7_BTN_MIN..ITEM_BASE).contains(&n) } else { n < ATLAS_MAX }
+	n < ATLAS_MAX
 }
 
 pub fn code_label(n: u32) -> String {
-	if ed7().is_some() {
-		if n >= RECORD_BASE { lformat!("достижение {}", "achievement {}", n - RECORD_BASE + 1) } else if n >= ITEM_BASE { lformat!("предмет {}", "item {}", n - ITEM_BASE) } else { format!("#{n}I") }
-	} else {
-		format!("<I{n}>")
-	}
+	format!("<I{n}>")
 }
 
 pub fn devices() -> [&'static str; 6] {
-	if ed7().is_some() { ["PlayStation", "Xbox", "Nintendo Switch", "Steam Deck", "PlayStation 5", tr("Клавиатура", "Keyboard")] } else { devices_list() }
+	devices_list()
 }
 
 pub fn devices_list() -> [&'static str; 6] {
@@ -65,9 +53,6 @@ pub fn pad_table() -> Vec<(&'static str, &'static str, u32, u32)> {
 }
 
 pub fn keys() -> Vec<(String, u32, u32)> {
-	if ed7().is_some() {
-		return keys_ed7();
-	}
 	let mut v = Vec::new();
 	let mut row = |r: u32, c0: u32, names: &[&str]| {
 		for (i, n) in names.iter().enumerate() {
@@ -90,85 +75,6 @@ pub fn keys() -> Vec<(String, u32, u32)> {
 	v
 }
 
-fn keys_ed7() -> Vec<(String, u32, u32)> {
-	let mut v = Vec::new();
-	let mut row = |r: u32, names: &[&str]| {
-		for (i, n) in names.iter().enumerate() {
-			if !n.is_empty() {
-				v.push((n.to_string(), r, i as u32));
-			}
-		}
-	};
-	row(0, &["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "^", "¥", "Q", "W", "E"]);
-	row(1, &["R", "T", "Y", "U", "I", "O", "P", "@", "[", "A", "S", "D", "F", "G", "H", "J"]);
-	row(2, &["K", "L", ";", ":", "]", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "\\"]);
-	row(3, &["Del", "Fn", "Esc", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Tab"]);
-	row(4, &["Ctrl", "Ctrl R", "Alt", "Alt R", "Shift", "Shift R", "Backspace", "PrtScr", "Caps Lock", "Space", "Enter", "", "↑", "←", "↓", "→"]);
-	row(5, &["Ins", "Home", "End", "Page Up", "Page Down", "Num Lock", "Num 1", "Num 2", "Num 3", "Num 4", "Num 5", "Num 6", "Num 7", "Num 8", "Num 9", "Num 0"]);
-	row(6, &["Num /", "Num *", "Num -", "Num +", "Num .", "Num Enter", tr("Мышь Л", "Mouse L"), tr("Мышь П", "Mouse R"), tr("Колесо", "Wheel"), "WASD", tr("Стрелки", "Arrows"), "Num 2468", tr("Мышь", "Mouse"), tr("Колесо ↕", "Wheel ↕"), tr("Мышь колесо", "Mouse wheel")]);
-	row(7, &["`", "", "", "", "", "", tr("Мышь 4", "Mouse 4"), tr("Мышь 5", "Mouse 5"), "", "", tr("Мышь ↕↔", "Mouse ↕↔")]);
-	v
-}
-
-fn pad_cell_ed7(key: &str) -> Option<(u32, u32)> {
-	Some(match key {
-		"south" => (0, 0),
-		"east" => (1, 0),
-		"west" => (2, 0),
-		"north" => (3, 0),
-		"left" => (0, 1),
-		"up" => (1, 1),
-		"right" => (2, 1),
-		"down" => (3, 1),
-		"L1" => (0, 2),
-		"R1" => (1, 2),
-		"view" => (2, 2),
-		"menu" => (3, 2),
-		"LS" => (0, 3),
-		"RS" => (1, 3),
-		"dpad" => (3, 3),
-		"L2" => (0, 4),
-		"R2" => (1, 4),
-		"dpadUD" => (2, 4),
-		"dpadLR" => (3, 4),
-		"L3" => (0, 5),
-		"R3" => (1, 5),
-		_ => return None,
-	})
-}
-const SET_ROW_ED7: [u32; 5] = [0, 4, 8, 12, 0];
-
-fn default_pad_ed7(n: u32) -> Option<&'static str> {
-	let azure = ed7() == Some(calvard_tool::scena::Title::Azure);
-	Some(match n {
-		165 => "north",
-		167 if azure => "L1",
-		167 => "up",
-		174 => "left",
-		175 => "right",
-		176 if !azure => "menu",
-		192 if azure => "menu",
-		194 if azure => "west",
-		195 if azure => "south",
-		_ => return None,
-	})
-}
-fn default_kb_ed7(n: u32) -> Option<&'static str> {
-	let azure = ed7() == Some(calvard_tool::scena::Title::Azure);
-	Some(match n {
-		165 => "R",
-		167 if azure => "Q",
-		167 => "W",
-		174 => "A",
-		175 => "D",
-		176 if !azure => "Tab",
-		192 if azure => "Tab",
-		194 if azure => "I",
-		195 if azure => tr("Мышь Л", "Mouse L"),
-		_ => return None,
-	})
-}
-
 fn atlas_width(n: u32) -> u32 {
 	match n {
 		214 | 216 | 218 | 220 | 222 | 235 | 237 | 256 | 258 => 2,
@@ -177,9 +83,6 @@ fn atlas_width(n: u32) -> u32 {
 }
 
 pub fn default_pad(n: u32) -> Option<&'static str> {
-	if ed7().is_some() {
-		return default_pad_ed7(n);
-	}
 	Some(match n {
 		900 | 1062 | 1126 => "south",
 		901 | 1127 => "east",
@@ -226,21 +129,6 @@ pub fn default_pad(n: u32) -> Option<&'static str> {
 }
 
 pub fn action_name(n: u32) -> Option<&'static str> {
-	if ed7().is_some() {
-		let azure = ed7() == Some(calvard_tool::scena::Title::Azure);
-		return Some(match n {
-			165 => tr("меню быстрого доступа", "quick access menu"),
-			167 if azure => tr("быстрый доступ: особый слот (металлоискатель)", "quick access: special slot (metal detector)"),
-			167 => tr("быстрый доступ ↑", "quick access ↑"),
-			174 => tr("быстрый доступ ← (блокнот детектива)", "quick access ← (detective notebook)"),
-			175 => tr("быстрый доступ → (боевой блокнот)", "quick access → (battle notebook)"),
-			176 if !azure => tr("карта города / штата", "city / state map"),
-			192 if azure => tr("карта города / штата", "city / state map"),
-			194 if azure => tr("подробности (удерживать)", "details (hold)"),
-			195 if azure => tr("подтвердить", "confirm"),
-			_ => return None,
-		});
-	}
 	Some(match n {
 		900 => tr("подтвердить / говорить / осмотреть", "confirm / talk / examine"),
 		901 => tr("отмена", "cancel"),
@@ -309,10 +197,7 @@ pub struct Buttons {
 	pub kb: BTreeMap<u32, String>,
 	icons: Option<image::RgbaImage>,
 	prompts: Option<image::RgbaImage>,
-	keys_img: Option<image::RgbaImage>,
-	ps5_img: Option<image::RgbaImage>,
-	record_img: Option<image::RgbaImage>,
-	crafts: HashMap<String, u32>,
+
 	pub kai_items: HashMap<u32, u32>,
 	pub kai_skills: HashMap<u32, u32>,
 	pub kai_skill_rank: HashMap<u32, Vec<u32>>,
@@ -320,7 +205,6 @@ pub struct Buttons {
 	pub kai_ranges: HashMap<u32, u32>,
 	pub kai_help: HashMap<String, u32>,
 	kai_items_from: Option<PathBuf>,
-	items: HashMap<u32, u32>,
 	loaded_from: String,
 	cache: HashMap<String, Option<(TextureHandle, f32)>>,
 	aspects: std::cell::RefCell<HashMap<String, f32>>,
@@ -329,13 +213,7 @@ pub struct Buttons {
 }
 
 pub fn map_file() -> &'static str {
-	if calvard_tool::kai::compare::ed7().is_some() { "KisekiCompare_buttons.txt" } else { "KaiCompare_buttons.txt" }
-}
-
-pub const ED7_GAMES: [(&str, &str); 2] = [("Zero", "Zero"), ("Azure", "Azure")];
-
-pub fn ed7_icons_dir() -> &'static str {
-	if ed7() == Some(calvard_tool::scena::Title::Azure) { "Azure" } else { "Zero" }
+	"CalvardCompare_buttons.txt"
 }
 
 pub use calvard_tool::pack;
@@ -349,13 +227,17 @@ pub fn icons_root() -> PathBuf {
 
 impl Buttons {
 	pub fn new(on: bool, device: usize, game_dir: String) -> Buttons {
-		let mut b = Buttons { on, device: device.min(devices_list().len() - 1), game_dir, pad: BTreeMap::new(), kb: BTreeMap::new(), icons: None, prompts: None, keys_img: None, ps5_img: None, record_img: None, crafts: HashMap::new(), kai_items: HashMap::new(), kai_skills: HashMap::new(), kai_skill_rank: HashMap::new(), kai_item_tail: HashMap::new(), kai_ranges: HashMap::new(), kai_help: HashMap::new(), kai_items_from: None, items: HashMap::new(), loaded_from: String::new(), cache: HashMap::new(), aspects: Default::default(), nonempty: Default::default(), status: String::new() };
+		let mut b = Buttons { on, device: device.min(devices_list().len() - 1), game_dir, pad: BTreeMap::new(), kb: BTreeMap::new(), icons: None, prompts: None, kai_items: HashMap::new(), kai_skills: HashMap::new(), kai_skill_rank: HashMap::new(), kai_item_tail: HashMap::new(), kai_ranges: HashMap::new(), kai_help: HashMap::new(), kai_items_from: None, loaded_from: String::new(), cache: HashMap::new(), aspects: Default::default(), nonempty: Default::default(), status: String::new() };
 		b.read_map();
 		b
 	}
 
 	fn read_map(&mut self) {
-		let Ok(s) = std::fs::read_to_string(crate::gui_common::exe_dir().join(map_file())) else { return };
+		let (old, new) = (crate::gui_common::exe_dir().join("KaiCompare_buttons.txt"), crate::gui_common::exe_dir().join(map_file()));
+		if old.is_file() && !new.is_file() && std::fs::rename(&old, &new).is_err() {
+			let _ = std::fs::copy(&old, &new);
+		}
+		let Ok(s) = std::fs::read_to_string(new) else { return };
 		for l in s.lines() {
 			let l = l.trim();
 			if l.starts_with('#') || l.is_empty() {
@@ -383,7 +265,7 @@ impl Buttons {
 	}
 
 	pub fn ensure_loaded(&mut self) {
-		if ed7().is_none() && !KAI_GAMES.iter().any(|g| g.1 == self.game_dir.trim()) {
+		if !KAI_GAMES.iter().any(|g| g.1 == self.game_dir.trim()) {
 			let l = self.game_dir.to_lowercase();
 			self.game_dir = if ["daybreak-2", "daybreak 2", "daybreak ii", "daybreak2", "db2"].iter().any(|k| l.contains(k)) {
 				"Daybreak-2"
@@ -394,17 +276,7 @@ impl Buttons {
 			}
 			.into();
 		}
-		if ed7().is_some() && !ED7_GAMES.iter().any(|g| g.1 == self.game_dir.trim()) {
-			let l = self.game_dir.to_lowercase();
-			self.game_dir = if l.contains("azure") {
-				"Azure"
-			} else if l.contains("zero") {
-				"Zero"
-			} else {
-				ed7_icons_dir()
-			}
-			.into();
-		}
+
 		let dir = self.game_dir.trim().to_string();
 		if dir == self.loaded_from {
 			return;
@@ -419,13 +291,7 @@ impl Buttons {
 		let in_pack = pack::has_game(&dir);
 		let missing = !in_pack && !d.is_dir();
 		let no_icons = lformat!("Нет файла «{}» рядом с программой — распакуйте архив Сверки целиком.", "The file '{}' is not next to the program: unpack the whole CalvardCompare archive.", pack::FILE);
-		if ed7().is_some() {
-			self.load_ed7(&d, dir == "Azure", in_pack.then_some(dir.as_str()));
-			if missing {
-				self.status = no_icons;
-			}
-			return;
-		}
+
 		let file = |name: &str| -> Option<image::RgbaImage> {
 			let b = if in_pack { pack::get(name)?.to_vec() } else { std::fs::read(icons_root().join(name)).ok()? };
 			image::load_from_memory(&b).ok().map(|i| i.to_rgba8())
@@ -439,64 +305,6 @@ impl Buttons {
 			lformat!("icons.png (предметы, статусы, «!») — {} · ph3_button_prompts.png (кнопки устройств) — {}", "icons.png (items, statuses, '!') {} · ph3_button_prompts.png (device buttons) {}", yes(self.icons.is_some()), yes(self.prompts.is_some()))
 		};
 	}
-	fn load_ed7(&mut self, d: &Path, azure: bool, pack: Option<&str>) {
-		let rd = |name: &str| -> Option<Vec<u8>> {
-			match pack {
-				Some(g) => pack::get(&format!("{g}/{name}")).or_else(|| pack::get(name)).map(|b| b.to_vec()),
-				None => std::fs::read(d.join(name)).or_else(|_| std::fs::read(d.parent().unwrap_or(d).join(name))).ok(),
-			}
-		};
-		let load = |name: &str| rd(name).and_then(|b| image::load_from_memory(&b).ok()).map(|i| i.to_rgba8());
-		self.icons = load("c_icon1.png");
-		self.prompts = load("buttons.png");
-		self.keys_img = load("keys.png");
-		self.record_img = load("record.png");
-		self.ps5_img = load("buttons_ps5.png");
-		self.crafts.clear();
-		if let Some(b) = rd("t_magic._dt") {
-			self.crafts = parse_t_magic(&b);
-		}
-		self.items.clear();
-		for f in ["t_item._dt", "t_item2._dt"] {
-			if let Some(b) = rd(f) {
-				for (k, v) in parse_t_item(&b) {
-					self.items.entry(k).or_insert(v);
-				}
-			}
-		}
-		if let Some(b) = rd("t_quartz._dt") {
-			{
-				let (q, mq) = parse_t_quartz(&b, azure);
-				let empty = |c: u32| self.icons.as_ref().map(|img| Self::trimmed(img, (c % 16) * 64, (c / 16) * 64, 64, 64).is_none()).unwrap_or(true);
-				for (&id, &el) in &mq {
-					self.items.insert(id, 73 + el.min(6));
-				}
-				let ids: Vec<u32> = self.items.keys().copied().collect();
-				for id in ids {
-					let cell = self.items[&id];
-					if !empty(cell) {
-						continue;
-					}
-					if let Some(&el) = mq.get(&id) {
-						self.items.insert(id, 73 + el.min(6));
-					} else if let Some(&el) = id.checked_sub(100).and_then(|q_id| q.get(&q_id)) {
-						self.items.insert(id, 89 + el.min(6));
-					}
-				}
-			}
-		}
-		let yes = |b: bool| if b { tr("найдена", "found") } else { tr("не найдена", "not found") };
-		self.status = lformat!("c_icon1 (сепит, предметы) — {} · buttons/keys (кнопки, клавиши) — {} · t_item (значки предметов #…M) — {}", "c_icon1 (sepith, items) {} · buttons/keys (buttons, keys) {} · t_item (#…M item icons) {}",
-			yes(self.icons.is_some()),
-			yes(self.prompts.is_some() && self.keys_img.is_some()),
-			if self.items.is_empty() { tr("не найдена", "not found").to_string() } else { lformat!("{} предметов", "{} items", self.items.len()) }
-		);
-	}
-
-	pub fn craft_cell(&self, en: &str) -> Option<u32> {
-		self.crafts.get(&craft_key(en)).copied()
-	}
-
 	pub fn load_kai_items(&mut self, places: &[PathBuf]) {
 		let gd = PathBuf::from(self.game_dir.trim());
 		let mut all: Vec<PathBuf> = places.to_vec();
@@ -540,15 +348,8 @@ impl Buttons {
 	}
 
 	pub fn drawable(&self, n: u32) -> bool {
-		if ed7().is_some() && is_atlas(n) {
-			let Some((key, rects, src)) = self.locate(n) else { return false };
-			if let Some(&v) = self.nonempty.borrow().get(&key) {
-				return v;
-			}
-			let v = self.src_img(src).and_then(|img| Self::compose(img, &rects)).is_some();
-			self.nonempty.borrow_mut().insert(key, v);
-			v
-		} else if is_atlas(n) {
+		if is_atlas(n) {
+
 			self.icons.is_some()
 		} else if self.device == 5 {
 			self.prompts.is_some() && self.kb_of(n).is_some()
@@ -566,7 +367,7 @@ impl Buttons {
 	}
 
 	pub fn kb_of(&self, n: u32) -> Option<String> {
-		self.kb.get(&n).cloned().or_else(|| if ed7().is_some() { default_kb_ed7(n).map(str::to_string) } else { None })
+		self.kb.get(&n).cloned()
 	}
 
 	pub fn ready(&self) -> bool {
@@ -574,13 +375,7 @@ impl Buttons {
 	}
 
 	fn src_img(&self, src: u8) -> Option<&image::RgbaImage> {
-		match src {
-			0 => self.icons.as_ref(),
-			2 if ed7().is_some() => self.keys_img.as_ref(),
-			3 => self.ps5_img.as_ref(),
-			4 => self.record_img.as_ref(),
-			_ => self.prompts.as_ref(),
-		}
+		if src == 0 { self.icons.as_ref() } else { self.prompts.as_ref() }
 	}
 
 	pub fn changed(&mut self) {
@@ -589,16 +384,8 @@ impl Buttons {
 	}
 
 	fn locate(&self, n: u32) -> Option<(String, Vec<(u32, u32, u32, u32)>, u8)> {
-		if ed7().is_some() {
-			if n >= RECORD_BASE {
-				let c = n - RECORD_BASE;
-				return Some((format!("r:{c}"), vec![((c % 8) * 128, (c / 8) * 128, 128, 128)], 4));
-			}
-			if is_atlas(n) {
-				let c = if n >= ITEM_BASE { *self.items.get(&(n - ITEM_BASE))? } else { n };
-				return Some((format!("i:{c}"), vec![((c % 16) * 64, (c / 16) * 64, 64, 64)], 0));
-			}
-		} else if n < ATLAS_MAX {
+		if n < ATLAS_MAX {
+
 			return Some((format!("i:{n}"), vec![((n % 21) * 48, (n / 21) * 48, 48 * atlas_width(n), 48)], 0));
 		}
 		let key = if self.device == 5 { format!("k:{}", self.kb_of(n)?) } else { format!("p:{}:{}", self.device, self.pad_of(n)?) };
@@ -607,13 +394,8 @@ impl Buttons {
 	}
 
 	fn key_src(key: &str) -> u8 {
-		if key.starts_with("k:") {
-			2
-		} else if ed7().is_some() && key.starts_with("p:4:") {
-			3
-		} else {
-			1
-		}
+		if key.starts_with("k:") { 2 } else { 1 }
+
 	}
 
 	fn cells_of(key: &str) -> Option<Vec<(u32, u32, u32, u32)>> {
@@ -628,8 +410,7 @@ impl Buttons {
 		let mut v = Vec::new();
 		for p in split_combo(body) {
 			let (r, c) = Self::cell_pos(&format!("{pre}{p}"))?;
-			let sz = if ed7().is_some() { 64 } else { 128 };
-			v.push((c * sz, r * sz, sz, sz));
+			v.push((c * 128, r * 128, 128, 128));
 		}
 		Some(v)
 	}
@@ -641,10 +422,7 @@ impl Buttons {
 			let mut it = key.splitn(3, ':').skip(1);
 			let dev: usize = it.next()?.parse().ok()?;
 			let b = it.next()?;
-			if ed7().is_some() {
-				let row0 = if dev == 4 { 0 } else { SET_ROW_ED7[dev.min(4)] };
-				return pad_cell_ed7(b).map(|(r, c)| (row0 + r, c));
-			}
+
 			pad_table().iter().find(|x| x.0 == b).map(|x| (SET_ROW[dev.min(4)] + x.2, x.3))
 		}
 	}
@@ -773,9 +551,6 @@ pub fn split_combo(s: &str) -> Vec<String> {
 }
 
 pub fn mark_codes(s: &str) -> String {
-	if ed7().is_some() {
-		return mark_codes_ed7(s);
-	}
 	let mut out = String::with_capacity(s.len());
 	let mut rest = s;
 	while let Some(p) = rest.find("<I") {
@@ -795,96 +570,8 @@ pub fn mark_codes(s: &str) -> String {
 	out
 }
 
-fn mark_codes_ed7(s: &str) -> String {
-	let c: Vec<char> = s.chars().collect();
-	let mut out = String::with_capacity(s.len());
-	let mut i = 0;
-	while i < c.len() {
-		if c[i] == '{' && c[i..].iter().take(6).collect::<String>() == "{item[" {
-			let mut j = i + 6;
-			while j < c.len() && c[j].is_ascii_digit() {
-				j += 1;
-			}
-			if j > i + 6 && c.get(j) == Some(&']') && c.get(j + 1) == Some(&'}') {
-				let n: u32 = c[i + 6..j].iter().collect::<String>().parse().unwrap_or(u32::MAX);
-				if let Some(ch) = (n < ITEM_BASE).then(|| char::from_u32(SENT0 + ITEM_BASE + n)).flatten() {
-					out.push(ch);
-					i = j + 2;
-					continue;
-				}
-			}
-		}
-		if c[i] == '#' {
-			let mut j = i + 1;
-			while j < c.len() && c[j].is_ascii_digit() && j - i <= 5 {
-				j += 1;
-			}
-			if j > i + 1 && j < c.len() && (c[j] == 'I' || c[j] == 'M') {
-				let n: u32 = c[i + 1..j].iter().collect::<String>().parse().unwrap_or(0);
-				let code = if c[j] == 'M' { ITEM_BASE + n } else { n };
-				if n < ITEM_BASE
-					&& let Some(ch) = char::from_u32(SENT0 + code) {
-						out.push(ch);
-						i = j + 1;
-						continue;
-					}
-			}
-		}
-		out.push(c[i]);
-		i += 1;
-	}
-	out
-}
-
-pub fn parse_t_item(b: &[u8]) -> HashMap<u32, u32> {
-	let u16at = |o: usize| b.get(o..o + 2).map(|x| u16::from_le_bytes([x[0], x[1]]) as usize);
-	let mut m = HashMap::new();
-	let Some(first) = u16at(0) else { return m };
-	let groups = first / 2;
-	let starts: Vec<usize> = (0..groups).filter_map(|g| u16at(g * 2)).collect();
-	let Some(table_end) = starts.iter().filter_map(|&a| u16at(a)).filter(|&r| r >= first).min() else { return m };
-	let mut recs = Vec::new();
-	for g in 0..starts.len() {
-		let e = starts.get(g + 1).copied().unwrap_or(table_end).min(table_end);
-		let mut o = starts[g];
-		while o + 2 <= e {
-			if let Some(r) = u16at(o) {
-				recs.push(r);
-			}
-			o += 2;
-		}
-	}
-	for r in recs {
-		if r < table_end || r + 6 > b.len() {
-			continue;
-		}
-		let id = u16::from_le_bytes([b[r], b[r + 1]]) as u32;
-		m.entry(id).or_insert(b[r + 5] as u32);
-	}
-	m
-}
-
 pub fn has_codes(s: &str) -> bool {
-	if ed7().is_some() { (s.contains('#') && (s.contains('I') || s.contains('M'))) || s.contains("{item[") } else { s.contains("<I") }
-}
-
-pub fn record_cells(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32> {
-	let mut rows: Vec<(u32, usize)> = d
-		.pairs
-		.iter()
-		.enumerate()
-		.filter(|(_, p)| p.file.rsplit('/').next().map(|f| f.starts_with("t_record")).unwrap_or(false))
-		.filter_map(|(i, p)| p.id.strip_prefix('s').and_then(|x| x.parse::<u32>().ok()).map(|n| (n, i)))
-		.collect();
-	rows.sort();
-	let text = |i: usize| d.pairs[i].en.as_ref().or(d.pairs[i].ru.as_ref()).map(|s| s.text.trim().to_string()).unwrap_or_default();
-	let mut m = HashMap::new();
-	let Some(sep) = rows.iter().position(|&(_, i)| { let t = text(i); t.is_empty() || t == "None" }) else { return m };
-	for (k, &(_, i)) in rows.iter().enumerate() {
-		let cell = if k < sep { k } else if k > sep && k - sep - 1 < sep { k - sep - 1 } else { continue };
-		m.insert(i, cell as u32);
-	}
-	m
+	s.contains("<I")
 }
 
 pub fn parse_kai_t_item(d: &[u8]) -> HashMap<u32, u32> {
@@ -1111,66 +798,6 @@ pub fn parse_kai_item_tail(d: &[u8]) -> HashMap<u32, Vec<u32>> {
 	m
 }
 
-fn craft_key(s: &str) -> String {
-	s.replace("\\n", "").chars().filter(|c| !c.is_whitespace()).collect()
-}
-
-pub fn parse_t_magic(b: &[u8]) -> HashMap<String, u32> {
-	let u16at = |o: usize| b.get(o..o + 2).map(|x| u16::from_le_bytes([x[0], x[1]]) as usize);
-	let mut m = HashMap::new();
-	let Some(first) = u16at(0) else { return m };
-	let offs: Vec<usize> = (0..first / 2).filter_map(|i| u16at(i * 2)).collect();
-	let Some(sz) = offs.get(1).zip(offs.first()).map(|(a, b)| a.saturating_sub(*b)).filter(|&s| (24..=64).contains(&s)) else { return m };
-	let text = |o: usize| -> Option<String> {
-		let e = b.get(o..)?.iter().position(|&c| c == 0)?;
-		std::str::from_utf8(&b[o..o + e]).ok().map(|s| s.to_string())
-	};
-	for &o in &offs {
-		if o + sz > b.len() {
-			continue;
-		}
-		let cell = match u16at(o).unwrap_or(0) {
-			7 => 44,
-			8 => 42,
-			4 if b[o + 8] == 100 || b[o + 9] == 100 => 47,
-			4 => 46,
-			_ => continue,
-		};
-		for f in [sz - 4, sz - 2] {
-			if let Some(t) = u16at(o + f).and_then(text) {
-				let k = craft_key(&t);
-				if k.chars().count() > 1 {
-					m.entry(k).or_insert(cell);
-				}
-			}
-		}
-	}
-	m
-}
-
-pub fn parse_t_quartz(b: &[u8], azure: bool) -> (HashMap<u32, u32>, HashMap<u32, u32>) {
-	let u16at = |o: usize| b.get(o..o + 2).map(|x| u16::from_le_bytes([x[0], x[1]]) as u32);
-	let (mut q, mut mq) = (HashMap::new(), HashMap::new());
-	let (start, end) = if azure { (2, u16at(0).unwrap_or(0) as usize) } else { (0, b.len()) };
-	let mut o = start;
-	while o + 28 <= end.min(b.len()) {
-		if let (Some(id), Some(el)) = (u16at(o), u16at(o + 2)) {
-			q.insert(id, el.saturating_sub(1));
-		}
-		o += 28;
-	}
-	if azure {
-		let mut o = end;
-		while o + 44 <= b.len() {
-			if let (Some(id), Some(el)) = (u16at(o), u16at(o + 2)) {
-				mq.insert(id, el.saturating_sub(1));
-			}
-			o += 44;
-		}
-	}
-	(q, mq)
-}
-
 pub fn ui_icon(file: &str, id: &str) -> Option<u32> {
 	let f = file.rsplit('/').next().unwrap_or(file);
 	if f.starts_with("t_text.") {
@@ -1227,7 +854,7 @@ const COND_D1: [u32; 54] = [322, 316, 315, 317, 318, 320, 325, 319, 321, 326, 30
 const COND_D2: [u32; 59] = [322, 316, 315, 317, 318, 320, 325, 319, 321, 326, 309, 0, 332, 333, 334, 0, 359, 314, 365, 335, 312, 313, 324, 310, 388, 386, 387, 311, 356, 357, 327, 328, 329, 348, 349, 350, 351, 336, 338, 340, 342, 344, 346, 352, 353, 354, 355, 337, 339, 341, 343, 345, 347, 330, 331, 361, 362, 363, 364];
 const COND_HELP_HZ: [u32; 21] = [322, 316, 315, 317, 318, 320, 325, 319, 321, 326, 0, 0, 333, 334, 314, 314, 335, 312, 313, 324, 311];
 
-pub fn cond_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32> {
+pub fn cond_icons(d: &calvard_tool::calvard::compare::Data) -> HashMap<usize, u32> {
 	let idx = |id: &str, pre: &str| -> Option<(usize, String)> {
 		let (k, f) = id.strip_prefix(pre)?.split_once('.')?;
 		Some((k.parse().ok()?, f.to_string()))
@@ -1264,7 +891,7 @@ pub fn cond_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32> {
 	m
 }
 
-pub fn sibling_icons(d: &calvard_tool::kai::compare::Data) -> HashMap<usize, u32> {
+pub fn sibling_icons(d: &calvard_tool::calvard::compare::Data) -> HashMap<usize, u32> {
 	let mut icon_of: HashMap<(String, String), u32> = HashMap::new();
 	for p in &d.pairs {
 		let Some(t) = p.en.as_ref().map(|s| s.text.trim().to_string()) else { continue };
@@ -1299,7 +926,7 @@ pub fn scan(texts: impl Iterator<Item = String>) -> BTreeMap<u32, (usize, String
 		if !marked.chars().any(|c| code_of(c).is_some()) {
 			continue;
 		}
-		let clean = calvard_tool::kai::compare::clean(&marked, true);
+		let clean = calvard_tool::calvard::compare::clean(&marked, true);
 		let chars: Vec<char> = clean.chars().collect();
 		for (i, &c) in chars.iter().enumerate() {
 			if let Some(n) = code_of(c) {

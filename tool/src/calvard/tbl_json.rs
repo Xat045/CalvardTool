@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 use serde_json::{json, Map, Value};
 
-static SCHEMAS: &str = include_str!("kuro_schemas.json");
+static SCHEMAS: &str = include_str!("calvard_schemas.json");
 const AUTO: &str = "auto";
 
 struct Sec {

@@ -1,4 +1,4 @@
-CalvardTool 0.2: decompiles and builds the files of the Calvard games (PC versions)
+CalvardTool 0.3: decompiles and builds the files of the Calvard games (PC versions)
   The Legend of Heroes: Trails through Daybreak     (Kuro no Kiseki)
   The Legend of Heroes: Trails through Daybreak II  (Kuro no Kiseki II)
   The Legend of Heroes: Trails beyond the Horizon   (Kai no Kiseki)
@@ -15,7 +15,8 @@ WHAT IT DOES
 
   1. The 'Decompile' tab. 'Game folder or files': 'Browse…' → the game folder or a translation mod's folder. You can also drop the game
      folder or .p3a files on the window.
-  2. The 'What to decompile' window opens: tick what you need and click 'Done'.
+  2. The 'What to decompile' window opens: tick what you need, 'Next' for the file format, 'Next' for the folder
+     structure, 'Done'.
   3. 'Project folder (for editing)' is where the files go; on the 'Build' tab, 'Output folder' is a separate folder for the result.
   4. 'Decompile all' → edit the files in the project folder.
   5. The 'Build' tab, 'Build' → tick the folders in the 'What to build' window → 'Build'.
@@ -52,12 +53,19 @@ WHAT IT DOES
   the mod goes only into the mod's folder. English originals of dialogues and tables replaced by the mod go
   into the project's _english folder, for CalvardCompare (they are not edited and don't go into the build).
 
-  The project structure follows the game: each archive becomes a folder with the same name.
+  The project structure is chosen in the last step of the window, 'Folder structure':
+  • 'As in the game': each archive becomes a folder with the same name:
     Project\script_eng\script_eng\scena\a0000.json      ← from script_eng.p3a
     Project\script_eng\table_eng\t_name.xlsx
     Project\mods\RU_MOD\script_eng\scena\a0000.json     ← from mods\RU_MOD.p3a
     Project\multilanguage\message_en.yaml
-  Don't touch the internal files (.kai_*.tsv, the _original and _english folders).
+  • 'By section': the program creates the section folders (the same as in 'What to decompile') in the project folder,
+    and each archive is decompiled into its own folder inside its section, with its own internal files:
+    Project\Text for translation\script_eng\scena\a0000.json
+    Project\Textures\image\...
+  If the project already has section folders, decompiling puts the files into them by itself and the build finds them.
+  Folders that are already decompiled stay where they are.
+  Don't touch the internal files (.kiseki_*.tsv, the _original and _english folders).
 
   The table format is chosen in the "What to decompile" window, the "Tables" block:
   - .xlsx: Excel, only the text to translate;

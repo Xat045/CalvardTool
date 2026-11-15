@@ -15,10 +15,22 @@ pub fn blurred_texture(ctx: &egui::Context, name: &str, png: &[u8]) -> Option<eg
 	Some(ctx.load_texture(name, egui::ColorImage::from_rgba_unmultiplied([blur.width() as usize, blur.height() as usize], blur.as_raw()), egui::TextureOptions::LINEAR))
 }
 
-pub fn picker_backdrop(ui: &Ui, rect: Rect, tex: &egui::TextureHandle, t: f32, bg: Color32) {
-	if t <= 0.0 {
-		return;
+pub fn picker_backdrops(ui: &Ui, rect: Rect, layers: &[(&egui::TextureHandle, f32)], bg: Color32) {
+	let mut top = 0.0f32;
+	let mut order: Vec<&(&egui::TextureHandle, f32)> = layers.iter().filter(|l| l.1 > 0.0).collect();
+	order.sort_by(|a, b| a.1.total_cmp(&b.1));
+	for (tex, t) in order {
+		picker_image(ui, rect, tex, *t);
+		top = top.max(*t);
 	}
+	if top > 0.0 {
+		let light = bg.r() as u32 + bg.g() as u32 + bg.b() as u32 > 3 * 128;
+		let veil = if light { 40.0 } else { 160.0 };
+		ui.painter().rect_filled(rect, 0, Color32::from_rgba_unmultiplied(bg.r(), bg.g(), bg.b(), (top * veil) as u8));
+	}
+}
+
+fn picker_image(ui: &Ui, rect: Rect, tex: &egui::TextureHandle, t: f32) {
 	let ts = tex.size_vec2();
 	let (want, have) = (rect.width() / rect.height().max(1.0), ts.x / ts.y.max(1.0));
 	let uv = if have < want {
@@ -30,7 +42,6 @@ pub fn picker_backdrop(ui: &Ui, rect: Rect, tex: &egui::TextureHandle, t: f32, b
 	};
 	let a = (t * 255.0) as u8;
 	ui.painter().image(tex.id(), rect, uv, Color32::from_rgba_unmultiplied(255, 255, 255, a));
-	ui.painter().rect_filled(rect, 0, Color32::from_rgba_unmultiplied(bg.r(), bg.g(), bg.b(), (t * 160.0) as u8));
 }
 
 pub use calvard_tool::lang::{UI_EN, tr, ui_en};

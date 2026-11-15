@@ -9,7 +9,7 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
 use crate::gui_common::*;
-use calvard_tool::kai::jobs::{self as kjobs, Counts};
+use calvard_tool::calvard::jobs::{self as kjobs, Counts};
 
 pub fn groups() -> [(&'static str, &'static str); 8] {
 	[
@@ -99,13 +99,13 @@ pub struct Picker {
 	pub items: Vec<Item>,
 	pub then_start: bool,
 	pub mod_mode: bool,
-	pub ed7: bool,
 	pending: Option<Arc<Mutex<Option<Vec<Item>>>>>,
 	pub tex_dds: bool,
 	pub tables_json: bool,
 	pub other_files: bool,
 	pub keep_failed: bool,
 	page: u8,
+	pub sections: bool,
 }
 
 pub fn plural(n: usize, one: &str, few: &str, many: &str) -> String {
@@ -286,62 +286,9 @@ fn proj_item(s: kjobs::ProjItem) -> Item {
 	Item { key: s.key, name: s.name, lang, desc, right, right_ok: ok, group, on: true, size: 0, unpacked: 0, changed: s.changed, out_key: s.archive, out_size: s.archive_size, mod_size: s.mod_size }
 }
 
-fn ed7_items(v: Vec<calvard_tool::jobs::Ed7Folder>, mode: Mode) -> Vec<Item> {
-	let keys: std::collections::HashSet<String> = v.iter().map(|f| f.key.clone()).collect();
-	let decomp = mode == Mode::Decompile;
-	let mut out: Vec<Item> = v
-		.into_iter()
-		.filter(|f| f.scenes + f.tables + f.textures + f.sprites + f.others > 0)
-		.map(|f| {
-			let text = f.scenes + f.tables > 0;
-			let group = if text { G_TEXT } else { G_TEX };
-			let us = f.key.ends_with("_us");
-			let lang = if us || (f.scenes == 0 && f.tables > 0 && f.tables_us == f.tables) {
-				tr("Английские файлы", "English files")
-			} else if f.tables_us > 0 {
-				tr("Японские и английские файлы", "Japanese and English files")
-			} else if text {
-				tr("Японские файлы", "Japanese files")
-			} else if keys.contains(&format!("{}_us", f.key)) {
-				tr("Японские и общие файлы", "Japanese and common files")
-			} else {
-				tr("Общие файлы", "Common files")
-			};
-			let mut parts = Vec::new();
-			if f.scenes > 0 {
-				parts.push(format!("{} {}", plural(f.scenes, tr("сцена", "scene"), tr("сцены", "scenes"), tr("сцен", "scenes")), if decomp { ".bin → .json" } else { ".json → .bin" }));
-			}
-			if f.tables > 0 {
-				let game = if f.dt2 == 0 { "._dt" } else if f.dt2 == f.tables { ".dt2" } else { "._dt / .dt2" };
-				parts.push(format!("{} {}", plural(f.tables, tr("таблица", "table"), tr("таблицы", "tables"), tr("таблиц", "tables")), if decomp { format!("{game} → .xlsx") } else { format!(".xlsx → {game}") }));
-			}
-			if f.textures > 0 {
-				parts.push(format!("{} {}", plural(f.textures, tr("картинка", "image"), tr("картинки", "images"), tr("картинок", "images")), if decomp { tr(".itp → .png или .dds", ".itp → .png or .dds") } else { ".png / .dds → .itp" }));
-			}
-			if f.sprites > 0 {
-				parts.push(format!("{} {}", plural(f.sprites, tr("спрайт", "sprite"), tr("спрайта", "sprites"), tr("спрайтов", "sprites")), if decomp { tr(".itc → кадры .png", ".itc → .png frames") } else { tr("кадры .png → .itc", ".png frames → .itc") }));
-			}
-			if f.others > 0 {
-				parts.push(lformat!("{} как есть", "{} as is", plural(f.others, tr("другой файл", "other file"), tr("других файла", "other files"), tr("других файлов", "other files"))));
-			}
-			let desc = if decomp { lformat!("Найдено: {}", "Found: {}", parts.join(", ")) } else { parts.join(", ") };
-			let (right, ok) = if decomp {
-				(fmt_size(f.size), false)
-			} else if f.changed > 0 {
-				(lformat!("изменено {}", "{} changed", f.changed), true)
-			} else {
-				(tr("без изменений", "no changes").to_string(), false)
-			};
-			Item { key: f.key.clone(), name: format!("{}\\", f.name), lang: lang.to_string(), desc, right, right_ok: ok, group, on: true, size: f.size, unpacked: f.unpacked, changed: f.changed, out_key: f.key.clone(), out_size: f.out_size, mod_size: 0 }
-		})
-		.collect();
-	out.sort_by_key(|i| (i.group, i.key.trim_end_matches("_us").to_string(), !i.key.ends_with("_us")));
-	out
-}
-
 impl Picker {
 	fn fmt_kinds(&self) -> (bool, bool) {
-		(self.items.iter().any(|i| i.on && i.group == G_TEX), !self.ed7 && self.items.iter().any(|i| i.on && (i.group == G_TEXT || i.group == G_MODS)))
+		(self.items.iter().any(|i| i.on && i.group == G_TEX), self.items.iter().any(|i| i.on && (i.group == G_TEXT || i.group == G_MODS)))
 	}
 
 	fn fmt_title(&self) -> &'static str {
@@ -349,23 +296,13 @@ impl Picker {
 	}
 
 	pub fn open(mode: Mode, dir: &str, then_start: bool, mod_mode: bool, ctx: &egui::Context) -> Picker {
-		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 };
+		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false };
 		p.rescan(ctx);
 		p
 	}
 
 	pub fn with_items(mode: Mode, dir: &str, items: Vec<Item>, then_start: bool, mod_mode: bool) -> Picker {
-		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, ed7: false, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 }
-	}
-
-	pub fn open_ed7(mode: Mode, dir: &str, then_start: bool, ctx: &egui::Context) -> Picker {
-		let mut p = Picker { mode, dir: dir.to_string(), items: Vec::new(), then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 };
-		p.rescan(ctx);
-		p
-	}
-
-	pub fn with_items_ed7(mode: Mode, dir: &str, items: Vec<Item>, then_start: bool) -> Picker {
-		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode: false, ed7: true, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0 }
+		Picker { mode, dir: dir.to_string(), items, then_start, mod_mode, pending: None, tex_dds: false, tables_json: false, other_files: false, keep_failed: true, page: 0, sections: false }
 	}
 
 	pub fn rescan(&mut self, ctx: &egui::Context) {
@@ -374,18 +311,8 @@ impl Picker {
 		self.items.clear();
 		let dir = PathBuf::from(&self.dir);
 		let mode = self.mode;
-		let ed7 = self.ed7;
 		let ctx = ctx.clone();
 		std::thread::spawn(move || {
-			if ed7 {
-				let v = match mode {
-					Mode::Decompile => calvard_tool::jobs::scan_game_ed7(&dir),
-					Mode::Build => calvard_tool::jobs::scan_project_ed7(&dir),
-				};
-				*slot.lock().unwrap() = Some(ed7_items(v, mode));
-				ctx.request_repaint();
-				return;
-			}
 			let items: Vec<Item> = match mode {
 				Mode::Decompile => kjobs::scan_game(&dir).into_iter().map(game_item).collect(),
 				Mode::Build => kjobs::scan_project(&dir).into_iter().map(proj_item).collect(),
@@ -416,9 +343,7 @@ impl Picker {
 
 	pub fn out_estimate(&self) -> u64 {
 		let on = self.items.iter().filter(|i| i.on);
-		if self.ed7 {
-			on.map(|i| i.out_size).sum()
-		} else if self.mod_mode {
+		if self.mod_mode {
 			self.items.first().map(|i| i.mod_size).unwrap_or(0)
 		} else {
 			let mut seen = std::collections::HashSet::new();
@@ -476,8 +401,9 @@ impl Picker {
 			let x1 = rect.max.x - 24.0;
 			let mut y = rect.min.y + 20.0;
 
-			let fmt_page = decomp && self.page == 1;
-			painter.text(Pos2::new(x0, y + 11.0), Align2::LEFT_CENTER, if fmt_page { self.fmt_title() } else if decomp { tr("Что разбирать", "What to decompile") } else { tr("Что собрать", "What to build") }, f_semi(19.0), p.text);
+		let fmt_page = decomp && self.page >= 1;
+		let struct_page = decomp && self.page == 2;
+			painter.text(Pos2::new(x0, y + 11.0), Align2::LEFT_CENTER, if struct_page { tr("Структура папок", "Folder structure") } else if fmt_page { self.fmt_title() } else if decomp { tr("Что разбирать", "What to decompile") } else { tr("Что собрать", "What to build") }, f_semi(19.0), p.text);
 			{
 				let t = if self.scanning() || fmt_page { "" } else { tr("Сканировать заново", "Rescan") };
 				let g = painter.layout_no_wrap(t.to_string(), f_body(13.0), p.accent);
@@ -492,17 +418,15 @@ impl Picker {
 			}
 			y += 30.0;
 			let n_all = self.items.len();
-			let headline = if fmt_page {
+			let headline = if struct_page {
+				tr("Как разложить разобранные файлы в папке проекта?", "How should the decompiled files be laid out in the project folder?").to_string()
+			} else if fmt_page {
 				tr("В каком виде разобрать файлы для правки и что делать с остальными?", "In what form to unpack the files for editing, and what to do with the rest?").to_string()
 			} else if self.scanning() {
 				if decomp { tr("Сканирую папку…", "Scanning the folder…").to_string() } else { tr("Смотрю папку проекта…", "Reading the project folder…").to_string() }
 			} else if decomp {
 				if n_all == 0 {
-					if self.ed7 {
-						tr("Подходящих папок не найдено — укажите папку игры или русификатора (в её data лежат scena_us, text_us…)", "No suitable folders found: choose the game folder or a translation mod's folder (its data folder holds scena_us, text_us…)").to_string()
-					} else {
-						tr("Подходящих архивов не найдено — укажите корневую папку игры (где лежат .p3a и папка mods)", "No suitable archives found: choose the game's root folder (the one with the .p3a files and the mods folder)").to_string()
-					}
+					tr("Подходящих архивов не найдено — укажите корневую папку игры (где лежат .p3a и папка mods)", "No suitable archives found: choose the game's root folder (the one with the .p3a files and the mods folder)").to_string()
 				} else {
 					let total: u64 = self.items.iter().map(|i| i.size).sum();
 					lformat!("Найдено {} ({}). По умолчанию отмечено всё — снимите лишнее.", "Found {} ({}). Everything is ticked by default: untick what you don't need.", plural(n_all, tr("пункт", "item"), tr("пункта", "items"), tr("пунктов", "items")), fmt_size(total))
@@ -555,7 +479,6 @@ impl Picker {
 			let mut lu = ui.new_child(egui::UiBuilder::new().max_rect(list));
 			lu.set_clip_rect(list);
 			if fmt_page {
-				let ed7 = self.ed7;
 				let (has_tex, has_tab) = self.fmt_kinds();
 				let gap = 10.0;
 				let cw = (list.width() - 30.0 - gap) / 2.0;
@@ -574,8 +497,14 @@ impl Picker {
 					*cy += card_h + 10.0;
 					pick
 				};
+				if struct_page {
+					let sections = [(false, tr("Как в игре", "As in the game"), [tr("Папки игры прямо в папке проекта,", "The game's folders right in the project folder,"), tr("как раньше.", "as before.")]), (true, tr("По разделам", "By section"), [tr("Папки разделов программа создаст сама:", "The program creates the section folders itself:"), tr("«Текст для перевода», «Текстуры», «Озвучка»…", "Text for translation, Textures, Voices…")])];
+					if let Some(v) = row(ui, &mut cy, tr("Папки проекта", "Project folders"), "structfmt", self.sections, sections) {
+						self.sections = v;
+					}
+				} else {
 				if has_tex {
-					let dds = if ed7 { [tr("Те же блоки BC7, что в .itp, без потерь.", "The same BC7 blocks as in .itp, lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")] } else { [tr("Как в игре — быстрее и без потерь.", "As in the game: faster and lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")] };
+					let dds = [tr("Как в игре — быстрее и без потерь.", "As in the game: faster and lossless."), tr("Нужен редактор с поддержкой DDS.", "Needs an editor that supports DDS.")];
 					if let Some(v) = row(ui, &mut cy, tr("Текстуры", "Textures"), "texfmt", self.tex_dds, [(false, tr(".png — обычные картинки", ".png: ordinary images"), [tr("Любой редактор: Photoshop, GIMP, Krita.", "Any editor: Photoshop, GIMP, Krita."), tr("При сборке сожмутся обратно.", "They are compressed back when building.")]), (true, tr(".dds — как в игре", ".dds: as in the game"), dds)]) {
 						self.tex_dds = v;
 					}
@@ -589,6 +518,7 @@ impl Picker {
 				}
 				if let Some(v) = row(ui, &mut cy, tr("Если файл не получится разобрать", "If a file cannot be unpacked"), "failfmt", self.keep_failed, [(true, tr("Положить как есть", "Copy it as it is"), [tr("Файл игры без изменений,", "The game file unchanged,"), tr("в журнале — предупреждение.", "with a warning in the log.")]), (false, tr("Пропустить", "Skip it"), [tr("Файла в папке не будет,", "The file is not in the folder,"), tr("только запись в журнале.", "only a line in the log.")])]) {
 					self.keep_failed = v;
+				}
 				}
 			} else {
 			egui::ScrollArea::vertical().id_salt("pick_list").auto_shrink([false, false]).show(&mut lu, |ui| {
@@ -614,10 +544,6 @@ impl Picker {
 					ui.painter().galley(Pos2::new(hr.min.x + 40.0, hr.center().y - tg.size().y / 2.0), tg, p.muted);
 					let note = if g == G_OTHER && !decomp {
 						tr("попадут в сборку, только если изменены", "only go into the build if changed")
-					} else if self.ed7 && g == G_TEXT {
-						tr("диалоги и таблицы", "dialogues and tables")
-					} else if self.ed7 && g == G_TEX {
-						if decomp { tr("картинки .itp → .png или .dds", ".itp images → .png or .dds") } else { tr("картинки .png / .dds → .itp", ".png / .dds images → .itp") }
 					} else {
 						groups()[g].1
 					};
@@ -662,7 +588,10 @@ impl Picker {
 			let n_on = self.n_on();
 			let (has_tex, has_tab) = self.fmt_kinds();
 			let has_fmt = decomp;
-			let (summary, hint) = if fmt_page {
+			let (summary, hint) = if struct_page {
+				let s = if self.sections { tr("По разделам — папки разделов создаются в папке проекта", "By section: section folders are created in the project folder") } else { tr("Как в игре — папки игры прямо в папке проекта", "As in the game: the game's folders right in the project folder") };
+				(s.to_string(), tr("Уже разобранные папки остаются там, где лежат", "Folders that are already decompiled stay where they are").to_string())
+			} else if fmt_page {
 				let tex = lformat!("Текстуры — в {}", "Textures: as {}", if self.tex_dds { ".dds" } else { ".png" });
 				let tab = lformat!("Таблицы — в {}", "Tables to {}", if self.tables_json { ".json" } else { ".xlsx" });
 				let mut parts = Vec::new();
@@ -692,7 +621,7 @@ impl Picker {
 				(lformat!("Выбрано {n_on} из {n_all} · {}{after}", "Selected {n_on} of {n_all} · {}{after}", fmt_size(size)), h)
 			} else {
 				let ch: usize = self.items.iter().filter(|i| i.on).map(|i| i.changed).sum();
-				let h = if self.ed7 { tr("Неотмеченные папки не собираются", "Unticked folders are not built").to_string() } else if self.mod_mode { tr("Неотмеченные папки в мод не войдут (файлы установленного мода — без ваших правок)", "Unticked folders are left out of the mod (files of the installed mod go in without your edits)").to_string() } else { tr("Неотмеченные папки не пересобираются", "Unticked folders are not rebuilt").to_string() };
+				let h = if self.mod_mode { tr("Неотмеченные папки в мод не войдут (файлы установленного мода — без ваших правок)", "Unticked folders are left out of the mod (files of the installed mod go in without your edits)").to_string() } else { tr("Неотмеченные папки не пересобираются", "Unticked folders are not rebuilt").to_string() };
 				let out = self.out_estimate();
 				let after = if out > 0 { lformat!(" → запишется ≈ {}", " → writes ≈ {}", fmt_size(out)) } else { String::new() };
 				let h = match (out > 0, build_speed()) {
@@ -705,7 +634,7 @@ impl Picker {
 			painter.text(Pos2::new(x0, foot.center().y - 9.0), Align2::LEFT_CENTER, summary, f_semi(14.0), p.text);
 			painter.text(Pos2::new(x0, foot.center().y + 11.0), Align2::LEFT_CENTER, hint, f_body(12.0), p.muted);
 			let bh = 38.0;
-			let next = has_fmt && !fmt_page;
+			let next = has_fmt && self.page < 2;
 			let ok_label = if next { tr("Далее", "Next") } else if decomp { tr("Готово", "Done") } else { tr("Собрать", "Build") };
 			let ok_w = 120.0;
 			let ok_r = Rect::from_min_size(Pos2::new(x1 - ok_w, foot.center().y - bh / 2.0), Vec2::new(ok_w, bh));
@@ -714,7 +643,7 @@ impl Picker {
 			let ok_icon = if next { "arrow-right" } else if decomp { "check" } else { "archive" };
 			if primary_button_icon(&mut bu, p, ok_label, Some(ok_icon), ok_r.size(), 8, f_semi(14.5), can).clicked() {
 				if next {
-					self.page = 1;
+					self.page += 1;
 				} else {
 					ev = Event::Done;
 				}
@@ -723,7 +652,7 @@ impl Picker {
 			let mut cu = ui.new_child(egui::UiBuilder::new().max_rect(cancel_r).layout(egui::Layout::right_to_left(egui::Align::Center)));
 			if small_button(&mut cu, p, if fmt_page { tr("Назад", "Back") } else { tr("Отмена", "Cancel") }, Some(if fmt_page { "arrow-left" } else { "x" }), bh, true, p.text).clicked() {
 				if fmt_page {
-					self.page = 0;
+					self.page -= 1;
 				} else {
 					ev = Event::Cancel;
 				}

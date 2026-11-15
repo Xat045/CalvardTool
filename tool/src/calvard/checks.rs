@@ -17,11 +17,7 @@ pub fn cats() -> [(&'static str, &'static str, u8); 3] {
 }
 
 pub fn cat_desc(i: usize) -> &'static str {
-	if i == CAT_CODES && super::compare::ed7().is_some() {
-		tr("Коды не совпадают с оригиналом: {wait}, {color N}, {0x06}, {0x0D}, {item[…]}, {}, лица #…F, голос #…V, #…P, #…W, #…S, значки #…I/#…M. Особые знаки (♥ ♪ ★ ━ ∴ ※ …) потеряны или лишние. И сломанный текст: «\\» посреди строки, обрывки кодов (x01).", "Codes don't match the original: {wait}, {color N}, {0x06}, {0x0D}, {item[…]}, {}, faces #…F, voice #…V, #…P, #…W, #…S, icons #…I/#…M. Special signs (♥ ♪ ★ ━ ∴ ※ …) are lost or extra. Also broken text: a '\\' in the middle of a line, code fragments (x01).")
-	} else {
-		cats()[i].1
-	}
+	cats()[i].1
 }
 
 pub const CAT_CODES: usize = 0;
@@ -43,39 +39,7 @@ pub struct Report {
 	pub checked: usize,
 }
 
-fn token_at_ed7(c: &[char], i: usize) -> Option<(String, usize)> {
-	match c[i] {
-		'{' => {
-			let j = c[i + 1..].iter().take(24).position(|&x| x == '}')?;
-			let inner: String = c[i + 1..i + 1 + j].iter().collect();
-			if inner.chars().any(|x| x == '{' || x == '\n') {
-				return None;
-			}
-			let norm: String = inner.split_whitespace().collect::<Vec<_>>().join(" ");
-			Some((format!("{{{norm}}}"), j + 2))
-		}
-		'#' => {
-			let mut j = i + 1;
-			while j < c.len() && c[j].is_ascii_digit() {
-				j += 1;
-			}
-			let letter = *c.get(j)?;
-			if !letter.is_ascii_alphabetic() {
-				return None;
-			}
-			let num: String = c[i + 1..j].iter().collect();
-			let num = num.trim_start_matches('0');
-			let num = if num.is_empty() && j > i + 1 { "0" } else { num };
-			Some((format!("#{num}{letter}"), j + 1 - i))
-		}
-		_ => None,
-	}
-}
-
 fn token_at(c: &[char], i: usize) -> Option<(String, usize)> {
-	if super::compare::ed7().is_some() {
-		return token_at_ed7(c, i);
-	}
 	let close = match c[i] {
 		'{' => '}',
 		'<' => '>',
@@ -146,7 +110,7 @@ fn has_jp(s: &str) -> bool {
 }
 
 fn is_dialogue(file: &str) -> bool {
-	if super::compare::ed7().is_some() { file.starts_with("scena/") } else { file.ends_with(".json") }
+	file.ends_with(".json")
 }
 
 fn has_cyr(s: &str) -> bool {
@@ -284,64 +248,6 @@ fn broken_newline(en: &str, ru: &str) -> Option<String> {
 	}
 }
 
-fn broken_ed7(en: &str, ru: &str) -> Vec<String> {
-	let cnt_bs = |s: &str| {
-		let c: Vec<char> = s.chars().collect();
-		(0..c.len()).filter(|&k| c[k] == '\\' && !matches!(c.get(k + 1), None | Some('\n') | Some('\r'))).count()
-	};
-	let cnt_x = |s: &str| {
-		let c: Vec<char> = s.chars().collect();
-		(1..c.len().saturating_sub(2)).filter(|&k| c[k] == 'x' && c[k - 1].is_alphabetic() && c[k + 1].is_ascii_hexdigit() && c[k + 2].is_ascii_hexdigit() && c[k + 1] <= '1').count()
-	};
-	let mut v = Vec::new();
-	if cnt_bs(ru) > cnt_bs(en) {
-		v.push(tr("«\\» посреди строки — в игре будет виден", "a '\\' in the middle of a line will be visible in the game").to_string());
-	}
-	if cnt_x(ru) > cnt_x(en) {
-		v.push(tr("обрывок кода (x01…) — вероятно, сломанный {x01}", "code fragment (x01…), probably a broken {x01}").to_string());
-	}
-	v
-}
-
-const ED7_SYMBOLS: &[char] = &['㈱', '♪', '★', '☆', '◆', '━', '∴', '※', '←', '→', '①', '②', '③', 'Ⅰ', 'Ⅱ', 'Ⅲ'];
-
-fn symbols_ed7(en: &str, ru: &str) -> Option<String> {
-	let show = |c: char| match c {
-		'㈱' => "♥ (㈱)".to_string(),
-		'㍉' => "è (㍉)".to_string(),
-		_ => c.to_string(),
-	};
-	let cnt = |s: &str| {
-		let mut m: HashMap<char, usize> = HashMap::new();
-		for c in s.chars().filter(|c| ED7_SYMBOLS.contains(c)) {
-			*m.entry(c).or_default() += 1;
-		}
-		m
-	};
-	let (e, r) = (cnt(en), cnt(ru));
-	if e == r {
-		return None;
-	}
-	let mut lost = Vec::new();
-	let mut extra = Vec::new();
-	for &c in ED7_SYMBOLS {
-		let (a, b) = (*e.get(&c).unwrap_or(&0), *r.get(&c).unwrap_or(&0));
-		if a > b {
-			lost.push(show(c));
-		} else if b > a {
-			extra.push(show(c));
-		}
-	}
-	let mut v = Vec::new();
-	if !lost.is_empty() {
-		v.push(lformat!("знаки потеряны: {}", "signs lost: {}", lost.join(" ")));
-	}
-	if !extra.is_empty() {
-		v.push(lformat!("знаки лишние: {}", "extra signs: {}", extra.join(" ")));
-	}
-	Some(v.join(" · "))
-}
-
 pub fn run(d: &Data) -> Report {
 	let mut r = Report::default();
 	let target = target_lang(d);
@@ -362,15 +268,7 @@ pub fn run(d: &Data) -> Report {
 			continue;
 		}
 		r.checked += 1;
-		if super::compare::ed7().is_some() {
-			for w in broken_ed7(&en.text, &ru.text) {
-				r.findings.push(Finding { cat: CAT_CODES, pair: i, what: w });
-			}
-			if !debug && has_cyr(&ru.text)
-				&& let Some(w) = symbols_ed7(&en.text, &ru.text) {
-					r.findings.push(Finding { cat: CAT_CODES, pair: i, what: w });
-				}
-		} else if let Some(w) = broken_newline(&en.text, &ru.text) {
+		if let Some(w) = broken_newline(&en.text, &ru.text) {
 			r.findings.push(Finding { cat: CAT_CODES, pair: i, what: w });
 		}
 		if !has_cyr(&ru.text) {

@@ -1,4 +1,4 @@
-Сверка перевода (CalvardCompare) 0.2 — Trails through Daybreak, Daybreak II, Trails beyond the Horizon
+Сверка перевода (CalvardCompare) 0.3 — Trails through Daybreak, Daybreak II, Trails beyond the Horizon
 
 ЧТО ДЕЛАЕТ
   Показывает текст двух языков рядом, строка к строке (японский, английский или русский — в любой паре,
@@ -124,7 +124,7 @@
 
 ──────────────────────────────── ФАЙЛЫ РЯДОМ С ПРОГРАММОЙ
 
-  KaiCompare.ini — настройки (папки, словарь, тема, где вы остановились, масштаб);
+  CalvardCompare.ini — настройки (папки, словарь, тема, где вы остановились, масштаб);
   CalvardCompare_buttons.txt — назначения кнопок;
   CalvardCompare_cache — кэш загрузки и английских файлов из папки игры, там же CalvardCompare_hidden.txt —
   список «Не ошибка» (Shift+«Загрузить» его не удаляет);

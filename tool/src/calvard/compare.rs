@@ -5,25 +5,6 @@ use crate::lang::tr;
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 
-static ED7: std::sync::atomic::AtomicU8 = std::sync::atomic::AtomicU8::new(0);
-
-pub fn set_ed7(t: Option<crate::scena::Title>) {
-	let v = match t {
-		None => 0,
-		Some(crate::scena::Title::Zero) => 1,
-		Some(crate::scena::Title::Azure) => 2,
-	};
-	ED7.store(v, std::sync::atomic::Ordering::Relaxed);
-}
-
-pub fn ed7() -> Option<crate::scena::Title> {
-	match ED7.load(std::sync::atomic::Ordering::Relaxed) {
-		1 => Some(crate::scena::Title::Zero),
-		2 => Some(crate::scena::Title::Azure),
-		_ => None,
-	}
-}
-
 #[derive(Clone, Debug, Default)]
 pub struct Side {
 	pub text: String,
@@ -73,8 +54,8 @@ pub fn clean(s: &str, keep_newlines: bool) -> String {
 				let rest: String = chars.clone().take(20).collect();
 				if let Some(p) = rest.find('}') {
 					let inner = &rest[..p];
-					let ok = |x: char| x.is_ascii_alphanumeric() || x == '-' || (ed7().is_some() && (x == ' ' || x == '[' || x == ']' || x == '_'));
-					if inner.chars().all(ok) && (!inner.is_empty() || ed7().is_some()) {
+					let ok = |x: char| x.is_ascii_alphanumeric() || x == '-';
+					if inner.chars().all(ok) && !inner.is_empty() {
 						for _ in 0..inner.chars().count() + 1 {
 							chars.next();
 						}
@@ -83,21 +64,10 @@ pub fn clean(s: &str, keep_newlines: bool) -> String {
 				}
 				out.push(c);
 			}
-			'#' if ed7().is_some() && chars.peek().map(|c| c.is_ascii_digit()).unwrap_or(false) => {
-				let rest: String = chars.clone().take(14).collect();
-				let digits = rest.chars().take_while(|c| c.is_ascii_digit()).count();
-				if rest.chars().nth(digits).map(|c| c.is_ascii_alphabetic()).unwrap_or(false) {
-					for _ in 0..digits + 1 {
-						chars.next();
-					}
-				} else {
-					out.push(c);
-				}
-			}
+
 			'\n' => out.push(if keep_newlines { '\n' } else { ' ' }),
 			'\r' => {}
-			'㈱' if ed7().is_some() => out.push('♥'),
-			'㍉' if ed7().is_some() => out.push('è'),
+
 			_ => out.push(c),
 		}
 	}
@@ -222,9 +192,7 @@ pub fn number_pairs(text: &str) -> std::collections::HashMap<u32, u32> {
 fn read_json(path: &Path) -> Result<Vec<Item>, String> {
 	let src = std::fs::read_to_string(path).map_err(|e| e.to_string())?;
 	let v: serde_json::Value = serde_json::from_str(src.trim_start_matches('\u{feff}')).map_err(|e| lformat!("ошибка JSON: {e}", "JSON error: {e}"))?;
-	if v.get("kiseki").and_then(|k| k.as_str()) == Some(crate::scena_json::MAGIC) {
-		return Ok(read_ed7_json(&src, &v, true));
-	}
+
 	if v.get("headers").is_some() && v.get("kiseki").is_none() {
 		return Ok(super::tbl_json::texts(&v).into_iter().enumerate().map(|(n, (id, text))| Item { key: id.clone(), id, text, line: n + 2, ..Default::default() }).collect());
 	}
@@ -365,52 +333,8 @@ fn text_lines(src: &str) -> Vec<usize> {
 	out
 }
 
-fn read_ed7_json(src: &str, v: &serde_json::Value, with_lines: bool) -> Vec<Item> {
-	let lines = if with_lines { text_lines(src) } else { Vec::new() };
-	let mut out = Vec::new();
-	let mut k = 0usize;
-	let mut n = 0usize;
-	fn go(a: &[serde_json::Value], out: &mut Vec<Item>, k: &mut usize, n: &mut usize, lines: &[usize]) {
-		for it in a {
-			let Some(o) = it.as_object() else { continue };
-			let line = o.get("line").and_then(|l| l.as_str()).unwrap_or("");
-			if let Some(t) = o.get("text").and_then(|t| t.as_array()) {
-				*n += 1;
-				for (i, x) in t.iter().enumerate() {
-					let ln = lines.get(*k).copied().unwrap_or(0);
-					*k += 1;
-					out.push(Item { key: format!("{line}#{i}"), id: lformat!("реплика {}", "line {}", *n), text: x.as_str().unwrap_or("").to_string(), line: ln, ..Default::default() });
-				}
-			}
-			if let Some(b) = o.get("body").and_then(|b| b.as_array()) {
-				go(b, out, k, n, lines);
-			}
-		}
-	}
-	go(v.get("script").and_then(|s| s.as_array()).map(|a| a.as_slice()).unwrap_or(&[]), &mut out, &mut k, &mut n, &lines);
-	out
-}
-
-fn read_bin(path: &Path) -> Result<Vec<Item>, String> {
-	let data = std::fs::read(path).map_err(|e| e.to_string())?;
-	let first = ed7().unwrap_or(crate::scena::Title::Zero);
-	let json = crate::scena::quick_json(first, &data).or_else(|e| crate::scena::quick_json(first.other(), &data).map_err(|_| e))?;
-	let v: serde_json::Value = serde_json::from_str(&json).map_err(|e| e.to_string())?;
-	Ok(read_ed7_json(&json, &v, false))
-}
-
-fn read_dt(path: &Path) -> Result<Vec<Item>, String> {
-	let data = std::fs::read(path).map_err(|e| e.to_string())?;
-	let n = path.file_name().map(|n| n.to_string_lossy().to_lowercase()).unwrap_or_default();
-	let stem = n.split('.').next().unwrap_or(&n).to_string();
-	Ok(crate::dt::texts(&data, &stem)?.into_iter().map(|(id, key, text)| Item { key, id, text, line: 0, ..Default::default() }).collect())
-}
-
 fn read_xlsx(path: &Path) -> Result<Vec<Item>, String> {
-	if ed7().is_some() {
-		let book = std::fs::read(path).map_err(|e| e.to_string())?;
-		return Ok(crate::dt::texts_xlsx(&book)?.into_iter().enumerate().map(|(n, (id, key, text))| Item { key, id, text: text.replace("\r\n", "\n"), line: n + 2, ..Default::default() }).collect());
-	}
+
 	use calamine::{Data, Reader, Xlsx};
 	let mut wb: Xlsx<_> = calamine::open_workbook(path).map_err(|e| lformat!("не удалось открыть Excel: {e}", "could not open Excel: {e}"))?;
 	let ws = wb.worksheet_range(super::tbl::SHEET).or_else(|_| wb.worksheet_range(super::tbl::LEGACY_SHEET)).map_err(|_| tr("нет листа «Text»", "no 'Text' sheet").to_string())?;
@@ -485,8 +409,7 @@ fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
 		let is_dir = e.file_type().map(|t| t.is_dir()).unwrap_or(false);
 		if is_dir {
 			let l = n.to_lowercase();
-			let ed7_skip = ed7().is_some() && (l.starts_with("map") || l.starts_with("visual") || l.starts_with("etc") || l.starts_with("movie") || l.starts_with("voice") || l.starts_with("bgm") || l.starts_with("chr") || l.starts_with("face") || l.starts_with("effect") || l.starts_with("battle") || l.starts_with("monster") || l == "test" || l.starts_with("system") || l.starts_with("savefile") || l.ends_with("shader") || l == "se");
-			if ed7_skip || n == "_original" || n == "_extracted" || n.starts_with('.') || n.starts_with("_backup")
+			if n == "_original" || n == "_extracted" || n.starts_with('.') || n.starts_with("_backup")
 				|| ["asset_shader", "shader", "vfx", "model", "model_info", "image", "scene", "layout_pc", "layout_pc_eng", "system_pc"].contains(&l.as_str())
 			{
 				continue;
@@ -494,8 +417,7 @@ fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
 			walk(&e.path(), out);
 		} else {
 			let l = n.to_lowercase();
-			let ed7_raw = ed7().is_some() && (l.ends_with(".bin") || l.ends_with("._dt") || l.ends_with(".dt2"));
-			if !n.starts_with("~$") && (l.ends_with(".json") || l.ends_with(".xlsx") || l.ends_with(".yaml") || ed7_raw) {
+			if !n.starts_with("~$") && (l.ends_with(".json") || l.ends_with(".xlsx") || l.ends_with(".yaml")) {
 				out.push(e.path());
 			}
 		}
@@ -504,19 +426,7 @@ fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
 
 fn file_key(rel: &str) -> Option<String> {
 	let l = rel.to_lowercase().replace('\\', "/");
-	if ed7().is_some() {
-		let name = l.rsplit('/').next()?;
-		let stem = name.split('.').next().unwrap_or(name);
-		let dirs: Vec<&str> = l.split('/').collect();
-		let dirs = &dirs[..dirs.len() - 1];
-		if (name.ends_with(".json") || name.ends_with(".bin")) && dirs.iter().any(|d| d.starts_with("scena")) {
-			return Some(format!("scena/{stem}"));
-		}
-		if (name.ends_with(".xlsx") || name.ends_with("._dt") || name.ends_with(".dt2")) && !stem.contains(' ') && crate::dt::is_supported(stem) {
-			return Some(format!("table/{}", stem.strip_suffix("_us").filter(|s| *s == "monsnote").unwrap_or(stem)));
-		}
-		return None;
-	}
+
 	if l.ends_with(".json") && l.split('/').any(|d| d == "table" || d == "table_en" || d == "table_eng") {
 		let name = l.rsplit('/').next()?;
 		return Some(format!("table/{}.xlsx", name.trim_end_matches(".json")));
@@ -604,7 +514,7 @@ fn english_from_game(dir: &Path) -> Option<PathBuf> {
 fn collect(dir: &Path, russian: bool) -> HashMap<String, Vec<PathBuf>> {
 	let mut files = Vec::new();
 	walk(dir, &mut files);
-	let from_game = if !russian && ed7().is_none() { english_from_game(dir) } else { None };
+	let from_game = if !russian { english_from_game(dir) } else { None };
 	if let Some(c) = &from_game {
 		walk(c, &mut files);
 	}
@@ -623,16 +533,7 @@ fn collect(dir: &Path, russian: bool) -> HashMap<String, Vec<PathBuf>> {
 				!l.contains("/_english/") && !l.contains("/data_backup/")
 			});
 		}
-		if ed7().is_some() {
-			v.sort_by_key(|p| {
-				let l = p.to_string_lossy().replace('\\', "/").to_lowercase();
-				let backup = l.contains("/data_backup/");
-				let us = l.contains("_us/") || l.contains("monsnote_us.");
-				let raw = l.ends_with(".bin") || l.ends_with("._dt") || l.ends_with(".dt2");
-				((if russian { backup } else { !backup }) as u8, !us as u8, raw as u8)
-			});
-			continue;
-		}
+
 		v.sort_by_key(|p| {
 			let l = p.to_string_lossy().replace('\\', "/").to_lowercase();
 			let in_mods = l.contains("/mods/");
@@ -764,10 +665,6 @@ fn read_any(path: &Path) -> Result<Vec<Item>, String> {
 	let l = path.to_string_lossy().to_lowercase();
 	if l.ends_with(".json") {
 		read_json(path)
-	} else if l.ends_with(".bin") {
-		read_bin(path)
-	} else if l.ends_with("._dt") || l.ends_with(".dt2") {
-		read_dt(path)
 	} else if l.ends_with(".xlsx") {
 		read_xlsx(path)
 	} else {
@@ -780,12 +677,11 @@ pub fn load(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Syn
 }
 
 pub fn load_cached(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Sync), cache: Option<&Path>) -> Data {
-	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}|{}", en_dir.display(), ru_dir.display(), ED7.load(std::sync::atomic::Ordering::Relaxed)).as_bytes()))));
+	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}", en_dir.display(), ru_dir.display()).as_bytes()))));
 	let old: HashMap<String, cache::Entry> = cache_file.as_deref().and_then(cache::read).unwrap_or_default();
-	if ed7().is_none()
-		&& let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
-			super::game::set(g);
-		}
+	if let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
+		super::game::set(g);
+	}
 	let en = collect(en_dir, false);
 	let ru = collect(ru_dir, true);
 	let mut keys: Vec<String> = en.keys().chain(ru.keys()).cloned().collect();
@@ -1118,15 +1014,19 @@ mod cache {
 }
 
 fn game_mismatch(en_dir: &Path, ru_dir: &Path, data: &Data, scenes: &[(usize, usize)]) -> Option<String> {
+	let empty = |d: &Path| std::fs::read_dir(d).map(|mut r| r.next().is_none()).unwrap_or(true);
+	if empty(en_dir) || empty(ru_dir) {
+		return None;
+	}
 	let by_dir = |d: &Path| -> Option<&'static str> {
-		if ed7().is_some() { crate::scena::detect_title(d).map(|t| t.label()) } else { super::game::detect(d).map(|g| g.name()) }
+		super::game::detect(d).map(|g| g.name())
 	};
 	match (by_dir(en_dir), by_dir(ru_dir)) {
 		(Some(a), Some(b)) if a != b => return Some(lformat!("Английские файлы — из {a}, русские — из {b}.", "English files are from {a}, Russian ones from {b}.")),
 		(Some(_), Some(_)) => return None,
 		_ => {}
 	}
-	let is_scene = |k: &str| if ed7().is_some() { k.starts_with("scena/") } else { k.ends_with(".json") };
+	let is_scene = |k: &str| k.ends_with(".json");
 	let (mut en_files, mut ru_files) = (0usize, 0usize);
 	for (k, &(a, b)) in &data.files {
 		if is_scene(k) {

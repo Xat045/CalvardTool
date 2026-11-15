@@ -1,3 +1,3 @@
-CalvardTool=0.2
-CalvardCompare=0.2
+CalvardTool=0.3
+CalvardCompare=0.3
 suffix=

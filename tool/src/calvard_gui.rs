@@ -9,10 +9,10 @@ use std::sync::{Arc, Mutex};
 use std::time::Instant;
 
 use crate::gui_common::*;
-use crate::kai_pick::{Event as PEvent, Item as PItem, Mode as PMode, Picker};
-use calvard_tool::jobs;
-use calvard_tool::kai::game::Game;
-use calvard_tool::kai::jobs::{self as kjobs, Options};
+use crate::calvard_pick::{Event as PEvent, Item as PItem, Mode as PMode, Picker};
+use calvard_tool::calvard::jobs;
+use calvard_tool::calvard::game::Game;
+use calvard_tool::calvard::jobs::{self as kjobs, Options};
 
 const TITLE: &str = concat!("CalvardTool ", env!("VER_CALVARDTOOL"), env!("VER_SUFFIX"), " — Trails through Daybreak / Daybreak II / Trails beyond the Horizon");
 fn game_items() -> [&'static str; 4] {
@@ -195,8 +195,8 @@ impl App {
 		let key_o = g.map(|g| format!("out_{}", g.key())).unwrap_or_else(|| "out".into());
 		let proj = st.get(&key_p).or(st.get("proj")).map(|s| s.to_string()).unwrap_or_default();
 		let out = st.get(&key_o).or(st.get("out")).map(|s| s.to_string()).unwrap_or_default();
-		crate::kai_pick::set_speed(st.get("unpack_speed").and_then(|v| v.parse().ok()).unwrap_or(0.0));
-		crate::kai_pick::set_build_speed(st.get("build_speed").and_then(|v| v.parse().ok()).unwrap_or(0.0));
+		crate::calvard_pick::set_speed(st.get("unpack_speed").and_then(|v| v.parse().ok()).unwrap_or(0.0));
+		crate::calvard_pick::set_build_speed(st.get("build_speed").and_then(|v| v.parse().ok()).unwrap_or(0.0));
 		
 		App {
 			pal,
@@ -259,8 +259,8 @@ impl App {
 				st.set("out", &self.out);
 			}
 		}
-		st.set("unpack_speed", &format!("{:.0}", crate::kai_pick::speed()));
-		st.set("build_speed", &format!("{:.0}", crate::kai_pick::build_speed()));
+		st.set("unpack_speed", &format!("{:.0}", crate::calvard_pick::speed()));
+		st.set("build_speed", &format!("{:.0}", crate::calvard_pick::build_speed()));
 		st.save();
 	}
 
@@ -355,6 +355,7 @@ impl App {
 		pk.other_files = self.other_files;
 		pk.keep_failed = self.keep_failed;
 		pk.tables_json = self.tables_json;
+		pk.sections = calvard_tool::calvard::jobs::uses_sections(std::path::Path::new(self.proj.trim()));
 		self.pick = Some(pk);
 	}
 
@@ -368,7 +369,7 @@ impl App {
 			}
 		let (dir, files) = self.sources();
 		let d = if files.is_empty() { dir } else { files[0].parent().map(|p| p.to_path_buf()).unwrap_or(dir) };
-		let g = calvard_tool::kai::game::detect(&d);
+		let g = calvard_tool::calvard::game::detect(&d);
 		*self.det_cache.borrow_mut() = Some((self.src.clone(), g));
 		g
 	}
@@ -483,13 +484,13 @@ impl App {
 			if let (true, false, Ok(s)) = (compile, cancelled, &res) {
 				let secs = start.elapsed().as_secs_f64();
 				if est > 0 && secs >= 10.0 && s.ok > 0 {
-					crate::kai_pick::set_build_speed(est as f64 / secs);
+					crate::calvard_pick::set_build_speed(est as f64 / secs);
 				}
 			}
 			if let (false, false, Ok(s)) = (compile, cancelled, &res) {
 				let secs = start.elapsed().as_secs_f64();
 				if est > 0 && secs >= 30.0 && s.same * 4 <= s.ok {
-					crate::kai_pick::set_speed(est as f64 / secs);
+					crate::calvard_pick::set_speed(est as f64 / secs);
 				}
 			}
 			if !cancelled && start.elapsed().as_secs() >= 10 {
@@ -520,7 +521,7 @@ impl App {
 		let (d, t) = (sh.done.load(Ordering::SeqCst), sh.total.load(Ordering::SeqCst));
 		if t > 0 && !sh.finished.load(Ordering::SeqCst) {
 			let what = if self.op == Some(Op::Compile) { tr("Сборка", "Building") } else { tr("Декомпиляция", "Decompiling") };
-			let left = if d >= 3 && d < t { lformat!(" · осталось {}", " · {} left", crate::kai_pick::fmt_time(self.op_start.elapsed().as_secs_f64() / d as f64 * (t - d) as f64)) } else { String::new() };
+			let left = if d >= 3 && d < t { lformat!(" · осталось {}", " · {} left", crate::calvard_pick::fmt_time(self.op_start.elapsed().as_secs_f64() / d as f64 * (t - d) as f64)) } else { String::new() };
 			let cur = sh.current.lock().unwrap().clone();
 			self.status = lformat!("{what}: {d} из {t} файлов{left}{}", "{what}: {d} of {t} files{left}{}", if cur.is_empty() { String::new() } else { format!(" · {cur}") });
 		}
@@ -960,6 +961,7 @@ impl eframe::App for App {
 							self.other_files = pk.other_files;
 							self.keep_failed = pk.keep_failed;
 							self.tables_json = pk.tables_json;
+							apply_sections(&self.proj, pk.sections);
 							self.save_settings();
 							self.dec_sel = Some((pk.dir.clone(), pk.items));
 							self.flash(&lformat!("Выбрано для разборки: {n}", "Selected to decompile: {n}"));
@@ -1056,5 +1058,20 @@ pub fn run() {
 	};
 	if let Err(e) = eframe::run_native(TITLE, opts, Box::new(|cc| Ok(Box::new(App::new(cc))))) {
 		eprintln!("{e}");
+	}
+}
+
+fn apply_sections(proj: &str, on: bool) {
+	let proj = std::path::Path::new(proj.trim());
+	if proj.as_os_str().is_empty() {
+		return;
+	}
+	for s in calvard_tool::calvard::jobs::SECTIONS {
+		let d = proj.join(s);
+		if on {
+			let _ = std::fs::create_dir_all(&d);
+		} else {
+			let _ = std::fs::remove_dir(&d);
+		}
 	}
 }
