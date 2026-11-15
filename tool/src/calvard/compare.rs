@@ -511,6 +511,35 @@ fn english_from_game(dir: &Path) -> Option<PathBuf> {
 	Some(out)
 }
 
+static PREFER_JP: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+pub fn set_prefer_jp(on: bool) {
+	PREFER_JP.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
+fn prefer_jp() -> bool {
+	PREFER_JP.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+fn is_jp_path(l: &str) -> bool {
+	l.split('/').any(|d| d == "script" || d == "table")
+}
+
+pub fn mixed_languages(dir: &Path) -> bool {
+	let mut files = Vec::new();
+	walk(dir, &mut files);
+	let (mut jp, mut en) = (std::collections::HashSet::new(), std::collections::HashSet::new());
+	for f in files {
+		let rel = f.strip_prefix(dir).unwrap_or(&f).to_string_lossy().replace('\\', "/").to_lowercase();
+		if rel.ends_with(".yaml") {
+			continue;
+		}
+		let Some(k) = file_key(&rel) else { continue };
+		if is_jp_path(&rel) { jp.insert(k) } else { en.insert(k) };
+	}
+	jp.iter().any(|k| en.contains(k))
+}
+
 fn collect(dir: &Path, russian: bool) -> HashMap<String, Vec<PathBuf>> {
 	let mut files = Vec::new();
 	walk(dir, &mut files);
@@ -538,7 +567,8 @@ fn collect(dir: &Path, russian: bool) -> HashMap<String, Vec<PathBuf>> {
 			let l = p.to_string_lossy().replace('\\', "/").to_lowercase();
 			let in_mods = l.contains("/mods/");
 			let eng = l.contains("/_english/");
-			if russian { (!in_mods) as u8 } else if eng { 0 } else if in_mods { 2 } else { 1 }
+			let other = is_jp_path(&l) != prefer_jp();
+			if russian { ((!in_mods) as u8, other as u8) } else if eng { (0, 0) } else if in_mods { (2, other as u8) } else { (1, other as u8) }
 		});
 	}
 	m.retain(|_, v| !v.is_empty());
@@ -677,7 +707,7 @@ pub fn load(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Syn
 }
 
 pub fn load_cached(en_dir: &Path, ru_dir: &Path, progress: &(dyn Fn(usize, usize) + Sync), cache: Option<&Path>) -> Data {
-	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}", en_dir.display(), ru_dir.display()).as_bytes()))));
+	let cache_file = cache.map(|d| d.join(format!("{:016x}.bin", fnv64(format!("{}|{}|{}", en_dir.display(), ru_dir.display(), if prefer_jp() { "jp" } else { "en" }).as_bytes()))));
 	let old: HashMap<String, cache::Entry> = cache_file.as_deref().and_then(cache::read).unwrap_or_default();
 	if let Some(g) = super::game::detect(en_dir).or_else(|| super::game::detect(ru_dir)) {
 		super::game::set(g);
