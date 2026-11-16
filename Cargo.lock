@@ -376,6 +376,7 @@ dependencies = [
  "themelios",
  "windows-sys 0.59.0",
  "xxhash-rust",
+ "zstd",
 ]
 
 [[package]]

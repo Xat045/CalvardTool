@@ -107,20 +107,43 @@ impl Archive {
 			0 => Ok(raw),
 			1 => lz4_flex::block::decompress(&raw, e.unc_size as usize).map_err(|x| lformat!("{}: ошибка LZ4: {x}", "{}: LZ4 error: {x}", e.name)),
 			2 | 3 => {
-				let mut dec = ruzstd::decoding::FrameDecoder::new();
-				if e.cmp_type == 3 {
-					let d = self.dict.as_ref().ok_or(tr("нет словаря zstd", "no zstd dictionary"))?;
-					let dict = ruzstd::decoding::Dictionary::decode_dict(d).map_err(|x| lformat!("словарь zstd: {x}", "zstd dictionary: {x}"))?;
-					dec.add_dict(dict).map_err(|x| lformat!("словарь zstd: {x}", "zstd dictionary: {x}"))?;
-				}
-				let mut out = Vec::with_capacity(e.unc_size as usize);
-				let mut r = ruzstd::decoding::StreamingDecoder::new_with_decoder(&raw[..], dec).map_err(|x| lformat!("{}: ошибка zstd: {x}", "{}: zstd error: {x}", e.name))?;
-				r.read_to_end(&mut out).map_err(|x| lformat!("{}: ошибка zstd: {x}", "{}: zstd error: {x}", e.name))?;
-				Ok(out)
+				let dict = if e.cmp_type == 3 { Some(self.dict.as_deref().ok_or(tr("нет словаря zstd", "no zstd dictionary"))?) } else { None };
+				zstd_unpack(&self.path, dict, &raw, e.unc_size as usize).map_err(|x| lformat!("{}: ошибка zstd: {x}", "{}: zstd error: {x}", e.name))
 			}
 			t => Err(lformat!("{}: неизвестное сжатие {t}", "{}: unknown compression {t}", e.name)),
 		}
 	}
+}
+
+/// zstd via the C zstd library (about 3x faster than ruzstd). One decompressor with the archive's
+/// dictionary per thread and archive: parsing the dictionary for every file cost more than unpacking small files.
+fn zstd_unpack(archive: &Path, dict: Option<&[u8]>, raw: &[u8], size: usize) -> Result<Vec<u8>, String> {
+	use std::cell::RefCell;
+	use std::collections::HashMap;
+	thread_local! {
+		static DEC: RefCell<HashMap<(std::path::PathBuf, bool), zstd::bulk::Decompressor<'static>>> = RefCell::new(HashMap::new());
+	}
+	DEC.with(|m| {
+		let mut m = m.borrow_mut();
+		let key = (archive.to_path_buf(), dict.is_some());
+		if !m.contains_key(&key) {
+			// keep only the current archive's decompressors
+			if !m.keys().any(|(p, _)| p == archive) {
+				m.clear();
+			}
+			let d = match dict {
+				Some(d) => zstd::bulk::Decompressor::with_dictionary(d),
+				None => zstd::bulk::Decompressor::new(),
+			}
+			.map_err(|x| lformat!("словарь zstd: {x}", "zstd dictionary: {x}"))?;
+			m.insert(key.clone(), d);
+		}
+		let out = m.get_mut(&key).unwrap().decompress(raw, size).map_err(|x| x.to_string())?;
+		if out.len() != size {
+			return Err(lformat!("распаковано {} байт вместо {size}", "unpacked {} bytes instead of {size}", out.len()));
+		}
+		Ok(out)
+	})
 }
 
 pub fn verify<'a>(path: &Path, expect: impl IntoIterator<Item = (&'a str, &'a [u8])>) -> Result<usize, String> {

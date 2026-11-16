@@ -31,6 +31,8 @@ ingert = { path = "../libs/ingert" }
 ingert-syntax = { path = "../libs/ingert-syntax" }
 lz4_flex = "0.11"
 ruzstd = "0.8"
+# .p3a archives: the C zstd library (about 3x faster than ruzstd); ruzstd stays for saves
+zstd = "0.12.3"
 xxhash-rust = { version = "0.8", features = ["xxh64"] }
 
 eframe = { version = "0.31", default-features = false, features = ["glow", "default_fonts"] }
