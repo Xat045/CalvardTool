@@ -33,9 +33,13 @@ CalvardTool:
 
 ![Выбор файлов для разборки](docs/screenshot_tool_files.jpg)
 
+![Выбор структуры папок проекта](docs/screenshot_tool_folders.jpg)
+
 CalvardCompare:
 
 ![Сравнение двух языков по строкам](docs/screenshot_compare.jpg)
+
+![Японский текст рядом с переводом, переключается кнопками JP | EN](docs/screenshot_compare_jp.jpg)
 
 ![Проверки перевода](docs/screenshot_checks.jpg)
 
